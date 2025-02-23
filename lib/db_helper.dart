@@ -32,7 +32,7 @@ class DBHelper {
   Future _onCreate(Database db, int version) async {
     await db.execute('''
       CREATE TABLE Realm (
-        id INTEGER PRIMARY KEY,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         description TEXT NOT NULL,
         icon TEXT NOT NULL
       )
@@ -40,28 +40,28 @@ class DBHelper {
 
     await db.execute('''
       CREATE TABLE AwakerType (
-        id INTEGER PRIMARY KEY,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         description TEXT NOT NULL
       )
     ''');
     
     await db.execute('''
       CREATE TABLE EdifyMaterialFamily (
-        id INTEGER PRIMARY KEY,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         description TEXT NOT NULL
       )
     ''');
 
     await db.execute('''
       CREATE TABLE SkillMaterialFamily (
-        id INTEGER PRIMARY KEY,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         description TEXT NOT NULL
       )
     ''');
 
     await db.execute('''
       CREATE TABLE SkillMaterials (
-        id INTEGER PRIMARY KEY,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         description TEXT NOT NULL,
         tier INTEGER NOT NULL,
         realm INTEGER NOT NULL,
@@ -74,7 +74,7 @@ class DBHelper {
 
     await db.execute('''
       CREATE TABLE AdvancedSkillMaterials (
-        id INTEGER PRIMARY KEY,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         description TEXT NOT NULL,
         icon TEXT NOT NULL
       )
@@ -82,7 +82,7 @@ class DBHelper {
 
     await db.execute('''
       CREATE TABLE EdifyMaterials (
-        id INTEGER PRIMARY KEY,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         description TEXT NOT NULL,
         tier INTEGER NOT NULL,
         realm INTEGER NOT NULL,
@@ -99,14 +99,14 @@ class DBHelper {
         name TEXT NOT NULL,
         realm INTEGER NOT NULL,
         type INTEGER NOT NULL,
-        skillMaterial INTEGER NOT NULL,
-        edifyMaterial INTEGER NOT NULL,
+        skillMaterialFamily INTEGER NOT NULL,
+        edifyMaterialFamily INTEGER NOT NULL,
         advancedSkillMaterial INTEGER NOT NULL,
         level INTEGER NOT NULL,
         FOREIGN KEY (realm) REFERENCES Realm(id),
         FOREIGN KEY (type) REFERENCES AwakerType(id)
-        FOREIGN KEY (skillMaterial) REFERENCES SkillMaterials(id),
-        FOREIGN KEY (edifyMaterial) REFERENCES EdifyMaterials(id),
+        FOREIGN KEY (skillMaterialFamily) REFERENCES SkillMaterialFamily(id),
+        FOREIGN KEY (edifyMaterialFamily) REFERENCES EdifyMaterialFamily(id),
         FOREIGN KEY (advancedSkillMaterial) REFERENCES AdvancedSkillMaterials(id),
       )
     ''');
