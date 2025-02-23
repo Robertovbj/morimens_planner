@@ -33,7 +33,7 @@ class DBHelper {
     ''');
 
     await db.execute('''
-      CREATE TABLE Type (
+      CREATE TABLE AwakerType (
         id INTEGER PRIMARY KEY,
         description TEXT NOT NULL
       )
@@ -48,14 +48,14 @@ class DBHelper {
         constitution INTEGER NOT NULL,
         attack INTEGER NOT NULL,
         defense INTEGER NOT NULL,
-        critical_rate INTEGER NOT NULL,
-        critical_damage INTEGER NOT NULL,
+        critical_rate REAL NOT NULL,  -- Percentage value
+        critical_damage REAL NOT NULL,
         realm_mastery INTEGER NOT NULL,
-        strong_attack INTEGER NOT NULL,
+        strong_attack REAL NOT NULL,  -- Percentage value
         aliemus_recharge INTEGER NOT NULL,
         silver_key_recharge INTEGER NOT NULL,
-        black_sigil_drop_rate INTEGER NOT NULL,
-        resistance INTEGER NOT NULL,
+        black_sigil_drop_rate REAL NOT NULL,  -- Percentage value
+        resistance REAL NOT NULL,  -- Percentage value
         level INTEGER NOT NULL,
         FOREIGN KEY (realm) REFERENCES Realm(id),
         FOREIGN KEY (type) REFERENCES Type(id)
