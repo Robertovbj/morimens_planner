@@ -12,17 +12,9 @@ class _AwakersPageState extends State<AwakersPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _realmController = TextEditingController();
   final TextEditingController _typeController = TextEditingController();
-  final TextEditingController _constitutionController = TextEditingController();
-  final TextEditingController _attackController = TextEditingController();
-  final TextEditingController _defenseController = TextEditingController();
-  final TextEditingController _criticalRateController = TextEditingController();
-  final TextEditingController _criticalDamageController = TextEditingController();
-  final TextEditingController _realmMasteryController = TextEditingController();
-  final TextEditingController _strongAttackController = TextEditingController();
-  final TextEditingController _aliemusRechargeController = TextEditingController();
-  final TextEditingController _silverKeyRechargeController = TextEditingController();
-  final TextEditingController _blackSigilDropRateController = TextEditingController();
-  final TextEditingController _resistanceController = TextEditingController();
+  final TextEditingController _skillMaterialController = TextEditingController();
+  final TextEditingController _edifyMaterialController = TextEditingController();
+  final TextEditingController _advancedSkillMaterialController = TextEditingController();
   final TextEditingController _levelController = TextEditingController();
   List<Awaker> _awakers = [];
 
@@ -43,17 +35,9 @@ class _AwakersPageState extends State<AwakersPage> {
     final name = _nameController.text;
     final realm = int.tryParse(_realmController.text) ?? 0;
     final type = int.tryParse(_typeController.text) ?? 0;
-    final constitution = int.tryParse(_constitutionController.text) ?? 0;
-    final attack = int.tryParse(_attackController.text) ?? 0;
-    final defense = int.tryParse(_defenseController.text) ?? 0;
-    final criticalRate = double.tryParse(_criticalRateController.text) ?? 0.0;
-    final criticalDamage = double.tryParse(_criticalDamageController.text) ?? 0.0;
-    final realmMastery = int.tryParse(_realmMasteryController.text) ?? 0;
-    final strongAttack = double.tryParse(_strongAttackController.text) ?? 0.0;
-    final aliemusRecharge = int.tryParse(_aliemusRechargeController.text) ?? 0;
-    final silverKeyRecharge = int.tryParse(_silverKeyRechargeController.text) ?? 0;
-    final blackSigilDropRate = double.tryParse(_blackSigilDropRateController.text) ?? 0.0;
-    final resistance = double.tryParse(_resistanceController.text) ?? 0.0;
+    final skillMaterial = int.tryParse(_skillMaterialController.text) ?? 0;
+    final edifyMaterial = int.tryParse(_edifyMaterialController.text) ?? 0;
+    final advancedSkillMaterial = int.tryParse(_advancedSkillMaterialController.text) ?? 0;
     final level = int.tryParse(_levelController.text) ?? 0;
 
     if (name.isNotEmpty) {
@@ -61,34 +45,18 @@ class _AwakersPageState extends State<AwakersPage> {
         name: name,
         realm: realm,
         type: type,
-        constitution: constitution,
-        attack: attack,
-        defense: defense,
-        criticalRate: criticalRate,
-        criticalDamage: criticalDamage,
-        realmMastery: realmMastery,
-        strongAttack: strongAttack,
-        aliemusRecharge: aliemusRecharge,
-        silverKeyRecharge: silverKeyRecharge,
-        blackSigilDropRate: blackSigilDropRate,
-        resistance: resistance,
+        skillMaterial: skillMaterial,
+        edifyMaterial: edifyMaterial,
+        advancedSkillMaterial: advancedSkillMaterial,
         level: level,
       );
       await Awaker.insert(awaker);
       _nameController.clear();
       _realmController.clear();
       _typeController.clear();
-      _constitutionController.clear();
-      _attackController.clear();
-      _defenseController.clear();
-      _criticalRateController.clear();
-      _criticalDamageController.clear();
-      _realmMasteryController.clear();
-      _strongAttackController.clear();
-      _aliemusRechargeController.clear();
-      _silverKeyRechargeController.clear();
-      _blackSigilDropRateController.clear();
-      _resistanceController.clear();
+      _skillMaterialController.clear();
+      _edifyMaterialController.clear();
+      _advancedSkillMaterialController.clear();
       _levelController.clear();
       _loadAwakers();
       print('Added Awaker: $awaker');
@@ -118,48 +86,16 @@ class _AwakersPageState extends State<AwakersPage> {
               decoration: const InputDecoration(labelText: 'Type'),
             ),
             TextField(
-              controller: _constitutionController,
-              decoration: const InputDecoration(labelText: 'Constitution'),
+              controller: _skillMaterialController,
+              decoration: const InputDecoration(labelText: 'Skill Material'),
             ),
             TextField(
-              controller: _attackController,
-              decoration: const InputDecoration(labelText: 'Attack'),
+              controller: _edifyMaterialController,
+              decoration: const InputDecoration(labelText: 'Edify Material'),
             ),
             TextField(
-              controller: _defenseController,
-              decoration: const InputDecoration(labelText: 'Defense'),
-            ),
-            TextField(
-              controller: _criticalRateController,
-              decoration: const InputDecoration(labelText: 'Critical Rate'),
-            ),
-            TextField(
-              controller: _criticalDamageController,
-              decoration: const InputDecoration(labelText: 'Critical Damage'),
-            ),
-            TextField(
-              controller: _realmMasteryController,
-              decoration: const InputDecoration(labelText: 'Realm Mastery'),
-            ),
-            TextField(
-              controller: _strongAttackController,
-              decoration: const InputDecoration(labelText: 'Strong Attack'),
-            ),
-            TextField(
-              controller: _aliemusRechargeController,
-              decoration: const InputDecoration(labelText: 'Aliemus Recharge'),
-            ),
-            TextField(
-              controller: _silverKeyRechargeController,
-              decoration: const InputDecoration(labelText: 'Silver Key Recharge'),
-            ),
-            TextField(
-              controller: _blackSigilDropRateController,
-              decoration: const InputDecoration(labelText: 'Black Sigil Drop Rate'),
-            ),
-            TextField(
-              controller: _resistanceController,
-              decoration: const InputDecoration(labelText: 'Resistance'),
+              controller: _advancedSkillMaterialController,
+              decoration: const InputDecoration(labelText: 'Advanced Skill Material'),
             ),
             TextField(
               controller: _levelController,

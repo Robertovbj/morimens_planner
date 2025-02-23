@@ -8,7 +8,7 @@ class DBHelper {
 
   static Database? _database;
   static const String _databaseName = 'morimens_planner.db';
-  static const int _databaseVersion = 1;
+  static const int _databaseVersion = 2;
 
   Future<Database> get database async {
     if (_database != null) return _database!;
@@ -42,25 +42,50 @@ class DBHelper {
     ''');
 
     await db.execute('''
+      CREATE TABLE SkillMaterials (
+        id INTEGER PRIMARY KEY,
+        description TEXT NOT NULL,
+        tier INTEGER NOT NULL,
+        realm INTEGER NOT NULL,
+        icon TEXT NOT NULL,
+        FOREIGN KEY (realm) REFERENCES Realm(id)
+      )
+    ''');
+
+    await db.execute('''
+      CREATE TABLE AdvancedSkillMaterials (
+        id INTEGER PRIMARY KEY,
+        description TEXT NOT NULL,
+        icon TEXT NOT NULL
+      )
+    ''');
+
+    await db.execute('''
+      CREATE TABLE EdifyMaterials (
+        id INTEGER PRIMARY KEY,
+        description TEXT NOT NULL,
+        tier INTEGER NOT NULL,
+        realm INTEGER NOT NULL,
+        icon TEXT NOT NULL,
+        FOREIGN KEY (realm) REFERENCES Realm(id)
+      )
+    ''');
+
+    await db.execute('''
       CREATE TABLE Awakers (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         realm INTEGER NOT NULL,
         type INTEGER NOT NULL,
-        constitution INTEGER NOT NULL,
-        attack INTEGER NOT NULL,
-        defense INTEGER NOT NULL,
-        critical_rate REAL NOT NULL,  -- Percentage value
-        critical_damage REAL NOT NULL,
-        realm_mastery INTEGER NOT NULL,
-        strong_attack REAL NOT NULL,  -- Percentage value
-        aliemus_recharge INTEGER NOT NULL,
-        silver_key_recharge INTEGER NOT NULL,
-        black_sigil_drop_rate REAL NOT NULL,  -- Percentage value
-        resistance REAL NOT NULL,  -- Percentage value
+        skillMaterial INTEGER NOT NULL,
+        edifyMaterial INTEGER NOT NULL,
+        advancedSkillMaterial INTEGER NOT NULL,
         level INTEGER NOT NULL,
         FOREIGN KEY (realm) REFERENCES Realm(id),
         FOREIGN KEY (type) REFERENCES AwakerType(id)
+        FOREIGN KEY (skillMaterial) REFERENCES SkillMaterials(id),
+        FOREIGN KEY (edifyMaterial) REFERENCES EdifyMaterials(id),
+        FOREIGN KEY (advancedSkillMaterial) REFERENCES AdvancedSkillMaterials(id),
       )
     ''');
 
