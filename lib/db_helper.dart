@@ -44,7 +44,14 @@ class DBHelper {
         description TEXT NOT NULL
       )
     ''');
-    
+
+    await db.execute('''
+      CREATE TABLE Rarity (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        description TEXT NOT NULL
+      )
+        ''');
+
     await db.execute('''
       CREATE TABLE EdifyMaterialFamily (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -95,19 +102,21 @@ class DBHelper {
 
     await db.execute('''
       CREATE TABLE Awakers (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        realm INTEGER NOT NULL,
-        type INTEGER NOT NULL,
-        skillMaterialFamily INTEGER NOT NULL,
-        edifyMaterialFamily INTEGER NOT NULL,
-        advancedSkillMaterial INTEGER NOT NULL,
-        level INTEGER NOT NULL,
-        FOREIGN KEY (realm) REFERENCES Realm(id),
-        FOREIGN KEY (type) REFERENCES AwakerType(id)
-        FOREIGN KEY (skillMaterialFamily) REFERENCES SkillMaterialFamily(id),
-        FOREIGN KEY (edifyMaterialFamily) REFERENCES EdifyMaterialFamily(id),
-        FOREIGN KEY (advancedSkillMaterial) REFERENCES AdvancedSkillMaterials(id),
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      realm INTEGER NOT NULL,
+      type INTEGER NOT NULL,
+      rarity INTEGER NOT NULL,
+      skillMaterialFamily INTEGER NOT NULL,
+      edifyMaterialFamily INTEGER NOT NULL,
+      advancedSkillMaterial INTEGER NOT NULL,
+      level INTEGER NOT NULL,
+      FOREIGN KEY (realm) REFERENCES Realm(id),
+      FOREIGN KEY (type) REFERENCES AwakerType(id),
+      FOREIGN KEY (rarity) REFERENCES Rarity(id),
+      FOREIGN KEY (skillMaterialFamily) REFERENCES SkillMaterialFamily(id),
+      FOREIGN KEY (edifyMaterialFamily) REFERENCES EdifyMaterialFamily(id),
+      FOREIGN KEY (advancedSkillMaterial) REFERENCES AdvancedSkillMaterials(id)
       )
     ''');
 

@@ -13,6 +13,7 @@ class DatabaseSeeder {
     await _seedSkillMaterials();
     await _seedEdifyMaterials();
     await _seedAdvancedSkillMaterials();
+    await _seedRarities();
   }
 
   Future<void> seedUpgrade(int oldVersion, int newVersion) async {
@@ -131,6 +132,18 @@ class DatabaseSeeder {
 
     for (var material in materials) {
       await db.insert('AdvancedSkillMaterials', material);
+    }
+  }
+
+  Future<void> _seedRarities() async {
+    final rarities = [
+      {'id': 1, 'description': 'R'},
+      {'id': 2, 'description': 'SR'},
+      {'id': 3, 'description': 'SSR'},
+    ];
+
+    for (var rarity in rarities) {
+      await db.insert('Rarity', rarity);
     }
   }
 
