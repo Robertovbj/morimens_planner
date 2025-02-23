@@ -11,7 +11,7 @@ class DBHelper {
 
   static Database? _database;
   static const String _databaseName = 'morimens_planner.db';
-  static const int _databaseVersion = 3;
+  static const int _databaseVersion = 1;
 
   Future<Database> get database async {
     if (_database != null) return _database!;
