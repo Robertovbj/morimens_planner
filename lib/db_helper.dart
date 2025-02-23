@@ -143,6 +143,26 @@ class DBHelper {
       )
     ''');
 
+    await db.execute('''
+      CREATE TABLE Planner (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        awaker INTEGER NOT NULL,
+        basicAttack_from INTEGER NOT NULL,
+        basicAttack_to INTEGER NOT NULL,
+        basicDefense_from INTEGER NOT NULL,
+        basicDefense_to INTEGER NOT NULL,
+        exalt_from INTEGER NOT NULL,
+        exalt_to INTEGER NOT NULL,
+        rouse_from INTEGER NOT NULL,
+        rouse_to INTEGER NOT NULL,
+        skillOne_from INTEGER NOT NULL,
+        skillOne_to INTEGER NOT NULL,
+        skillTwo_from INTEGER NOT NULL,
+        skillTwo_to INTEGER NOT NULL,
+        FOREIGN KEY (awaker) REFERENCES Awakers(id)
+      )
+    ''');
+
     await DatabaseSeeder(db).seed();
   }
 
