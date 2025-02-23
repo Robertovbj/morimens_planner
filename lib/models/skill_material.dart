@@ -7,6 +7,7 @@ class SkillMaterial {
   final int tier;
   final int realm;
   final String icon;
+  final int family;
 
   SkillMaterial({
     this.id,
@@ -14,6 +15,7 @@ class SkillMaterial {
     required this.tier,
     required this.realm,
     required this.icon,
+    required this.family,
   });
 
   factory SkillMaterial.fromMap(Map<String, Object?> map) => SkillMaterial(
@@ -22,6 +24,7 @@ class SkillMaterial {
         tier: map['tier'] as int,
         realm: map['realm'] as int,
         icon: map['icon'] as String,
+        family: map['family'] as int,
       );
 
   Map<String, Object?> toMap() => {
@@ -30,11 +33,12 @@ class SkillMaterial {
         'tier': tier,
         'realm': realm,
         'icon': icon,
+        'family': family,
       };
 
   @override
   String toString() {
-    return 'SkillMaterial{id: $id, description: $description, tier: $tier, realm: $realm, icon: $icon}';
+    return 'SkillMaterial{id: $id, description: $description, tier: $tier, realm: $realm, icon: $icon, family: $family}';
   }
 
   // CRUD functions

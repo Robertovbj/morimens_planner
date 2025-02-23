@@ -7,6 +7,7 @@ class EdifyMaterial {
   final int tier;
   final int realm;
   final String icon;
+  final int family;
 
   EdifyMaterial({
     this.id,
@@ -14,6 +15,7 @@ class EdifyMaterial {
     required this.tier,
     required this.realm,
     required this.icon,
+    required this.family,
   });
 
   factory EdifyMaterial.fromMap(Map<String, Object?> map) => EdifyMaterial(
@@ -22,6 +24,7 @@ class EdifyMaterial {
         tier: map['tier'] as int,
         realm: map['realm'] as int,
         icon: map['icon'] as String,
+        family: map['family'] as int,
       );
 
   Map<String, Object?> toMap() => {
@@ -30,11 +33,12 @@ class EdifyMaterial {
         'tier': tier,
         'realm': realm,
         'icon': icon,
+        'family': family,
       };
 
   @override
   String toString() {
-    return 'EdifyMaterial{id: $id, description: $description, tier: $tier, realm: $realm, icon: $icon}';
+    return 'EdifyMaterial{id: $id, description: $description, tier: $tier, realm: $realm, icon: $icon, family: $family}';
   }
 
   // CRUD functions
