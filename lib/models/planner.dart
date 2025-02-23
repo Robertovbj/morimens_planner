@@ -89,6 +89,14 @@ class Planner {
   // CRUD functions
   static Future<int> insert(Planner planner) async {
     final db = await DBHelper().database;
+    final existingPlanner = await db.query(
+      'Planner',
+      where: 'awaker = ?',
+      whereArgs: [planner.awaker],
+    );
+    if (existingPlanner.isNotEmpty) {
+      throw ArgumentError('A plan with the same awaker already exists.');
+    }
     return await db.insert(
       'Planner',
       planner.toMap(),

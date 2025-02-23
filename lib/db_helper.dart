@@ -146,7 +146,7 @@ class DBHelper {
     await db.execute('''
       CREATE TABLE Planner (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        awaker INTEGER NOT NULL,
+        awaker INTEGER NOT NULL UNIQUE,
         basicAttack_from INTEGER NOT NULL,
         basicAttack_to INTEGER NOT NULL,
         basicDefense_from INTEGER NOT NULL,
