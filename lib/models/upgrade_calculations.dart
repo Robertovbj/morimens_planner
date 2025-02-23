@@ -10,6 +10,7 @@ class UpgradeCalculations {
   final int tier2;
   final int tier3;
   final int advanced;
+  final int money;
   final int rarity;
 
   UpgradeCalculations({
@@ -21,6 +22,7 @@ class UpgradeCalculations {
     required this.tier2,
     required this.tier3,
     required this.advanced,
+    required this.money,
     required this.rarity,
   });
 
@@ -33,6 +35,7 @@ class UpgradeCalculations {
         tier2: map['tier2'] as int,
         tier3: map['tier3'] as int,
         advanced: map['advanced'] as int,
+        money: map['money'] as int,
         rarity: map['rarity'] as int,
       );
 
@@ -45,12 +48,13 @@ class UpgradeCalculations {
         'tier2': tier2,
         'tier3': tier3,
         'advanced': advanced,
+        'money': money,
         'rarity': rarity,
       };
 
   @override
   String toString() {
-    return 'UpgradeCalculations{id: $id, from: $from, to: $to, type: $type, tier1: $tier1, tier2: $tier2, tier3: $tier3, advanced: $advanced, rarity: $rarity}';
+    return 'UpgradeCalculations{id: $id, from: $from, to: $to, type: $type, tier1: $tier1, tier2: $tier2, tier3: $tier3, advanced: $advanced, money: $money, rarity: $rarity}';
   }
 
   // CRUD functions

@@ -117,6 +117,7 @@ class DBHelper {
         tier2 INTEGER NOT NULL,
         tier3 INTEGER NOT NULL,
         advanced INTEGER NOT NULL,
+        money INTEGER NOT NULL,
         rarity INTEGER NOT NULL,
         FOREIGN KEY (type) REFERENCES UpgradeType(id),
         FOREIGN KEY (rarity) REFERENCES Rarity(id)
