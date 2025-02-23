@@ -38,7 +38,6 @@ class _AwakersPageState extends State<AwakersPage> {
     final skillMaterial = int.tryParse(_skillMaterialController.text) ?? 0;
     final edifyMaterial = int.tryParse(_edifyMaterialController.text) ?? 0;
     final advancedSkillMaterial = int.tryParse(_advancedSkillMaterialController.text) ?? 0;
-    final level = int.tryParse(_levelController.text) ?? 0;
 
     if (name.isNotEmpty) {
       final awaker = Awaker(
@@ -48,7 +47,6 @@ class _AwakersPageState extends State<AwakersPage> {
         skillMaterial: skillMaterial,
         edifyMaterial: edifyMaterial,
         advancedSkillMaterial: advancedSkillMaterial,
-        level: level,
       );
       await Awaker.insert(awaker);
       _nameController.clear();
@@ -114,8 +112,7 @@ class _AwakersPageState extends State<AwakersPage> {
               itemBuilder: (context, index) {
                 final awaker = _awakers[index];
                 return ListTile(
-                  title: Text(awaker.name),
-                  subtitle: Text('Level: ${awaker.level}'),
+                  title: Text(awaker.name)
                 );
               },
             ),
