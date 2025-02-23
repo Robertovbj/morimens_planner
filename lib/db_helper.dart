@@ -110,8 +110,8 @@ class DBHelper {
     await db.execute('''
       CREATE TABLE UpgradeCalculations (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        from INTEGER NOT NULL,
-        to INTEGER NOT NULL,
+        fromLevel INTEGER NOT NULL,
+        toLevel INTEGER NOT NULL,
         type INTEGER NOT NULL,
         tier1 INTEGER NOT NULL,
         tier2 INTEGER NOT NULL,
@@ -122,7 +122,7 @@ class DBHelper {
         FOREIGN KEY (type) REFERENCES UpgradeType(id),
         FOREIGN KEY (rarity) REFERENCES Rarity(id)
       )
-        ''');
+    ''');
 
     await db.execute('''
       CREATE TABLE Awakers (

@@ -3,8 +3,8 @@ import '../db_helper.dart';
 
 class UpgradeCalculations {
   final int? id;
-  final int from;
-  final int to;
+  final int fromLevel;
+  final int toLevel;
   final int type;
   final int tier1;
   final int tier2;
@@ -15,8 +15,8 @@ class UpgradeCalculations {
 
   UpgradeCalculations({
     this.id,
-    required this.from,
-    required this.to,
+    required this.fromLevel,
+    required this.toLevel,
     required this.type,
     required this.tier1,
     required this.tier2,
@@ -28,8 +28,8 @@ class UpgradeCalculations {
 
   factory UpgradeCalculations.fromMap(Map<String, Object?> map) => UpgradeCalculations(
         id: map['id'] as int?,
-        from: map['from'] as int,
-        to: map['to'] as int,
+        fromLevel: map['from'] as int,
+        toLevel: map['to'] as int,
         type: map['type'] as int,
         tier1: map['tier1'] as int,
         tier2: map['tier2'] as int,
@@ -41,8 +41,8 @@ class UpgradeCalculations {
 
   Map<String, Object?> toMap() => {
         'id': id,
-        'from': from,
-        'to': to,
+        'fromLevel': fromLevel,
+        'toLevel': toLevel,
         'type': type,
         'tier1': tier1,
         'tier2': tier2,
@@ -54,7 +54,7 @@ class UpgradeCalculations {
 
   @override
   String toString() {
-    return 'UpgradeCalculations{id: $id, from: $from, to: $to, type: $type, tier1: $tier1, tier2: $tier2, tier3: $tier3, advanced: $advanced, money: $money, rarity: $rarity}';
+    return 'UpgradeCalculations{id: $id, from: $fromLevel, to: $toLevel, type: $type, tier1: $tier1, tier2: $tier2, tier3: $tier3, advanced: $advanced, money: $money, rarity: $rarity}';
   }
 
   // CRUD functions
