@@ -63,6 +63,15 @@ class DBHelper {
         FOREIGN KEY (type) REFERENCES AwakerType(id)
       )
     ''');
+
+    await db.insert('Realm', {'id': 1, 'description': 'Chaos', 'icon': 'chaos_icon'});
+    await db.insert('Realm', {'id': 2, 'description': 'Aequor', 'icon': 'aequor_icon'});
+    await db.insert('Realm', {'id': 3, 'description': 'Caro', 'icon': 'caro_icon'});
+    await db.insert('Realm', {'id': 4, 'description': 'Ultra', 'icon': 'ultra_icon'});
+
+    await db.insert('AwakerType', {'id': 1, 'description': 'Damage'});
+    await db.insert('AwakerType', {'id': 2, 'description': 'Defense'});
+    await db.insert('AwakerType', {'id': 3, 'description': 'Assist'});
   }
 
 }
