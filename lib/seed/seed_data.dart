@@ -14,6 +14,9 @@ class DatabaseSeeder {
     await _seedEdifyMaterials();
     await _seedAdvancedSkillMaterials();
     await _seedRarities();
+    await _seedUpgradeTypes();
+    await _seedUpgradeCalculations();
+    await _seedAwakers();
   }
 
   Future<void> seedUpgrade(int oldVersion, int newVersion) async {
@@ -52,10 +55,10 @@ class DatabaseSeeder {
 
   Future<void> _seedSkillMaterialFamilies() async {
     final families = [
-      {'id': 1, 'description': 'Crystal'},
-      {'id': 2, 'description': 'Lily'},
-      {'id': 3, 'description': 'Polymer'},
-      {'id': 4, 'description': 'Star'},
+      {'id': 1, 'description': 'Chaos Cluster'},
+      {'id': 2, 'description': 'Ruins of Ponape'},
+      {'id': 3, 'description': 'Worm\'s Lair'},
+      {'id': 4, 'description': 'Schwarzschild Throat'},
     ];
 
     for (var family in families) {
@@ -65,10 +68,10 @@ class DatabaseSeeder {
 
   Future<void> _seedEdifyMaterialFamilies() async {
     final families = [
-      {'id': 1, 'description': 'Tome'},
-      {'id': 2, 'description': 'Mind'},
-      {'id': 3, 'description': 'Dungeon'},
-      {'id': 4, 'description': 'Template'},
+      {'id': 1, 'description': 'Murky Afterimage'},
+      {'id': 2, 'description': 'Abyssal Afterimage'},
+      {'id': 3, 'description': 'Organic Afterimage'},
+      {'id': 4, 'description': 'Dimensional Afterimage'},
     ];
 
     for (var family in families) {
@@ -144,6 +147,61 @@ class DatabaseSeeder {
 
     for (var rarity in rarities) {
       await db.insert('Rarity', rarity);
+    }
+  }
+
+  Future<void> _seedUpgradeTypes() async {
+    final types = [
+      {'id': 1, 'description': 'Skill'},
+      {'id': 2, 'description': 'Exalt'},
+      {'id': 3, 'description': 'Edify'},
+    ];
+
+    for (var type in types) {
+      await db.insert('UpgradeType', type);
+    }
+  }
+
+  Future<void> _seedUpgradeCalculations() async {
+    final calculations = [
+      {'from': 1, 'to': 2, 'type': 1, 'tier1': 9, 'tier2': 0, 'tier3': 0, 'advanced': 0, 'money': 3150, 'rarity': 3},
+      {'from': 2, 'to': 3, 'type': 1, 'tier1': 0, 'tier2': 9, 'tier3': 0, 'advanced': 0, 'money': 12150, 'rarity': 3},
+      {'from': 3, 'to': 4, 'type': 1, 'tier1': 0, 'tier2': 18, 'tier3': 0, 'advanced': 0, 'money': 0, 'rarity': 3},
+      {'from': 10, 'to': 20, 'type': 3, 'tier1': 9, 'tier2': 0, 'tier3': 0, 'advanced': 0, 'money': 0, 'rarity': 3},
+      {'from': 20, 'to': 30, 'type': 3, 'tier1': 0, 'tier2': 9, 'tier3': 0, 'advanced': 0, 'money': 8100, 'rarity': 3},
+      {'from': 30, 'to': 40, 'type': 3, 'tier1': 0, 'tier2': 18, 'tier3': 0, 'advanced': 0, 'money': 21600, 'rarity': 3},
+      {'from': 40, 'to': 50, 'type': 3, 'tier1': 0, 'tier2': 0, 'tier3': 15, 'advanced': 0, 'money': 67500, 'rarity': 3},
+      {'from': 1, 'to': 2, 'type': 2, 'tier1': 18, 'tier2': 0, 'tier3': 0, 'advanced': 1, 'money': 6300, 'rarity': 3},
+      {'from': 2, 'to': 3, 'type': 2, 'tier1': 0, 'tier2': 18, 'tier3': 0, 'advanced': 2, 'money': 24300, 'rarity': 3},
+    ];
+
+    for (var calculation in calculations) {
+      await db.insert('UpgradeCalculations', calculation);
+    }
+  }
+
+  Future<void> _seedAwakers() async {
+    final awakers = [
+      {'name': 'Sorel', 'realm': 3, 'type': 1, 'rarity': 3, 'skillMaterialFamily': 3, 'edifyMaterialFamily': 3, 'advancedSkillMaterial': 5},
+      {'name': 'Leigh', 'realm': 3, 'type': 3, 'rarity': 3, 'skillMaterialFamily': 3, 'edifyMaterialFamily': 3, 'advancedSkillMaterial': 1},
+      {'name': 'Faint', 'realm': 3, 'type': 2, 'rarity': 3, 'skillMaterialFamily': 3, 'edifyMaterialFamily': 3, 'advancedSkillMaterial': 2},
+      {'name': 'Helot', 'realm': 3, 'type': 1, 'rarity': 3, 'skillMaterialFamily': 3, 'edifyMaterialFamily': 3, 'advancedSkillMaterial': 1},
+      {'name': 'Agrippa', 'realm': 3, 'type': 2, 'rarity': 3, 'skillMaterialFamily': 3, 'edifyMaterialFamily': 3, 'advancedSkillMaterial': 3},
+      {'name': 'Aigis', 'realm': 3, 'type': 3, 'rarity': 3, 'skillMaterialFamily': 3, 'edifyMaterialFamily': 3, 'advancedSkillMaterial': 2},
+      {'name': 'Lily', 'realm': 1, 'type': 2, 'rarity': 3, 'skillMaterialFamily': 1, 'edifyMaterialFamily': 1, 'advancedSkillMaterial': 5},
+      {'name': 'Karen', 'realm': 1, 'type': 3, 'rarity': 3, 'skillMaterialFamily': 1, 'edifyMaterialFamily': 1, 'advancedSkillMaterial': 3},
+      {'name': 'Celeste', 'realm': 2, 'type': 3, 'rarity': 3, 'skillMaterialFamily': 2, 'edifyMaterialFamily': 2, 'advancedSkillMaterial': 1},
+      {'name': 'Aurita', 'realm': 2, 'type': 1, 'rarity': 3, 'skillMaterialFamily': 2, 'edifyMaterialFamily': 2, 'advancedSkillMaterial': 3},
+      {'name': 'Sanga', 'realm': 2, 'type': 2, 'rarity': 3, 'skillMaterialFamily': 2, 'edifyMaterialFamily': 2, 'advancedSkillMaterial': 4},
+      {'name': 'Faros', 'realm': 2, 'type': 3, 'rarity': 3, 'skillMaterialFamily': 2, 'edifyMaterialFamily': 2, 'advancedSkillMaterial': 1},
+      {'name': 'Tulu', 'realm': 2, 'type': 1, 'rarity': 3, 'skillMaterialFamily': 2, 'edifyMaterialFamily': 2, 'advancedSkillMaterial': 5},
+      {'name': 'Liz', 'realm': 4, 'type': 1, 'rarity': 3, 'skillMaterialFamily': 4, 'edifyMaterialFamily': 4, 'advancedSkillMaterial': 3},
+      {'name': 'Casiah', 'realm': 4, 'type': 3, 'rarity': 3, 'skillMaterialFamily': 4, 'edifyMaterialFamily': 4, 'advancedSkillMaterial': 4},
+      {'name': 'Erica', 'realm': 4, 'type': 2, 'rarity': 3, 'skillMaterialFamily': 4, 'edifyMaterialFamily': 4, 'advancedSkillMaterial': 3},
+    ];
+
+    for (var awaker in awakers) {
+      await db.insert('Awakers', awaker);
     }
   }
 
