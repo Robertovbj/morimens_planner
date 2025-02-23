@@ -60,8 +60,9 @@ class DBHelper {
         resistance REAL NOT NULL,  -- Percentage value
         level INTEGER NOT NULL,
         FOREIGN KEY (realm) REFERENCES Realm(id),
-        FOREIGN KEY (type) REFERENCES Type(id)
+        FOREIGN KEY (type) REFERENCES AwakerType(id)
       )
     ''');
   }
+
 }
