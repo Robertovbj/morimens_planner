@@ -16,4 +16,9 @@ class Realm {
         'description': description,
         'icon': icon,
       };
+
+  @override
+  String toString() {
+    return 'Realm{id: $id, description: $description, icon: $icon}';
+  }
 }

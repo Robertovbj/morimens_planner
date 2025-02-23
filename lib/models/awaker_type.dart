@@ -13,4 +13,9 @@ class AwakerType {
         'id': id,
         'description': description,
       };
+
+  @override
+  String toString() {
+    return 'AwakerType{id: $id, description: $description}';
+  }
 }

@@ -72,4 +72,9 @@ class Awaker {
         'resistance': resistance,
         'level': level,
       };
+
+  @override
+  String toString() {
+    return 'Awaker{id: $id, name: $name, realm: $realm, type: $type, constitution: $constitution, attack: $attack, defense: $defense, criticalRate: $criticalRate, criticalDamage: $criticalDamage, realmMastery: $realmMastery, strongAttack: $strongAttack, aliemusRecharge: $aliemusRecharge, silverKeyRecharge: $silverKeyRecharge, blackSigilDropRate: $blackSigilDropRate, resistance: $resistance, level: $level}';
+  }
 }
