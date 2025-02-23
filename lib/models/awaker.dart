@@ -9,7 +9,6 @@ class Awaker {
   final int skillMaterial;
   final int edifyMaterial;
   final int advancedSkillMaterial;
-  final int level;
 
   Awaker({
     this.id,
@@ -19,7 +18,6 @@ class Awaker {
     required this.skillMaterial,
     required this.edifyMaterial,
     required this.advancedSkillMaterial,
-    required this.level,
   });
 
   factory Awaker.fromMap(Map<String, Object?> map) => Awaker(
@@ -30,7 +28,6 @@ class Awaker {
         skillMaterial: map['skillMaterial'] as int,
         edifyMaterial: map['edifyMaterial'] as int,
         advancedSkillMaterial: map['advancedSkillMaterial'] as int,
-        level: map['level'] as int,
       );
 
   Map<String, Object?> toMap() => {
@@ -41,15 +38,14 @@ class Awaker {
         'skillMaterial': skillMaterial,
         'edifyMaterial': edifyMaterial,
         'advancedSkillMaterial': advancedSkillMaterial,
-        'level': level,
       };
 
   @override
   String toString() {
-    return 'Awaker{id: $id, name: $name, realm: $realm, type: $type, skillMaterial: $skillMaterial, edifyMaterial: $edifyMaterial, advancedSkillMaterial: $advancedSkillMaterial, level: $level}';
+    return 'Awaker{id: $id, name: $name, realm: $realm, type: $type, skillMaterial: $skillMaterial, edifyMaterial: $edifyMaterial, advancedSkillMaterial: $advancedSkillMaterial}';
   }
 
-  // CRUD functions
+  // CRUD functions remain the same
   static Future<int> insert(Awaker awaker) async {
     final db = await DBHelper().database;
     return await db.insert(

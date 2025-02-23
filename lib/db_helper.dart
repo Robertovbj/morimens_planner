@@ -101,6 +101,29 @@ class DBHelper {
     ''');
 
     await db.execute('''
+      CREATE TABLE UpgradeType (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        description TEXT NOT NULL
+      )
+        ''');
+
+    await db.execute('''
+      CREATE TABLE UpgradeCalculations (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        from INTEGER NOT NULL,
+        to INTEGER NOT NULL,
+        type INTEGER NOT NULL,
+        tier1 INTEGER NOT NULL,
+        tier2 INTEGER NOT NULL,
+        tier3 INTEGER NOT NULL,
+        advanced INTEGER NOT NULL,
+        rarity INTEGER NOT NULL,
+        FOREIGN KEY (type) REFERENCES UpgradeType(id),
+        FOREIGN KEY (rarity) REFERENCES Rarity(id)
+      )
+        ''');
+
+    await db.execute('''
       CREATE TABLE Awakers (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
@@ -110,7 +133,6 @@ class DBHelper {
       skillMaterialFamily INTEGER NOT NULL,
       edifyMaterialFamily INTEGER NOT NULL,
       advancedSkillMaterial INTEGER NOT NULL,
-      level INTEGER NOT NULL,
       FOREIGN KEY (realm) REFERENCES Realm(id),
       FOREIGN KEY (type) REFERENCES AwakerType(id),
       FOREIGN KEY (rarity) REFERENCES Rarity(id),
