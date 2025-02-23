@@ -7,6 +7,8 @@ class DBHelper {
   DBHelper._internal();
 
   static Database? _database;
+  static const String _databaseName = 'morimens_planner.db';
+  static const int _databaseVersion = 1;
 
   Future<Database> get database async {
     if (_database != null) return _database!;
@@ -15,10 +17,10 @@ class DBHelper {
   }
 
   Future<Database> _initDB() async {
-    String path = join(await getDatabasesPath(), 'morimens_planner.db');
+    String path = join(await getDatabasesPath(), _databaseName);
     return await openDatabase(
       path,
-      version: 1,
+      version: _databaseVersion,
       onCreate: _onCreate,
     );
   }
