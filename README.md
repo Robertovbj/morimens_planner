@@ -45,6 +45,10 @@ You can submit game data through:
 
 Your data contributions will help improve the accuracy and completeness of the planner for the community.
 
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 ## Support the Project
 
 If you find this tool helpful, you can support its development by buying me a coffee:
