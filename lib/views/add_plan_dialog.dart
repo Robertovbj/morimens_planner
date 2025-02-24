@@ -144,11 +144,13 @@ class _AddPlanDialogState extends State<AddPlanDialog> {
               }).toList(),
               onChanged: (value) {
                 if (value != null) {
-                  fromController.text = value.toString();
-                  final toValue = int.tryParse(toController.text) ?? 1;
-                  if (toValue < value) {
-                    toController.text = value.toString();
-                  }
+                  setState(() {
+                    fromController.text = value.toString();
+                    final toValue = int.tryParse(toController.text) ?? value;
+                    if (toValue < value) {
+                      toController.text = value.toString();
+                    }
+                  });
                 }
               },
               decoration: const InputDecoration(
@@ -176,11 +178,13 @@ class _AddPlanDialogState extends State<AddPlanDialog> {
               }).toList(),
               onChanged: (value) {
                 if (value != null) {
-                  toController.text = value.toString();
-                  final fromValue = int.tryParse(fromController.text) ?? 1;
-                  if (fromValue > value) {
-                    fromController.text = value.toString();
-                  }
+                  setState(() {
+                    toController.text = value.toString();
+                    final fromValue = int.tryParse(fromController.text) ?? value;
+                    if (value < fromValue) {
+                      fromController.text = value.toString();
+                    }
+                  });
                 }
               },
               decoration: const InputDecoration(
