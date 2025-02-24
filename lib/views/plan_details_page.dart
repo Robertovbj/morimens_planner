@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/planner.dart';
 import '../models/awaker.dart';
 import 'add_plan_dialog.dart';
+import '../utils/color_generator.dart';
 
 class PlanDetailsPage extends StatefulWidget {
   final Planner plan;
@@ -99,6 +100,8 @@ class _PlanDetailsPageState extends State<PlanDetailsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.awaker.name),
+        backgroundColor: ColorGenerator.fromString(widget.awaker.name),
+        foregroundColor: Colors.white,
         actions: [
           IconButton(
             icon: const Icon(Icons.delete),

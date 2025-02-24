@@ -3,6 +3,7 @@ import '../models/planner.dart';
 import '../models/awaker.dart';
 import 'add_plan_dialog.dart';
 import 'plan_details_page.dart';
+import '../utils/color_generator.dart';
 
 class PlannerPage extends StatefulWidget {
   const PlannerPage({super.key});
@@ -76,7 +77,7 @@ class _PlannerPageState extends State<PlannerPage> {
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.grey[200],
+                        color: ColorGenerator.fromString(awaker?.name ?? ''),
                         borderRadius: const BorderRadius.vertical(
                           top: Radius.circular(4),
                         ),
@@ -85,6 +86,7 @@ class _PlannerPageState extends State<PlannerPage> {
                         child: Icon(
                           Icons.person,
                           size: 64,
+                          color: Colors.white,
                         ),
                       ),
                     ),
