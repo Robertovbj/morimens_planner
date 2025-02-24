@@ -14,10 +14,22 @@ class MaterialRequirement {
   });
 }
 
+class AdvancedMaterialRequirement {
+  final int materialId;
+  final String materialName;
+  final int quantity;
+
+  AdvancedMaterialRequirement({
+    required this.materialId,
+    required this.materialName,
+    required this.quantity,
+  });
+}
+
 class MaterialRequirements {
   final List<MaterialRequirement> skillFamilies;
   final List<MaterialRequirement> edifyFamilies;
-  final int advancedMaterials;
+  final List<AdvancedMaterialRequirement> advancedMaterials;
   final int totalMoney;
 
   MaterialRequirements({

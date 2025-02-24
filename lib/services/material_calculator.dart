@@ -23,6 +23,9 @@ class MaterialCalculator {
     Map<int, List<Map<String, dynamic>>> edifyFamilyRanges = {};
     List<Map<String, dynamic>> exaltRanges = [];
 
+    // Track advanced materials by ID
+    Map<int, int> advancedMaterialsCount = {};
+
     for (var plan in plans) {
       final awaker = awakersMap[plan.awaker];
       if (awaker == null) continue;
@@ -72,13 +75,13 @@ class MaterialCalculator {
         'to': plan.exaltTo,
         'rarity': awaker.rarity,
         'skillFamily': awaker.skillMaterialFamily,
+        'advancedMaterial': awaker.advancedSkillMaterial,
       });
     }
 
     // Calculate requirements for each family
     List<MaterialRequirement> skillRequirements = [];
     List<MaterialRequirement> edifyRequirements = [];
-    int totalAdvanced = 0;
     int totalMoney = 0;
 
     // Calculate skill materials
@@ -97,7 +100,6 @@ class MaterialCalculator {
         tier3: result['tier3'] ?? 0,
       ));
       
-      totalAdvanced += result['advanced'] ?? 0;
       totalMoney += result['money'] ?? 0;
     }
 
@@ -126,8 +128,13 @@ class MaterialCalculator {
       final exaltResult = await _calculateFamilyRequirements(
         db, [range], 2, // type 2 for exalt
       );
-      totalAdvanced += exaltResult['advanced'] ?? 0;
       totalMoney += exaltResult['money'] ?? 0;
+
+      // Track which advanced material is needed
+      final advancedMaterialId = range['advancedMaterial'] as int;
+      advancedMaterialsCount[advancedMaterialId] = 
+          (advancedMaterialsCount[advancedMaterialId] ?? 0) + 
+          (exaltResult['advanced'] ?? 0);
 
       // Add skill materials to the corresponding family
       final skillFamily = range['skillFamily'] as int;
@@ -162,6 +169,17 @@ class MaterialCalculator {
       );
     }
 
+    // Convert advanced materials count to requirements list
+    List<AdvancedMaterialRequirement> advancedRequirements = [];
+    for (var entry in advancedMaterialsCount.entries) {
+      final materialName = await _getAdvancedMaterialName(db, entry.key);
+      advancedRequirements.add(AdvancedMaterialRequirement(
+        materialId: entry.key,
+        materialName: materialName,
+        quantity: entry.value,
+      ));
+    }
+
     // Update family names after all calculations
     for (var i = 0; i < skillRequirements.length; i++) {
       final req = skillRequirements[i];
@@ -178,7 +196,7 @@ class MaterialCalculator {
     return MaterialRequirements(
       skillFamilies: skillRequirements,
       edifyFamilies: edifyRequirements,
-      advancedMaterials: totalAdvanced,
+      advancedMaterials: advancedRequirements,
       totalMoney: totalMoney,
     );
   }
@@ -227,6 +245,16 @@ class MaterialCalculator {
   static Future<String> _getFamilyName(Database db, String table, int id) async {
     final result = await db.query(
       table,
+      columns: ['description'],
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    return result.first['description'] as String;
+  }
+
+  static Future<String> _getAdvancedMaterialName(Database db, int id) async {
+    final result = await db.query(
+      'AdvancedSkillMaterials',
       columns: ['description'],
       where: 'id = ?',
       whereArgs: [id],
