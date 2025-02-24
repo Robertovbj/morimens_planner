@@ -3,7 +3,12 @@ import '../models/planner.dart';
 import '../models/awaker.dart';
 
 class AddPlanDialog extends StatefulWidget {
-  const AddPlanDialog({super.key});
+  final Planner? planToEdit;
+  
+  const AddPlanDialog({
+    super.key,
+    this.planToEdit,
+  });
 
   @override
   State<AddPlanDialog> createState() => _AddPlanDialogState();
@@ -34,29 +39,57 @@ class _AddPlanDialogState extends State<AddPlanDialog> {
   void initState() {
     super.initState();
     _loadAwakers();
-    // Inicializar os controllers com valores válidos
-    edifyFromController.text = '10';  // Menor valor possível para Edify
-    edifyToController.text = '10';    // Menor valor possível para Edify
+    
+    if (widget.planToEdit != null) {
+      // Preencher os campos com os valores existentes
+      basicAttackFromController.text = widget.planToEdit!.basicAttackFrom.toString();
+      basicAttackToController.text = widget.planToEdit!.basicAttackTo.toString();
+      basicDefenseFromController.text = widget.planToEdit!.basicDefenseFrom.toString();
+      basicDefenseToController.text = widget.planToEdit!.basicDefenseTo.toString();
+      exaltFromController.text = widget.planToEdit!.exaltFrom.toString();
+      exaltToController.text = widget.planToEdit!.exaltTo.toString();
+      rouseFromController.text = widget.planToEdit!.rouseFrom.toString();
+      rouseToController.text = widget.planToEdit!.rouseTo.toString();
+      skillOneFromController.text = widget.planToEdit!.skillOneFrom.toString();
+      skillOneToController.text = widget.planToEdit!.skillOneTo.toString();
+      skillTwoFromController.text = widget.planToEdit!.skillTwoFrom.toString();
+      skillTwoToController.text = widget.planToEdit!.skillTwoTo.toString();
+      edifyFromController.text = widget.planToEdit!.edifyFrom.toString();
+      edifyToController.text = widget.planToEdit!.edifyTo.toString();
+    } else {
+      edifyFromController.text = '10';
+      edifyToController.text = '10';
+    }
   }
 
   Future<void> _loadAwakers() async {
     final loadedAwakers = await Awaker.getAll();
-    final existingPlans = await Planner.getAll();
     
-    // Create a set of awaker IDs that are already in the planner
-    final plannedAwakerIds = existingPlans.map((plan) => plan.awaker).toSet();
+    if (widget.planToEdit != null) {
+      // Se estiver editando, carrega apenas o awaker atual
+      final currentAwaker = await Awaker.get(widget.planToEdit!.awaker);
+      setState(() {
+        awakers = [currentAwaker!];
+        selectedAwaker = currentAwaker;
+      });
+    } else {
+      final existingPlans = await Planner.getAll();
     
-    // Filter out awakers that are already in the planner
-    final availableAwakers = loadedAwakers.where(
-      (awaker) => !plannedAwakerIds.contains(awaker.id)
-    ).toList();
-    
-    // Sort the filtered list by name
-    availableAwakers.sort((a, b) => a.name.compareTo(b.name));
-    
-    setState(() {
-      awakers = availableAwakers;
-    });
+      // Create a set of awaker IDs that are already in the planner
+      final plannedAwakerIds = existingPlans.map((plan) => plan.awaker).toSet();
+      
+      // Filter out awakers that are already in the planner
+      final availableAwakers = loadedAwakers.where(
+        (awaker) => !plannedAwakerIds.contains(awaker.id)
+      ).toList();
+      
+      // Sort the filtered list by name
+      availableAwakers.sort((a, b) => a.name.compareTo(b.name));
+      
+      setState(() {
+        awakers = availableAwakers;
+      });
+    }
   }
 
   @override
@@ -203,6 +236,7 @@ class _AddPlanDialogState extends State<AddPlanDialog> {
     
     try {
       final planner = Planner(
+        id: widget.planToEdit?.id,  // Include ID if editing
         awaker: selectedAwaker!.id!,
         basicAttackFrom: int.parse(basicAttackFromController.text),
         basicAttackTo: int.parse(basicAttackToController.text),
@@ -220,7 +254,12 @@ class _AddPlanDialogState extends State<AddPlanDialog> {
         edifyTo: int.parse(edifyToController.text),
       );
 
-      await Planner.insert(planner);
+      if (widget.planToEdit != null) {
+        await Planner.update(planner);
+      } else {
+        await Planner.insert(planner);
+      }
+      
       if (mounted) {
         Navigator.of(context).pop(true);
       }

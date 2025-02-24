@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/planner.dart';
 import '../models/awaker.dart';
 import 'add_plan_dialog.dart';
+import 'plan_details_page.dart';
 
 class PlannerPage extends StatefulWidget {
   const PlannerPage({super.key});
@@ -57,36 +58,49 @@ class _PlannerPageState extends State<PlannerPage> {
           final plan = plans[index];
           final awaker = awakersMap[plan.awaker];
           
-          return Card(
-            child: Column(
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: const BorderRadius.vertical(
-                        top: Radius.circular(4),
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PlanDetailsPage(
+                    plan: plan,
+                    awaker: awaker!,
+                  ),
+                ),
+              ).then((_) => _loadData()); // Recarrega os dados ao retornar
+            },
+            child: Card(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: const BorderRadius.vertical(
+                          top: Radius.circular(4),
+                        ),
                       ),
-                    ),
-                    child: const Center(
-                      child: Icon(
-                        Icons.person,
-                        size: 64,
+                      child: const Center(
+                        child: Icon(
+                          Icons.person,
+                          size: 64,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    awaker?.name ?? 'Unknown',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      awaker?.name ?? 'Unknown',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },
