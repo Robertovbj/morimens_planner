@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'db_helper.dart';
-import 'views/awakers_page.dart';
 import 'debug_config.dart';
 import 'views/debug/debug_views.dart';
 import 'views/planner_page.dart';
@@ -76,16 +75,6 @@ class _WelcomePageState extends State<WelcomePage> {
               title: const Text('Home'),
               onTap: () {
                 Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text('Awakers'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const AwakersPage()),
-                );
               },
             ),
             ListTile(
