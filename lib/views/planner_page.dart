@@ -23,10 +23,18 @@ class _PlannerPageState extends State<PlannerPage> {
   Future<void> _loadData() async {
     final allPlans = await Planner.getAll();
     final allAwakers = await Awaker.getAll();
+    final awakerMap = {for (var awaker in allAwakers) awaker.id!: awaker};
+    
+    // Sort plans based on awaker names
+    allPlans.sort((a, b) {
+      final awakerA = awakerMap[a.awaker]?.name ?? '';
+      final awakerB = awakerMap[b.awaker]?.name ?? '';
+      return awakerA.compareTo(awakerB);
+    });
     
     setState(() {
       plans = allPlans;
-      awakersMap = {for (var awaker in allAwakers) awaker.id!: awaker};
+      awakersMap = awakerMap;
     });
   }
 
