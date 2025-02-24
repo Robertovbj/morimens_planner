@@ -206,7 +206,13 @@ class DatabaseSeeder {
   }
 
   Future<void> _seedV2() async {
-    // Add seed data for version 2
+    final awakers = [
+      {'name': 'Daffodil', 'realm': 4, 'type': 1, 'rarity': 3, 'skillMaterialFamily': 4, 'edifyMaterialFamily': 4, 'advancedSkillMaterial': 5},
+    ];
+
+    for (var awaker in awakers) {
+      await db.insert('Awakers', awaker);
+    }
   }
 
   Future<void> _seedV3() async {
