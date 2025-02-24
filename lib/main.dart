@@ -3,6 +3,7 @@ import 'db_helper.dart';
 import 'views/awakers_page.dart';
 import 'debug_config.dart';
 import 'views/debug/debug_views.dart';
+import 'views/planner_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -84,6 +85,16 @@ class _WelcomePageState extends State<WelcomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const AwakersPage()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.edit_calendar),
+              title: const Text('Planner'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const PlannerPage()),
                 );
               },
             ),

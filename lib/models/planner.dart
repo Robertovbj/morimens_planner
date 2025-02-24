@@ -42,7 +42,10 @@ class Planner {
       throw ArgumentError('The "to" value must be greater than or equal to the "from" value.');
     }
 
-    if (exaltTo > 6 || rouseTo > 6 || skillOneTo > 6 || skillTwoTo > 6) {
+    if (rouseTo > 6 || skillOneTo > 6 || skillTwoTo > 6) {
+      throw ArgumentError('Skill, exalt, and rouse values cannot be greater than 6.');
+    }
+    if (exaltTo > 60) {
       throw ArgumentError('Skill, exalt, and rouse values cannot be greater than 6.');
     }
   }

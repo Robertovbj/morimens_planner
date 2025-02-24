@@ -23,11 +23,11 @@ class Awaker {
   factory Awaker.fromMap(Map<String, Object?> map) => Awaker(
         id: map['id'] as int?,
         name: map['name'] as String,
-        realm: map['realm'] as int,
-        type: map['type'] as int,
-        skillMaterial: map['skillMaterial'] as int,
-        edifyMaterial: map['edifyMaterial'] as int,
-        advancedSkillMaterial: map['advancedSkillMaterial'] as int,
+        realm: (map['realm'] as num?)?.toInt() ?? 0,
+        type: (map['type'] as num?)?.toInt() ?? 0,
+        skillMaterial: (map['skillMaterial'] as num?)?.toInt() ?? 0,
+        edifyMaterial: (map['edifyMaterial'] as num?)?.toInt() ?? 0,
+        advancedSkillMaterial: (map['advancedSkillMaterial'] as num?)?.toInt() ?? 0,
       );
 
   Map<String, Object?> toMap() => {
