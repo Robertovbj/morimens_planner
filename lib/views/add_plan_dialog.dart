@@ -27,14 +27,16 @@ class _AddPlanDialogState extends State<AddPlanDialog> {
   final skillOneToController = TextEditingController(text: '1');
   final skillTwoFromController = TextEditingController(text: '1');
   final skillTwoToController = TextEditingController(text: '1');
+  final edifyFromController = TextEditingController(text: '1');
+  final edifyToController = TextEditingController(text: '1');
 
   @override
   void initState() {
     super.initState();
     _loadAwakers();
     // Inicializar os controllers com valores válidos
-    exaltFromController.text = '10';  // Menor valor possível para Exalt
-    exaltToController.text = '10';    // Menor valor possível para Exalt
+    edifyFromController.text = '10';  // Menor valor possível para Edify
+    edifyToController.text = '10';    // Menor valor possível para Edify
   }
 
   Future<void> _loadAwakers() async {
@@ -86,12 +88,13 @@ class _AddPlanDialogState extends State<AddPlanDialog> {
                   return null;
                 },
               ),
+              _buildLevelInputRow('Edify', edifyFromController, edifyToController, maxValue: 6),
               _buildLevelInputRow('Basic Attack', basicAttackFromController, basicAttackToController),
               _buildLevelInputRow('Basic Defense', basicDefenseFromController, basicDefenseToController),
-              _buildLevelInputRow('Exalt', exaltFromController, exaltToController, maxValue: 6),
               _buildLevelInputRow('Rouse', rouseFromController, rouseToController, maxValue: 6),
               _buildLevelInputRow('Skill One', skillOneFromController, skillOneToController, maxValue: 6),
               _buildLevelInputRow('Skill Two', skillTwoFromController, skillTwoToController, maxValue: 6),
+              _buildLevelInputRow('Exalt (Ult)', exaltFromController, exaltToController, maxValue: 6),
             ],
           ),
         ),
@@ -110,8 +113,8 @@ class _AddPlanDialogState extends State<AddPlanDialog> {
   }
 
   Widget _buildLevelInputRow(String label, TextEditingController fromController, TextEditingController toController, {int maxValue = 6}) {
-    final isExalt = label == 'Exalt';
-    final List<int> values = isExalt 
+    final isEdify = label == 'Edify';
+    final List<int> values = isEdify
         ? [10, 20, 30, 40, 50, 60]
         : List.generate(maxValue, (i) => i + 1);
 
@@ -133,7 +136,7 @@ class _AddPlanDialogState extends State<AddPlanDialog> {
                   child: FittedBox( // Ajusta o tamanho do texto automaticamente
                     fit: BoxFit.scaleDown,
                     child: Text(
-                      isExalt ? '$value/$value' : value.toString(),
+                      isEdify ? '$value/$value' : value.toString(),
                       style: const TextStyle(fontSize: 14), // Tamanho base menor
                     ),
                   ),
@@ -165,7 +168,7 @@ class _AddPlanDialogState extends State<AddPlanDialog> {
                   child: FittedBox( // Ajusta o tamanho do texto automaticamente
                     fit: BoxFit.scaleDown,
                     child: Text(
-                      isExalt ? '$value/$value' : value.toString(),
+                      isEdify ? '$value/$value' : value.toString(),
                       style: const TextStyle(fontSize: 14), // Tamanho base menor
                     ),
                   ),
@@ -191,15 +194,6 @@ class _AddPlanDialogState extends State<AddPlanDialog> {
     );
   }
 
-  String? _validateLevel(String? value, int maxValue) {
-    if (value == null || value.isEmpty) return 'Required';
-    final number = int.tryParse(value);
-    if (number == null) return 'Invalid number';
-    if (number < 1) return 'Min is 1';
-    if (number > maxValue) return 'Max is $maxValue';
-    return null;
-  }
-
   void _savePlan() async {
     if (!_formKey.currentState!.validate()) return;
     
@@ -218,6 +212,8 @@ class _AddPlanDialogState extends State<AddPlanDialog> {
         skillOneTo: int.parse(skillOneToController.text),
         skillTwoFrom: int.parse(skillTwoFromController.text),
         skillTwoTo: int.parse(skillTwoToController.text),
+        edifyFrom: int.parse(edifyFromController.text),
+        edifyTo: int.parse(edifyToController.text),
       );
 
       await Planner.insert(planner);

@@ -16,6 +16,8 @@ class Planner {
   final int skillOneTo;
   final int skillTwoFrom;
   final int skillTwoTo;
+  final int edifyFrom;
+  final int edifyTo;
 
   Planner({
     this.id,
@@ -32,21 +34,17 @@ class Planner {
     required this.skillOneTo,
     required this.skillTwoFrom,
     required this.skillTwoTo,
+    required this.edifyFrom,
+    required this.edifyTo,
   }) {
     if (basicAttackTo < basicAttackFrom ||
         basicDefenseTo < basicDefenseFrom ||
         exaltTo < exaltFrom ||
         rouseTo < rouseFrom ||
         skillOneTo < skillOneFrom ||
-        skillTwoTo < skillTwoFrom) {
+        skillTwoTo < skillTwoFrom ||
+        edifyTo < edifyFrom) {
       throw ArgumentError('The "to" value must be greater than or equal to the "from" value.');
-    }
-
-    if (rouseTo > 6 || skillOneTo > 6 || skillTwoTo > 6) {
-      throw ArgumentError('Skill, exalt, and rouse values cannot be greater than 6.');
-    }
-    if (exaltTo > 60) {
-      throw ArgumentError('Skill, exalt, and rouse values cannot be greater than 6.');
     }
   }
 
@@ -65,6 +63,8 @@ class Planner {
         skillOneTo: map['skillOne_to'] as int,
         skillTwoFrom: map['skillTwo_from'] as int,
         skillTwoTo: map['skillTwo_to'] as int,
+        edifyFrom: map['edify_from'] as int,
+        edifyTo: map['edify_to'] as int,
       );
 
   Map<String, Object?> toMap() => {
@@ -82,11 +82,13 @@ class Planner {
         'skillOne_to': skillOneTo,
         'skillTwo_from': skillTwoFrom,
         'skillTwo_to': skillTwoTo,
+        'edify_from': edifyFrom,
+        'edify_to': edifyTo,
       };
 
   @override
   String toString() {
-    return 'Planner{id: $id, awaker: $awaker, basicAttackFrom: $basicAttackFrom, basicAttackTo: $basicAttackTo, basicDefenseFrom: $basicDefenseFrom, basicDefenseTo: $basicDefenseTo, exaltFrom: $exaltFrom, exaltTo: $exaltTo, rouseFrom: $rouseFrom, rouseTo: $rouseTo, skillOneFrom: $skillOneFrom, skillOneTo: $skillOneTo, skillTwoFrom: $skillTwoFrom, skillTwoTo: $skillTwoTo}';
+    return 'Planner{id: $id, awaker: $awaker, basicAttackFrom: $basicAttackFrom, basicAttackTo: $basicAttackTo, basicDefenseFrom: $basicDefenseFrom, basicDefenseTo: $basicDefenseTo, exaltFrom: $exaltFrom, exaltTo: $exaltTo, rouseFrom: $rouseFrom, rouseTo: $rouseTo, skillOneFrom: $skillOneFrom, skillOneTo: $skillOneTo, skillTwoFrom: $skillTwoFrom, skillTwoTo: $skillTwoTo, edifyFrom: $edifyFrom, edifyTo: $edifyTo}';
   }
 
   // CRUD functions

@@ -159,6 +159,8 @@ class DBHelper {
         skillOne_to INTEGER NOT NULL,
         skillTwo_from INTEGER NOT NULL,
         skillTwo_to INTEGER NOT NULL,
+        edify_from INTEGER NOT NULL,
+        edify_to INTEGER NOT NULL,
         FOREIGN KEY (awaker) REFERENCES Awakers(id)
       )
     ''');
