@@ -3,6 +3,7 @@ import 'db_helper.dart';
 import 'debug_config.dart';
 import 'views/debug/debug_views.dart';
 import 'views/planner_page.dart';
+import 'views/material_requirements_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -84,6 +85,16 @@ class _WelcomePageState extends State<WelcomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const PlannerPage()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.shopping_cart),
+              title: const Text('Materials'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MaterialRequirementsPage()),
                 );
               },
             ),
