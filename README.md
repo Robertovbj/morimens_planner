@@ -12,6 +12,11 @@ A mobile evolution planner for Morimens. Plan your farming routes, calculate req
 - Inventory management system
 - Automatic item conversion in inventory
 - Menophin requirement calculator for farming completion
+- Better UI for the planner details
+- Importing and exporting planner data to json
+- Adding a "What's New" section in the planner
+- Remove the blank welcome screen
+- Add more descriptive tooltips in the material list
 - Probably some other things I forgot right now...
 
 ## Development Setup
