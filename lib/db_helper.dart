@@ -30,6 +30,25 @@ class DBHelper {
   }
 
   Future _onCreate(Database db, int version) async {
+    // Create all tables first
+    await _createTables(db);
+    
+    // Then seed with ALL data, including V2 and V3 data
+    await DatabaseSeeder(db).seed();
+    await DatabaseSeeder(db).seedUpgrade(1, version);
+  }
+
+  Future _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      await MigrationV2().upgrade(db);
+    }
+    if (oldVersion < 3) {
+      await MigrationV3().upgrade(db);
+    }
+    await DatabaseSeeder(db).seedUpgrade(oldVersion, newVersion);
+  }
+
+  Future _createTables(Database db) async {
     await db.execute('''
       CREATE TABLE Realm (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -164,17 +183,5 @@ class DBHelper {
         FOREIGN KEY (awaker) REFERENCES Awakers(id)
       )
     ''');
-
-    await DatabaseSeeder(db).seed();
-  }
-
-  Future _onUpgrade(Database db, int oldVersion, int newVersion) async {
-    if (oldVersion < 2) {
-      await MigrationV2().upgrade(db);
-    }
-    if (oldVersion < 3) {
-      await MigrationV3().upgrade(db);
-    }
-    await DatabaseSeeder(db).seedUpgrade(oldVersion, newVersion);
   }
 }
