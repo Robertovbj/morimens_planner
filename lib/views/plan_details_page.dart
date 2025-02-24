@@ -26,6 +26,46 @@ class _PlanDetailsPageState extends State<PlanDetailsPage> {
     currentPlan = widget.plan;
   }
 
+  Future<void> _confirmDelete() async {
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirm Delete'),
+          content: Text('Are you sure you want to delete the plan for ${widget.awaker.name}?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: const Text(
+                'Delete',
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (result == true && mounted) {
+      try {
+        await Planner.delete(currentPlan.id!);
+        if (mounted) {
+          Navigator.of(context).pop(true); // Return true to trigger refresh
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Error deleting plan: $e')),
+          );
+        }
+      }
+    }
+  }
+
   String _formatValue(String label, int from, int to) {
     if (label == 'Edify') {
       return '$from/$from → $to/$to';
@@ -59,6 +99,12 @@ class _PlanDetailsPageState extends State<PlanDetailsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.awaker.name),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: _confirmDelete,
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
