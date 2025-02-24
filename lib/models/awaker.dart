@@ -6,8 +6,9 @@ class Awaker {
   final String name;
   final int realm;
   final int type;
-  final int skillMaterial;
-  final int edifyMaterial;
+  final int rarity;
+  final int skillMaterialFamily;
+  final int edifyMaterialFamily;
   final int advancedSkillMaterial;
 
   Awaker({
@@ -15,8 +16,9 @@ class Awaker {
     required this.name,
     required this.realm,
     required this.type,
-    required this.skillMaterial,
-    required this.edifyMaterial,
+    required this.rarity,
+    required this.skillMaterialFamily,
+    required this.edifyMaterialFamily,
     required this.advancedSkillMaterial,
   });
 
@@ -25,8 +27,9 @@ class Awaker {
         name: map['name'] as String,
         realm: (map['realm'] as num?)?.toInt() ?? 0,
         type: (map['type'] as num?)?.toInt() ?? 0,
-        skillMaterial: (map['skillMaterial'] as num?)?.toInt() ?? 0,
-        edifyMaterial: (map['edifyMaterial'] as num?)?.toInt() ?? 0,
+        rarity: (map['rarity'] as num?)?.toInt() ?? 0,
+        skillMaterialFamily: (map['skillMaterialFamily'] as num?)?.toInt() ?? 0,
+        edifyMaterialFamily: (map['edifyMaterialFamily'] as num?)?.toInt() ?? 0,
         advancedSkillMaterial: (map['advancedSkillMaterial'] as num?)?.toInt() ?? 0,
       );
 
@@ -35,14 +38,15 @@ class Awaker {
         'name': name,
         'realm': realm,
         'type': type,
-        'skillMaterial': skillMaterial,
-        'edifyMaterial': edifyMaterial,
+        'rarity': rarity,
+        'skillMaterialFamily': skillMaterialFamily,
+        'edifyMaterialFamily': edifyMaterialFamily,
         'advancedSkillMaterial': advancedSkillMaterial,
       };
 
   @override
   String toString() {
-    return 'Awaker{id: $id, name: $name, realm: $realm, type: $type, skillMaterial: $skillMaterial, edifyMaterial: $edifyMaterial, advancedSkillMaterial: $advancedSkillMaterial}';
+    return 'Awaker{id: $id, name: $name, realm: $realm, type: $type, rarity: $rarity, skillMaterialFamily: $skillMaterialFamily, edifyMaterialFamily: $edifyMaterialFamily, advancedSkillMaterial: $advancedSkillMaterial}';
   }
 
   // CRUD functions remain the same
