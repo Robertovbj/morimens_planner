@@ -10,8 +10,10 @@ class DatabaseSeeder {
     await _seedAwakerTypes();
     await _seedSkillMaterialFamilies();
     await _seedEdifyMaterialFamilies();
+    await _seedUniversalMaterialFamilies();
     await _seedSkillMaterials();
     await _seedEdifyMaterials();
+    await _seedUniversalMaterials();
     await _seedAdvancedSkillMaterials();
     await _seedRarities();
     await _seedUpgradeTypes();
@@ -79,6 +81,16 @@ class DatabaseSeeder {
     }
   }
 
+  Future<void> _seedUniversalMaterialFamilies() async {
+    final families = [
+      {'id': 1, 'description': 'Philosopher\'s Stone'},
+    ];
+
+    for (var family in families) {
+      await db.insert('UniversalMaterialFamily', family);
+    }
+  }
+
   Future<void> _seedSkillMaterials() async {
     final materials = [
       {'id': 1, 'description': 'Chaos Crystal', 'realm': 1, 'tier': 3, 'icon': 'chaos_crystal.png', 'family': 1},
@@ -118,6 +130,17 @@ class DatabaseSeeder {
 
     for (var material in materials) {
       await db.insert('EdifyMaterials', material);
+    }
+  }
+
+  Future<void> _seedUniversalMaterials() async {
+    final materials = [
+      {'id': 1, 'description': 'Shard of Sage Stone', 'icon': 'shard_of_sage_stone.png', 'family': 1, 'shard': 1},
+      {'id': 2, 'description': 'Philosopher\'s Stone', 'icon': 'philosophers_stone.png', 'family': 1, 'shard': 0},
+    ];
+
+    for (var material in materials) {
+      await db.insert('UniversalMaterials', material);
     }
   }
 
@@ -186,22 +209,23 @@ class DatabaseSeeder {
 
   Future<void> _seedAwakers() async {
     final awakers = [
-      {'name': 'Sorel', 'realm': 3, 'type': 1, 'rarity': 3, 'skillMaterialFamily': 3, 'edifyMaterialFamily': 3, 'advancedSkillMaterial': 5},
-      {'name': 'Leigh', 'realm': 3, 'type': 3, 'rarity': 3, 'skillMaterialFamily': 3, 'edifyMaterialFamily': 3, 'advancedSkillMaterial': 1},
-      {'name': 'Faint', 'realm': 3, 'type': 2, 'rarity': 3, 'skillMaterialFamily': 3, 'edifyMaterialFamily': 3, 'advancedSkillMaterial': 2},
-      {'name': 'Helot', 'realm': 3, 'type': 1, 'rarity': 3, 'skillMaterialFamily': 3, 'edifyMaterialFamily': 3, 'advancedSkillMaterial': 1},
-      {'name': 'Agrippa', 'realm': 3, 'type': 2, 'rarity': 3, 'skillMaterialFamily': 3, 'edifyMaterialFamily': 3, 'advancedSkillMaterial': 3},
-      {'name': 'Aigis', 'realm': 3, 'type': 3, 'rarity': 3, 'skillMaterialFamily': 3, 'edifyMaterialFamily': 3, 'advancedSkillMaterial': 2},
-      {'name': 'Lily', 'realm': 1, 'type': 2, 'rarity': 3, 'skillMaterialFamily': 1, 'edifyMaterialFamily': 1, 'advancedSkillMaterial': 5},
-      {'name': 'Karen', 'realm': 1, 'type': 3, 'rarity': 3, 'skillMaterialFamily': 1, 'edifyMaterialFamily': 1, 'advancedSkillMaterial': 3},
-      {'name': 'Celeste', 'realm': 2, 'type': 3, 'rarity': 3, 'skillMaterialFamily': 2, 'edifyMaterialFamily': 2, 'advancedSkillMaterial': 1},
-      {'name': 'Aurita', 'realm': 2, 'type': 1, 'rarity': 3, 'skillMaterialFamily': 2, 'edifyMaterialFamily': 2, 'advancedSkillMaterial': 3},
-      {'name': 'Sanga', 'realm': 2, 'type': 2, 'rarity': 3, 'skillMaterialFamily': 2, 'edifyMaterialFamily': 2, 'advancedSkillMaterial': 4},
-      {'name': 'Faros', 'realm': 2, 'type': 3, 'rarity': 3, 'skillMaterialFamily': 2, 'edifyMaterialFamily': 2, 'advancedSkillMaterial': 1},
-      {'name': 'Tulu', 'realm': 2, 'type': 1, 'rarity': 3, 'skillMaterialFamily': 2, 'edifyMaterialFamily': 2, 'advancedSkillMaterial': 5},
-      {'name': 'Liz', 'realm': 4, 'type': 1, 'rarity': 3, 'skillMaterialFamily': 4, 'edifyMaterialFamily': 4, 'advancedSkillMaterial': 3},
-      {'name': 'Casiah', 'realm': 4, 'type': 3, 'rarity': 3, 'skillMaterialFamily': 4, 'edifyMaterialFamily': 4, 'advancedSkillMaterial': 4},
-      {'name': 'Erica', 'realm': 4, 'type': 2, 'rarity': 3, 'skillMaterialFamily': 4, 'edifyMaterialFamily': 4, 'advancedSkillMaterial': 3},
+      {'name': 'Sorel', 'realm': 3, 'type': 1, 'rarity': 3, 'skillMaterialFamily': 3, 'edifyMaterialFamily': 3, 'advancedSkillMaterial': 5, 'universalMaterialFamily': 1},
+      {'name': 'Leigh', 'realm': 3, 'type': 3, 'rarity': 3, 'skillMaterialFamily': 3, 'edifyMaterialFamily': 3, 'advancedSkillMaterial': 1, 'universalMaterialFamily': 1},
+      {'name': 'Faint', 'realm': 3, 'type': 2, 'rarity': 3, 'skillMaterialFamily': 3, 'edifyMaterialFamily': 3, 'advancedSkillMaterial': 2, 'universalMaterialFamily': 1},
+      {'name': 'Helot', 'realm': 3, 'type': 1, 'rarity': 3, 'skillMaterialFamily': 3, 'edifyMaterialFamily': 3, 'advancedSkillMaterial': 1, 'universalMaterialFamily': 1},
+      {'name': 'Agrippa', 'realm': 3, 'type': 2, 'rarity': 3, 'skillMaterialFamily': 3, 'edifyMaterialFamily': 3, 'advancedSkillMaterial': 3, 'universalMaterialFamily': 1},
+      {'name': 'Aigis', 'realm': 3, 'type': 3, 'rarity': 3, 'skillMaterialFamily': 3, 'edifyMaterialFamily': 3, 'advancedSkillMaterial': 2, 'universalMaterialFamily': 1},
+      {'name': 'Lily', 'realm': 1, 'type': 2, 'rarity': 3, 'skillMaterialFamily': 1, 'edifyMaterialFamily': 1, 'advancedSkillMaterial': 5, 'universalMaterialFamily': 1},
+      {'name': 'Karen', 'realm': 1, 'type': 3, 'rarity': 3, 'skillMaterialFamily': 1, 'edifyMaterialFamily': 1, 'advancedSkillMaterial': 3, 'universalMaterialFamily': 1},
+      {'name': 'Celeste', 'realm': 2, 'type': 3, 'rarity': 3, 'skillMaterialFamily': 2, 'edifyMaterialFamily': 2, 'advancedSkillMaterial': 1, 'universalMaterialFamily': 1},
+      {'name': 'Aurita', 'realm': 2, 'type': 1, 'rarity': 3, 'skillMaterialFamily': 2, 'edifyMaterialFamily': 2, 'advancedSkillMaterial': 3, 'universalMaterialFamily': 1},
+      {'name': 'Sanga', 'realm': 2, 'type': 2, 'rarity': 3, 'skillMaterialFamily': 2, 'edifyMaterialFamily': 2, 'advancedSkillMaterial': 4, 'universalMaterialFamily': 1},
+      {'name': 'Faros', 'realm': 2, 'type': 3, 'rarity': 3, 'skillMaterialFamily': 2, 'edifyMaterialFamily': 2, 'advancedSkillMaterial': 1, 'universalMaterialFamily': 1},
+      {'name': 'Tulu', 'realm': 2, 'type': 1, 'rarity': 3, 'skillMaterialFamily': 2, 'edifyMaterialFamily': 2, 'advancedSkillMaterial': 5, 'universalMaterialFamily': 1},
+      {'name': 'Liz', 'realm': 4, 'type': 1, 'rarity': 3, 'skillMaterialFamily': 4, 'edifyMaterialFamily': 4, 'advancedSkillMaterial': 3, 'universalMaterialFamily': 1},
+      {'name': 'Casiah', 'realm': 4, 'type': 3, 'rarity': 3, 'skillMaterialFamily': 4, 'edifyMaterialFamily': 4, 'advancedSkillMaterial': 4, 'universalMaterialFamily': 1},
+      {'name': 'Erica', 'realm': 4, 'type': 2, 'rarity': 3, 'skillMaterialFamily': 4, 'edifyMaterialFamily': 4, 'advancedSkillMaterial': 3, 'universalMaterialFamily': 1},
+      {'name': 'Daffodil', 'realm': 4, 'type': 1, 'rarity': 3, 'skillMaterialFamily': 4, 'edifyMaterialFamily': 4, 'advancedSkillMaterial': 5, 'universalMaterialFamily': 1},
     ];
 
     for (var awaker in awakers) {
@@ -210,13 +234,6 @@ class DatabaseSeeder {
   }
 
   Future<void> _seedV2() async {
-    final awakers = [
-      {'name': 'Daffodil', 'realm': 4, 'type': 1, 'rarity': 3, 'skillMaterialFamily': 4, 'edifyMaterialFamily': 4, 'advancedSkillMaterial': 5},
-    ];
-
-    for (var awaker in awakers) {
-      await db.insert('Awakers', awaker);
-    }
   }
 
   Future<void> _seedV3() async {

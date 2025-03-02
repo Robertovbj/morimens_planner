@@ -167,6 +167,39 @@ class MaterialRequirementsPage extends StatelessWidget {
     );
   }
 
+  Widget _buildUniversalMaterialsCard(int quantity, String materialName) {
+    if (quantity <= 0) {
+      return const SizedBox.shrink();
+    }
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Universal Materials',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            SizedBox(
+              height: 140,
+              child: _buildMaterialCard(
+                materialName, // Usa o nome específico do material
+                quantity,
+                Colors.orange,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -195,6 +228,13 @@ class MaterialRequirementsPage extends StatelessWidget {
                 _buildFamilySection('Edify Materials', requirements.edifyFamilies),
                 if (requirements.advancedMaterials.any((m) => m.quantity > 0)) ...[
                   _buildAdvancedMaterialsCard(requirements.advancedMaterials),
+                  const SizedBox(height: 16),
+                ],
+                if (requirements.universalMaterials > 0) ...[
+                  _buildUniversalMaterialsCard(
+                    requirements.universalMaterials, 
+                    requirements.universalMaterialName // Passa o nome específico
+                  ),
                   const SizedBox(height: 16),
                 ],
                 if (requirements.totalMoney > 0)

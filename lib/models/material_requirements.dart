@@ -30,12 +30,16 @@ class MaterialRequirements {
   final List<MaterialRequirement> skillFamilies;
   final List<MaterialRequirement> edifyFamilies;
   final List<AdvancedMaterialRequirement> advancedMaterials;
+  final int universalMaterials;
+  final String universalMaterialName; // Novo campo
   final int totalMoney;
 
   MaterialRequirements({
     required this.skillFamilies,
     required this.edifyFamilies,
     required this.advancedMaterials,
+    required this.universalMaterials,
+    required this.universalMaterialName, // Novo campo
     required this.totalMoney,
   });
 }

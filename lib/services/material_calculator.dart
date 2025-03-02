@@ -3,6 +3,7 @@ import '../db_helper.dart';
 import '../models/material_requirements.dart';
 import '../models/planner.dart';
 import '../models/awaker.dart';
+import '../models/universal_material.dart'; // Importar o modelo do material universal
 
 class MaterialCalculator {
   static Future<MaterialRequirements> calculate() async {
@@ -26,9 +27,18 @@ class MaterialCalculator {
     // Track advanced materials by ID
     Map<int, int> advancedMaterialsCount = {};
 
+    // Grupo para rastrear famílias de materiais universais
+    Set<int> universalFamilies = {};
+    int totalUniversalMaterials = 0;
+
     for (var plan in plans) {
       final awaker = awakersMap[plan.awaker];
       if (awaker == null) continue;
+
+      // Rastrear as famílias de materiais universais usadas
+      if (awaker != null) {
+        universalFamilies.add(awaker.universalMaterialFamily);
+      }
 
       // Group skill upgrades by family
       final skillFamily = awaker.skillMaterialFamily;
@@ -129,6 +139,7 @@ class MaterialCalculator {
         db, [range], 2, // type 2 for exalt
       );
       totalMoney += exaltResult['money'] ?? 0;
+      totalUniversalMaterials += exaltResult['universal'] ?? 0;
 
       // Track which advanced material is needed
       final advancedMaterialId = range['advancedMaterial'] as int;
@@ -193,10 +204,23 @@ class MaterialCalculator {
       );
     }
 
+    // Obter o nome do material universal completo (não o fragmento)
+    String universalMaterialName = "Universal Material"; // Nome padrão
+    if (universalFamilies.isNotEmpty) {
+      // Pegamos o primeiro, pois normalmente todos os awakeners usarão o mesmo tipo de material universal
+      final familyId = universalFamilies.first;
+      final universalMaterial = await UniversalMaterial.getCompleteMaterialFromFamily(familyId);
+      if (universalMaterial != null) {
+        universalMaterialName = universalMaterial.description;
+      }
+    }
+
     return MaterialRequirements(
       skillFamilies: skillRequirements,
       edifyFamilies: edifyRequirements,
       advancedMaterials: advancedRequirements,
+      universalMaterials: totalUniversalMaterials, // Novo campo
+      universalMaterialName: universalMaterialName, // Novo campo
       totalMoney: totalMoney,
     );
   }
@@ -207,7 +231,7 @@ class MaterialCalculator {
     int type,
   ) async {
     int totalTier1 = 0, totalTier2 = 0, totalTier3 = 0, 
-        totalAdvanced = 0, totalMoney = 0;
+        totalAdvanced = 0, totalUniversal = 0, totalMoney = 0;
 
     for (var range in ranges) {
       final results = await db.rawQuery('''
@@ -216,6 +240,7 @@ class MaterialCalculator {
           SUM(tier2) as total_tier2,
           SUM(tier3) as total_tier3,
           SUM(advanced) as total_advanced,
+          SUM(universal) as total_universal,
           SUM(money) as total_money
         FROM UpgradeCalculations
         WHERE rarity = ?
@@ -229,6 +254,7 @@ class MaterialCalculator {
         totalTier2 += results.first['total_tier2'] as int? ?? 0;
         totalTier3 += results.first['total_tier3'] as int? ?? 0;
         totalAdvanced += results.first['total_advanced'] as int? ?? 0;
+        totalUniversal += results.first['total_universal'] as int? ?? 0;
         totalMoney += results.first['total_money'] as int? ?? 0;
       }
     }
@@ -238,6 +264,7 @@ class MaterialCalculator {
       'tier2': totalTier2,
       'tier3': totalTier3,
       'advanced': totalAdvanced,
+      'universal': totalUniversal,
       'money': totalMoney,
     };
   }

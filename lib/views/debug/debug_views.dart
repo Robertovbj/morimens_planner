@@ -17,11 +17,15 @@ class DebugViews {
           context, 'Edify Material Families', 'SELECT * FROM EdifyMaterialFamily'),
       _createDebugTile(context, 'Skill Material Families',
           'SELECT * FROM SkillMaterialFamily'),
+      _createDebugTile(context, 'Universal Material Families',
+          'SELECT * FROM UniversalMaterialFamily'),
       _createDebugTile(context, 'Skill Materials', 'SELECT * FROM SkillMaterials'),
       _createDebugTile(context, 'Advanced Skill Materials',
           'SELECT * FROM AdvancedSkillMaterials'),
       _createDebugTile(
           context, 'Edify Materials', 'SELECT * FROM EdifyMaterials'),
+      _createDebugTile(
+          context, 'Universal Materials', 'SELECT * FROM UniversalMaterials'),
       _createDebugTile(
           context, 'Upgrade Types', 'SELECT * FROM UpgradeType'),
       _createDebugTile(

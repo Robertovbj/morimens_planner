@@ -32,7 +32,7 @@ class DBHelper {
   Future _onCreate(Database db, int version) async {
     // Create all tables first
     await _createTables(db);
-    
+
     // Then seed with ALL data, including V2 and V3 data
     await DatabaseSeeder(db).seed();
     await DatabaseSeeder(db).seedUpgrade(1, version);
@@ -118,6 +118,24 @@ class DBHelper {
         FOREIGN KEY (family) REFERENCES EdifyMaterialFamily(id)
       )
     ''');
+    
+    await db.execute('''
+      CREATE TABLE UniversalMaterialFamily (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        description TEXT NOT NULL
+      )
+    ''');
+
+    await db.execute('''
+      CREATE TABLE UniversalMaterials (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        description TEXT NOT NULL,
+        icon TEXT NOT NULL,
+        family INTEGER NOT NULL,
+        shard INTEGER NOT NULL,
+        FOREIGN KEY (family) REFERENCES UniversalMaterialFamily(id)
+      )
+    ''');
 
     await db.execute('''
       CREATE TABLE UpgradeType (
@@ -146,20 +164,22 @@ class DBHelper {
 
     await db.execute('''
       CREATE TABLE Awakers (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
-      realm INTEGER NOT NULL,
-      type INTEGER NOT NULL,
-      rarity INTEGER NOT NULL,
-      skillMaterialFamily INTEGER NOT NULL,
-      edifyMaterialFamily INTEGER NOT NULL,
-      advancedSkillMaterial INTEGER NOT NULL,
-      FOREIGN KEY (realm) REFERENCES Realm(id),
-      FOREIGN KEY (type) REFERENCES AwakerType(id),
-      FOREIGN KEY (rarity) REFERENCES Rarity(id),
-      FOREIGN KEY (skillMaterialFamily) REFERENCES SkillMaterialFamily(id),
-      FOREIGN KEY (edifyMaterialFamily) REFERENCES EdifyMaterialFamily(id),
-      FOREIGN KEY (advancedSkillMaterial) REFERENCES AdvancedSkillMaterials(id)
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        realm INTEGER NOT NULL,
+        type INTEGER NOT NULL,
+        rarity INTEGER NOT NULL,
+        skillMaterialFamily INTEGER NOT NULL,
+        edifyMaterialFamily INTEGER NOT NULL,
+        advancedSkillMaterial INTEGER NOT NULL,
+        universalMaterialFamily INTEGER NOT NULL,
+        FOREIGN KEY (realm) REFERENCES Realm(id),
+        FOREIGN KEY (type) REFERENCES AwakerType(id),
+        FOREIGN KEY (rarity) REFERENCES Rarity(id),
+        FOREIGN KEY (skillMaterialFamily) REFERENCES SkillMaterialFamily(id),
+        FOREIGN KEY (edifyMaterialFamily) REFERENCES EdifyMaterialFamily(id),
+        FOREIGN KEY (advancedSkillMaterial) REFERENCES AdvancedSkillMaterials(id),
+        FOREIGN KEY (universalMaterialFamily) REFERENCES UniversalMaterialFamily(id)
       )
     ''');
 
