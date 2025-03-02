@@ -44,7 +44,7 @@ class _PlannerPageState extends State<PlannerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Planner'),
+        title: const Text('Awakers'),
       ),
       body: GridView.builder(
         padding: const EdgeInsets.all(8),

@@ -79,8 +79,8 @@ class _WelcomePageState extends State<WelcomePage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.edit_calendar),
-              title: const Text('Planner'),
+              leading: const Icon(Icons.person),
+              title: const Text('Awakers'),
               onTap: () {
                 Navigator.push(
                   context,
