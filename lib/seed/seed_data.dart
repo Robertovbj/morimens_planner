@@ -164,15 +164,19 @@ class DatabaseSeeder {
 
   Future<void> _seedUpgradeCalculations() async {
     final calculations = [
-      {'fromLevel': 1, 'toLevel': 2, 'type': 1, 'tier1': 9, 'tier2': 0, 'tier3': 0, 'advanced': 0, 'money': 3150, 'rarity': 3},
-      {'fromLevel': 2, 'toLevel': 3, 'type': 1, 'tier1': 0, 'tier2': 9, 'tier3': 0, 'advanced': 0, 'money': 12150, 'rarity': 3},
-      {'fromLevel': 3, 'toLevel': 4, 'type': 1, 'tier1': 0, 'tier2': 18, 'tier3': 0, 'advanced': 0, 'money': 0, 'rarity': 3},
-      {'fromLevel': 10, 'toLevel': 20, 'type': 3, 'tier1': 9, 'tier2': 0, 'tier3': 0, 'advanced': 0, 'money': 0, 'rarity': 3},
-      {'fromLevel': 20, 'toLevel': 30, 'type': 3, 'tier1': 0, 'tier2': 9, 'tier3': 0, 'advanced': 0, 'money': 8100, 'rarity': 3},
-      {'fromLevel': 30, 'toLevel': 40, 'type': 3, 'tier1': 0, 'tier2': 18, 'tier3': 0, 'advanced': 0, 'money': 21600, 'rarity': 3},
-      {'fromLevel': 40, 'toLevel': 50, 'type': 3, 'tier1': 0, 'tier2': 0, 'tier3': 15, 'advanced': 0, 'money': 67500, 'rarity': 3},
-      {'fromLevel': 1, 'toLevel': 2, 'type': 2, 'tier1': 18, 'tier2': 0, 'tier3': 0, 'advanced': 1, 'money': 6300, 'rarity': 3},
-      {'fromLevel': 2, 'toLevel': 3, 'type': 2, 'tier1': 0, 'tier2': 18, 'tier3': 0, 'advanced': 2, 'money': 24300, 'rarity': 3},
+      {'fromLevel': 1, 'toLevel': 2, 'type': 1, 'tier1': 9, 'tier2': 0, 'tier3': 0, 'advanced': 0, 'universal': 0, 'money': 3150, 'rarity': 3},
+      {'fromLevel': 2, 'toLevel': 3, 'type': 1, 'tier1': 0, 'tier2': 9, 'tier3': 0, 'advanced': 0, 'universal': 0, 'money': 12150, 'rarity': 3},
+      {'fromLevel': 3, 'toLevel': 4, 'type': 1, 'tier1': 0, 'tier2': 15, 'tier3': 0, 'advanced': 1, 'universal': 0, 'money': 24750, 'rarity': 3},
+      {'fromLevel': 4, 'toLevel': 5, 'type': 1, 'tier1': 0, 'tier2': 0, 'tier3': 9, 'advanced': 2, 'universal': 0, 'money': 44550, 'rarity': 3},
+      {'fromLevel': 10, 'toLevel': 20, 'type': 3, 'tier1': 9, 'tier2': 0, 'tier3': 0, 'advanced': 0, 'universal': 0, 'money': 0, 'rarity': 3},
+      {'fromLevel': 20, 'toLevel': 30, 'type': 3, 'tier1': 0, 'tier2': 9, 'tier3': 0, 'advanced': 0, 'universal': 0, 'money': 8100, 'rarity': 3},
+      {'fromLevel': 30, 'toLevel': 40, 'type': 3, 'tier1': 0, 'tier2': 18, 'tier3': 0, 'advanced': 0, 'universal': 0, 'money': 21600, 'rarity': 3},
+      {'fromLevel': 40, 'toLevel': 50, 'type': 3, 'tier1': 0, 'tier2': 0, 'tier3': 15, 'advanced': 0, 'universal': 0, 'money': 67500, 'rarity': 3},
+      {'fromLevel': 50, 'toLevel': 60, 'type': 3, 'tier1': 0, 'tier2': 0, 'tier3': 24, 'advanced': 0, 'universal': 0, 'money': 129600, 'rarity': 3},
+      {'fromLevel': 1, 'toLevel': 2, 'type': 2, 'tier1': 18, 'tier2': 0, 'tier3': 0, 'advanced': 1, 'universal': 0, 'money': 6300, 'rarity': 3},
+      {'fromLevel': 2, 'toLevel': 3, 'type': 2, 'tier1': 0, 'tier2': 18, 'tier3': 0, 'advanced': 2, 'universal': 0, 'money': 24300, 'rarity': 3},
+      {'fromLevel': 3, 'toLevel': 4, 'type': 2, 'tier1': 0, 'tier2': 30, 'tier3': 0, 'advanced': 3, 'universal': 1, 'money': 49500, 'rarity': 3},
+      {'fromLevel': 4, 'toLevel': 5, 'type': 2, 'tier1': 0, 'tier2': 0, 'tier3': 18, 'advanced': 4, 'universal': 1, 'money': 89100, 'rarity': 3},
     ];
 
     for (var calculation in calculations) {

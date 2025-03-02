@@ -11,7 +11,7 @@ class DBHelper {
 
   static Database? _database;
   static const String _databaseName = 'morimens_planner.db';
-  static const int _databaseVersion = 2;
+  static const int _databaseVersion = 1;
 
   Future<Database> get database async {
     if (_database != null) return _database!;
@@ -136,6 +136,7 @@ class DBHelper {
         tier2 INTEGER NOT NULL,
         tier3 INTEGER NOT NULL,
         advanced INTEGER NOT NULL,
+        universal INTEGER NOT NULL,
         money INTEGER NOT NULL,
         rarity INTEGER NOT NULL,
         FOREIGN KEY (type) REFERENCES UpgradeType(id),
