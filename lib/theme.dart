@@ -599,8 +599,8 @@ class MaterialTheme {
     ),
   );
 
-  /// S Rarity
-  static const sRarity = ExtendedColor(
+  /// R Rarity
+  static const rRarity = ExtendedColor(
     seed: Color(0xff84afc8),
     value: Color(0xff84afc8),
     light: ColorFamily(
@@ -690,7 +690,7 @@ class MaterialTheme {
     chaos,
     sRRarity,
     sSRRarity,
-    sRarity,
+    rRarity,
     nRarity,
   ];
 }
