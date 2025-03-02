@@ -224,8 +224,8 @@ class MaterialRequirementsPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildFamilySection('Skill Materials', requirements.skillFamilies),
                 _buildFamilySection('Edify Materials', requirements.edifyFamilies),
+                _buildFamilySection('Skill Materials', requirements.skillFamilies),
                 if (requirements.advancedMaterials.any((m) => m.quantity > 0)) ...[
                   _buildAdvancedMaterialsCard(requirements.advancedMaterials),
                   const SizedBox(height: 16),
