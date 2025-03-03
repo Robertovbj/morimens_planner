@@ -2,7 +2,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'migrations/migration_v2.dart';
 import 'migrations/migration_v3.dart';
-import 'seed/seed_data.dart';
+import 'seeder/seed_data.dart';
 
 class DBHelper {
   static final DBHelper _instance = DBHelper._internal();

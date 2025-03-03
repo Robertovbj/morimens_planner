@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../db_helper.dart';
+import '../../../core/data/database/db_helper.dart';
 import 'generic_table_view.dart';
 
 class DebugViews {

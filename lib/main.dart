@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'db_helper.dart';
-import 'debug_config.dart';
-import 'theme_manager.dart';
-import 'views/debug/debug_views.dart';
-import 'views/planner_page.dart';
-import 'views/material_requirements_page.dart';
+import 'core/data/database/db_helper.dart';
+import 'core/utils/debug_config.dart';
+import 'core/services/theme_manager.dart';
+import 'presentation/views/debug/debug_views.dart';
+import 'presentation/views/awakers/planner_page.dart';
+import 'presentation/views/planner/material_requirements_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

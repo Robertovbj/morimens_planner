@@ -1,9 +1,9 @@
 import 'package:sqflite/sqflite.dart';
-import '../db_helper.dart';
-import '../models/material_requirements.dart';
-import '../models/planner.dart';
-import '../models/awaker.dart';
-import '../models/universal_material.dart'; // Importar o modelo do material universal
+import '../data/database/db_helper.dart';
+import '../data/models/material_requirements.dart';
+import '../data/models/planner.dart';
+import '../data/models/awaker.dart';
+import '../data/models/universal_material.dart'; // Importar o modelo do material universal
 
 class MaterialCalculator {
   static Future<MaterialRequirements> calculate() async {

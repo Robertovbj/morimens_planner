@@ -1,13 +1,13 @@
 import 'package:sqflite/sqflite.dart';
-import '../db_helper.dart';
+import '../database/db_helper.dart';
 
-class Rarity {
+class UpgradeType {
   final int? id;
   final String description;
 
-  Rarity({this.id, required this.description});
+  UpgradeType({this.id, required this.description});
 
-  factory Rarity.fromMap(Map<String, Object?> map) => Rarity(
+  factory UpgradeType.fromMap(Map<String, Object?> map) => UpgradeType(
         id: map['id'] as int?,
         description: map['description'] as String,
       );
@@ -19,56 +19,56 @@ class Rarity {
 
   @override
   String toString() {
-    return 'Rarity{id: $id, description: $description}';
+    return 'UpgradeType{id: $id, description: $description}';
   }
 
   // CRUD functions
-  static Future<int> insert(Rarity rarity) async {
+  static Future<int> insert(UpgradeType upgradeType) async {
     final db = await DBHelper().database;
     return await db.insert(
-      'Rarity',
-      rarity.toMap(),
+      'UpgradeType',
+      upgradeType.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
-  static Future<Rarity?> get(int id) async {
+  static Future<UpgradeType?> get(int id) async {
     final db = await DBHelper().database;
     final maps = await db.query(
-      'Rarity',
+      'UpgradeType',
       where: 'id = ?',
       whereArgs: [id],
     );
     if (maps.isNotEmpty) {
-      return Rarity.fromMap(maps.first);
+      return UpgradeType.fromMap(maps.first);
     }
     return null;
   }
 
-  static Future<int> update(Rarity rarity) async {
+  static Future<int> update(UpgradeType upgradeType) async {
     final db = await DBHelper().database;
     return await db.update(
-      'Rarity',
-      rarity.toMap(),
+      'UpgradeType',
+      upgradeType.toMap(),
       where: 'id = ?',
-      whereArgs: [rarity.id],
+      whereArgs: [upgradeType.id],
     );
   }
 
   static Future<int> delete(int id) async {
     final db = await DBHelper().database;
     return await db.delete(
-      'Rarity',
+      'UpgradeType',
       where: 'id = ?',
       whereArgs: [id],
     );
   }
 
-  static Future<List<Rarity>> getAll() async {
+  static Future<List<UpgradeType>> getAll() async {
     final db = await DBHelper().database;
-    final List<Map<String, dynamic>> maps = await db.query('Rarity');
+    final List<Map<String, dynamic>> maps = await db.query('UpgradeType');
     return List.generate(maps.length, (i) {
-      return Rarity.fromMap(maps[i]);
+      return UpgradeType.fromMap(maps[i]);
     });
   }
 }

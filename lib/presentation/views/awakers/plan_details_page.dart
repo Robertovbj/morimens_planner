@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../models/planner.dart';
-import '../models/awaker.dart';
+import '../../../core/data/models/planner.dart';
+import '../../../core/data/models/awaker.dart';
 import 'add_plan_dialog.dart';
-import '../utils/color_generator.dart';
+import '../../../core/utils/color_generator.dart';
 
 class PlanDetailsPage extends StatefulWidget {
   final Planner plan;

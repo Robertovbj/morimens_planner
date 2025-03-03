@@ -1,74 +1,77 @@
 import 'package:sqflite/sqflite.dart';
-import '../db_helper.dart';
+import '../database/db_helper.dart';
 
-class UpgradeType {
+class Realm {
   final int? id;
   final String description;
+  final String? icon;
 
-  UpgradeType({this.id, required this.description});
+  Realm({this.id, required this.description, this.icon});
 
-  factory UpgradeType.fromMap(Map<String, Object?> map) => UpgradeType(
+  factory Realm.fromMap(Map<String, Object?> map) => Realm(
         id: map['id'] as int?,
         description: map['description'] as String,
+        icon: map['icon'] as String?,
       );
 
   Map<String, Object?> toMap() => {
         'id': id,
         'description': description,
+        'icon': icon,
       };
 
   @override
   String toString() {
-    return 'UpgradeType{id: $id, description: $description}';
+    return 'Realm{id: $id, description: $description, icon: $icon}';
   }
 
   // CRUD functions
-  static Future<int> insert(UpgradeType upgradeType) async {
+  static Future<int> insert(Realm realm) async {
     final db = await DBHelper().database;
     return await db.insert(
-      'UpgradeType',
-      upgradeType.toMap(),
+      'Realm',
+      realm.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
-  static Future<UpgradeType?> get(int id) async {
+  static Future<Realm?> get(int id) async {
     final db = await DBHelper().database;
     final maps = await db.query(
-      'UpgradeType',
+      'Realm',
       where: 'id = ?',
       whereArgs: [id],
     );
     if (maps.isNotEmpty) {
-      return UpgradeType.fromMap(maps.first);
+      return Realm.fromMap(maps.first);
     }
     return null;
   }
 
-  static Future<int> update(UpgradeType upgradeType) async {
+  static Future<int> update(Realm realm) async {
     final db = await DBHelper().database;
     return await db.update(
-      'UpgradeType',
-      upgradeType.toMap(),
+      'Realm',
+      realm.toMap(),
       where: 'id = ?',
-      whereArgs: [upgradeType.id],
+      whereArgs: [realm.id],
     );
   }
 
   static Future<int> delete(int id) async {
     final db = await DBHelper().database;
     return await db.delete(
-      'UpgradeType',
+      'Realm',
       where: 'id = ?',
       whereArgs: [id],
     );
   }
 
-  static Future<List<UpgradeType>> getAll() async {
+  static Future<List<Realm>> getAll() async {
     final db = await DBHelper().database;
-    final List<Map<String, dynamic>> maps = await db.query('UpgradeType');
+    final List<Map<String, dynamic>> maps = await db.query('Realm');
     return List.generate(maps.length, (i) {
-      return UpgradeType.fromMap(maps[i]);
+      return Realm.fromMap(maps[i]);
     });
   }
 }

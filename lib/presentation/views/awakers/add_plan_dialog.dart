@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/planner.dart';
-import '../models/awaker.dart';
+import '../../../core/data/models/planner.dart';
+import '../../../core/data/models/awaker.dart';
 
 class AddPlanDialog extends StatefulWidget {
   final Planner? planToEdit;

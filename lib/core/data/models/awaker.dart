@@ -1,5 +1,5 @@
 import 'package:sqflite/sqflite.dart';
-import '../db_helper.dart';
+import '../database/db_helper.dart';
 
 class Awaker {
   final int? id;

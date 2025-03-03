@@ -1,77 +1,74 @@
 import 'package:sqflite/sqflite.dart';
-import '../db_helper.dart';
+import '../database/db_helper.dart';
 
-class Realm {
+class AwakerType {
   final int? id;
   final String description;
-  final String? icon;
 
-  Realm({this.id, required this.description, this.icon});
+  AwakerType({this.id, required this.description});
 
-  factory Realm.fromMap(Map<String, Object?> map) => Realm(
+  factory AwakerType.fromMap(Map<String, Object?> map) => AwakerType(
         id: map['id'] as int?,
         description: map['description'] as String,
-        icon: map['icon'] as String?,
       );
 
   Map<String, Object?> toMap() => {
         'id': id,
         'description': description,
-        'icon': icon,
       };
 
   @override
   String toString() {
-    return 'Realm{id: $id, description: $description, icon: $icon}';
+    return 'AwakerType{id: $id, description: $description}';
   }
 
   // CRUD functions
-  static Future<int> insert(Realm realm) async {
+  static Future<int> insert(AwakerType awakerType) async {
     final db = await DBHelper().database;
     return await db.insert(
-      'Realm',
-      realm.toMap(),
+      'AwakerType',
+      awakerType.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
-  static Future<Realm?> get(int id) async {
+  static Future<AwakerType?> get(int id) async {
     final db = await DBHelper().database;
     final maps = await db.query(
-      'Realm',
+      'AwakerType',
       where: 'id = ?',
       whereArgs: [id],
     );
     if (maps.isNotEmpty) {
-      return Realm.fromMap(maps.first);
+      return AwakerType.fromMap(maps.first);
     }
     return null;
   }
 
-  static Future<int> update(Realm realm) async {
+  static Future<int> update(AwakerType awakerType) async {
     final db = await DBHelper().database;
     return await db.update(
-      'Realm',
-      realm.toMap(),
+      'AwakerType',
+      awakerType.toMap(),
       where: 'id = ?',
-      whereArgs: [realm.id],
+      whereArgs: [awakerType.id],
     );
   }
 
   static Future<int> delete(int id) async {
     final db = await DBHelper().database;
     return await db.delete(
-      'Realm',
+      'AwakerType',
       where: 'id = ?',
       whereArgs: [id],
     );
   }
 
-  static Future<List<Realm>> getAll() async {
+  static Future<List<AwakerType>> getAll() async {
     final db = await DBHelper().database;
-    final List<Map<String, dynamic>> maps = await db.query('Realm');
+    final List<Map<String, dynamic>> maps = await db.query('AwakerType');
     return List.generate(maps.length, (i) {
-      return Realm.fromMap(maps[i]);
+      return AwakerType.fromMap(maps[i]);
     });
   }
 }

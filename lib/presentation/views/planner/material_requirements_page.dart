@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/material_requirements.dart';
-import '../services/material_calculator.dart';
+import '../../../core/data/models/material_requirements.dart';
+import '../../../core/services/material_calculator.dart';
 
 class MaterialRequirementsPage extends StatelessWidget {
   const MaterialRequirementsPage({super.key});

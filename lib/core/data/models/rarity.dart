@@ -1,13 +1,13 @@
 import 'package:sqflite/sqflite.dart';
-import '../db_helper.dart';
+import '../database/db_helper.dart';
 
-class EdifyMaterialFamily {
+class Rarity {
   final int? id;
   final String description;
 
-  EdifyMaterialFamily({this.id, required this.description});
+  Rarity({this.id, required this.description});
 
-  factory EdifyMaterialFamily.fromMap(Map<String, Object?> map) => EdifyMaterialFamily(
+  factory Rarity.fromMap(Map<String, Object?> map) => Rarity(
         id: map['id'] as int?,
         description: map['description'] as String,
       );
@@ -19,56 +19,56 @@ class EdifyMaterialFamily {
 
   @override
   String toString() {
-    return 'EdifyMaterialFamily{id: $id, description: $description}';
+    return 'Rarity{id: $id, description: $description}';
   }
 
   // CRUD functions
-  static Future<int> insert(EdifyMaterialFamily family) async {
+  static Future<int> insert(Rarity rarity) async {
     final db = await DBHelper().database;
     return await db.insert(
-      'EdifyMaterialFamily',
-      family.toMap(),
+      'Rarity',
+      rarity.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
-  static Future<EdifyMaterialFamily?> get(int id) async {
+  static Future<Rarity?> get(int id) async {
     final db = await DBHelper().database;
     final maps = await db.query(
-      'EdifyMaterialFamily',
+      'Rarity',
       where: 'id = ?',
       whereArgs: [id],
     );
     if (maps.isNotEmpty) {
-      return EdifyMaterialFamily.fromMap(maps.first);
+      return Rarity.fromMap(maps.first);
     }
     return null;
   }
 
-  static Future<int> update(EdifyMaterialFamily family) async {
+  static Future<int> update(Rarity rarity) async {
     final db = await DBHelper().database;
     return await db.update(
-      'EdifyMaterialFamily',
-      family.toMap(),
+      'Rarity',
+      rarity.toMap(),
       where: 'id = ?',
-      whereArgs: [family.id],
+      whereArgs: [rarity.id],
     );
   }
 
   static Future<int> delete(int id) async {
     final db = await DBHelper().database;
     return await db.delete(
-      'EdifyMaterialFamily',
+      'Rarity',
       where: 'id = ?',
       whereArgs: [id],
     );
   }
 
-  static Future<List<EdifyMaterialFamily>> getAll() async {
+  static Future<List<Rarity>> getAll() async {
     final db = await DBHelper().database;
-    final List<Map<String, dynamic>> maps = await db.query('EdifyMaterialFamily');
+    final List<Map<String, dynamic>> maps = await db.query('Rarity');
     return List.generate(maps.length, (i) {
-      return EdifyMaterialFamily.fromMap(maps[i]);
+      return Rarity.fromMap(maps[i]);
     });
   }
 }
