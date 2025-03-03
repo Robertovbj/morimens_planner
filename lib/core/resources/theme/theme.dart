@@ -828,6 +828,17 @@ class RealmColors extends ThemeExtension<RealmColors> {
   final Color chaosColor;
   final Color caroColor;
 
+  // Convenience method to get color based on realm
+  Color getRealmColor(int realm) {
+    return switch (realm) {
+      4 => ultraColor,
+      3 => caroColor,
+      2 => aequorColor,
+      1 => chaosColor,
+      _ => chaosColor,
+    };
+  }
+
   @override
   RealmColors copyWith({
     Color? ultraColor,
