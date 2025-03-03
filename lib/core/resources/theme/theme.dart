@@ -347,32 +347,118 @@ class MaterialTheme {
     canvasColor: colorScheme.surface,
     extensions: [
       RarityColors(
+        // SSR Colors
         ssrColor: colorScheme.brightness == Brightness.light 
           ? sSRRarity.light.color 
           : sSRRarity.dark.color,
+        ssrOnColor: colorScheme.brightness == Brightness.light 
+          ? sSRRarity.light.onColor 
+          : sSRRarity.dark.onColor,
+        ssrColorContainer: colorScheme.brightness == Brightness.light 
+          ? sSRRarity.light.colorContainer 
+          : sSRRarity.dark.colorContainer,
+        ssrOnColorContainer: colorScheme.brightness == Brightness.light 
+          ? sSRRarity.light.onColorContainer 
+          : sSRRarity.dark.onColorContainer,
+          
+        // SR Colors
         srColor: colorScheme.brightness == Brightness.light 
           ? sRRarity.light.color 
           : sRRarity.dark.color,
+        srOnColor: colorScheme.brightness == Brightness.light 
+          ? sRRarity.light.onColor 
+          : sRRarity.dark.onColor,
+        srColorContainer: colorScheme.brightness == Brightness.light 
+          ? sRRarity.light.colorContainer 
+          : sRRarity.dark.colorContainer,
+        srOnColorContainer: colorScheme.brightness == Brightness.light 
+          ? sRRarity.light.onColorContainer 
+          : sRRarity.dark.onColorContainer,
+          
+        // R Colors
         rColor: colorScheme.brightness == Brightness.light 
           ? rRarity.light.color 
           : rRarity.dark.color,
+        rOnColor: colorScheme.brightness == Brightness.light 
+          ? rRarity.light.onColor 
+          : rRarity.dark.onColor,
+        rColorContainer: colorScheme.brightness == Brightness.light 
+          ? rRarity.light.colorContainer 
+          : rRarity.dark.colorContainer,
+        rOnColorContainer: colorScheme.brightness == Brightness.light 
+          ? rRarity.light.onColorContainer 
+          : rRarity.dark.onColorContainer,
+          
+        // N Colors
         nColor: colorScheme.brightness == Brightness.light 
           ? nRarity.light.color 
           : nRarity.dark.color,
+        nOnColor: colorScheme.brightness == Brightness.light 
+          ? nRarity.light.onColor 
+          : nRarity.dark.onColor,
+        nColorContainer: colorScheme.brightness == Brightness.light 
+          ? nRarity.light.colorContainer 
+          : nRarity.dark.colorContainer,
+        nOnColorContainer: colorScheme.brightness == Brightness.light 
+          ? nRarity.light.onColorContainer 
+          : nRarity.dark.onColorContainer,
       ),
       RealmColors(
+        // Ultra Colors
         ultraColor: colorScheme.brightness == Brightness.light 
           ? ultra.light.color 
           : ultra.dark.color,
+        ultraOnColor: colorScheme.brightness == Brightness.light 
+          ? ultra.light.onColor 
+          : ultra.dark.onColor,
+        ultraColorContainer: colorScheme.brightness == Brightness.light 
+          ? ultra.light.colorContainer 
+          : ultra.dark.colorContainer,
+        ultraOnColorContainer: colorScheme.brightness == Brightness.light 
+          ? ultra.light.onColorContainer 
+          : ultra.dark.onColorContainer,
+          
+        // Aequor Colors
         aequorColor: colorScheme.brightness == Brightness.light 
           ? aequor.light.color 
           : aequor.dark.color,
+        aequorOnColor: colorScheme.brightness == Brightness.light 
+          ? aequor.light.onColor 
+          : aequor.dark.onColor,
+        aequorColorContainer: colorScheme.brightness == Brightness.light 
+          ? aequor.light.colorContainer 
+          : aequor.dark.colorContainer,
+        aequorOnColorContainer: colorScheme.brightness == Brightness.light 
+          ? aequor.light.onColorContainer 
+          : aequor.dark.onColorContainer,
+          
+        // Chaos Colors
         chaosColor: colorScheme.brightness == Brightness.light 
           ? chaos.light.color 
           : chaos.dark.color,
+        chaosOnColor: colorScheme.brightness == Brightness.light 
+          ? chaos.light.onColor 
+          : chaos.dark.onColor,
+        chaosColorContainer: colorScheme.brightness == Brightness.light 
+          ? chaos.light.colorContainer 
+          : chaos.dark.colorContainer,
+        chaosOnColorContainer: colorScheme.brightness == Brightness.light 
+          ? chaos.light.onColorContainer 
+          : chaos.dark.onColorContainer,
+          
+        // Caro Colors
         caroColor: colorScheme.brightness == Brightness.light 
           ? caro.light.color 
           : caro.dark.color,
+        caroOnColor: colorScheme.brightness == Brightness.light 
+          ? caro.light.onColor 
+          : caro.dark.onColor,
+        caroColorContainer: colorScheme.brightness == Brightness.light 
+          ? caro.light.colorContainer 
+          : caro.dark.colorContainer,
+        caroOnColorContainer: colorScheme.brightness == Brightness.light 
+          ? caro.light.onColorContainer 
+          : caro.dark.onColorContainer,
       ),
     ],
   );
@@ -763,18 +849,56 @@ class ColorFamily {
 @immutable
 class RarityColors extends ThemeExtension<RarityColors> {
   const RarityColors({
+    // SSR
     required this.ssrColor,
+    required this.ssrOnColor,
+    required this.ssrColorContainer,
+    required this.ssrOnColorContainer,
+    
+    // SR
     required this.srColor,
+    required this.srOnColor,
+    required this.srColorContainer,
+    required this.srOnColorContainer,
+    
+    // R
     required this.rColor,
+    required this.rOnColor,
+    required this.rColorContainer,
+    required this.rOnColorContainer,
+    
+    // N
     required this.nColor,
+    required this.nOnColor,
+    required this.nColorContainer,
+    required this.nOnColorContainer,
   });
 
+  // SSR colors
   final Color ssrColor;
-  final Color srColor;
-  final Color rColor;
-  final Color nColor;
+  final Color ssrOnColor;
+  final Color ssrColorContainer;
+  final Color ssrOnColorContainer;
   
-  // Método de conveniência para obter a cor com base no tier
+  // SR colors
+  final Color srColor;
+  final Color srOnColor;
+  final Color srColorContainer;
+  final Color srOnColorContainer;
+  
+  // R colors
+  final Color rColor;
+  final Color rOnColor;
+  final Color rColorContainer;
+  final Color rOnColorContainer;
+  
+  // N colors
+  final Color nColor;
+  final Color nOnColor;
+  final Color nColorContainer;
+  final Color nOnColorContainer;
+  
+  // Convenience method to get color based on tier
   Color getTierColor(int tier) {
     return switch (tier) {
       4 => ssrColor,
@@ -785,18 +909,78 @@ class RarityColors extends ThemeExtension<RarityColors> {
     };
   }
 
+  // Convenience method to get onColor based on tier
+  Color getTierOnColor(int tier) {
+    return switch (tier) {
+      4 => ssrOnColor,
+      3 => srOnColor,
+      2 => rOnColor,
+      1 => nOnColor,
+      _ => nOnColor,
+    };
+  }
+
+  // Convenience method to get colorContainer based on tier
+  Color getTierColorContainer(int tier) {
+    return switch (tier) {
+      4 => ssrColorContainer,
+      3 => srColorContainer,
+      2 => rColorContainer,
+      1 => nColorContainer,
+      _ => nColorContainer,
+    };
+  }
+
+  // Convenience method to get onColorContainer based on tier
+  Color getTierOnColorContainer(int tier) {
+    return switch (tier) {
+      4 => ssrOnColorContainer,
+      3 => srOnColorContainer,
+      2 => rOnColorContainer,
+      1 => nOnColorContainer,
+      _ => nOnColorContainer,
+    };
+  }
+
   @override
   RarityColors copyWith({
     Color? ssrColor,
+    Color? ssrOnColor,
+    Color? ssrColorContainer,
+    Color? ssrOnColorContainer,
     Color? srColor,
+    Color? srOnColor,
+    Color? srColorContainer,
+    Color? srOnColorContainer,
     Color? rColor,
+    Color? rOnColor,
+    Color? rColorContainer,
+    Color? rOnColorContainer,
     Color? nColor,
+    Color? nOnColor,
+    Color? nColorContainer,
+    Color? nOnColorContainer,
   }) {
     return RarityColors(
       ssrColor: ssrColor ?? this.ssrColor,
+      ssrOnColor: ssrOnColor ?? this.ssrOnColor,
+      ssrColorContainer: ssrColorContainer ?? this.ssrColorContainer,
+      ssrOnColorContainer: ssrOnColorContainer ?? this.ssrOnColorContainer,
+      
       srColor: srColor ?? this.srColor,
+      srOnColor: srOnColor ?? this.srOnColor,
+      srColorContainer: srColorContainer ?? this.srColorContainer,
+      srOnColorContainer: srOnColorContainer ?? this.srOnColorContainer,
+      
       rColor: rColor ?? this.rColor,
+      rOnColor: rOnColor ?? this.rOnColor,
+      rColorContainer: rColorContainer ?? this.rColorContainer,
+      rOnColorContainer: rOnColorContainer ?? this.rOnColorContainer,
+      
       nColor: nColor ?? this.nColor,
+      nOnColor: nOnColor ?? this.nOnColor,
+      nColorContainer: nColorContainer ?? this.nColorContainer,
+      nOnColorContainer: nOnColorContainer ?? this.nOnColorContainer,
     );
   }
 
@@ -807,9 +991,24 @@ class RarityColors extends ThemeExtension<RarityColors> {
     }
     return RarityColors(
       ssrColor: Color.lerp(ssrColor, other.ssrColor, t)!,
+      ssrOnColor: Color.lerp(ssrOnColor, other.ssrOnColor, t)!,
+      ssrColorContainer: Color.lerp(ssrColorContainer, other.ssrColorContainer, t)!,
+      ssrOnColorContainer: Color.lerp(ssrOnColorContainer, other.ssrOnColorContainer, t)!,
+      
       srColor: Color.lerp(srColor, other.srColor, t)!,
+      srOnColor: Color.lerp(srOnColor, other.srOnColor, t)!,
+      srColorContainer: Color.lerp(srColorContainer, other.srColorContainer, t)!,
+      srOnColorContainer: Color.lerp(srOnColorContainer, other.srOnColorContainer, t)!,
+      
       rColor: Color.lerp(rColor, other.rColor, t)!,
+      rOnColor: Color.lerp(rOnColor, other.rOnColor, t)!,
+      rColorContainer: Color.lerp(rColorContainer, other.rColorContainer, t)!,
+      rOnColorContainer: Color.lerp(rOnColorContainer, other.rOnColorContainer, t)!,
+      
       nColor: Color.lerp(nColor, other.nColor, t)!,
+      nOnColor: Color.lerp(nOnColor, other.nOnColor, t)!,
+      nColorContainer: Color.lerp(nColorContainer, other.nColorContainer, t)!,
+      nOnColorContainer: Color.lerp(nOnColorContainer, other.nOnColorContainer, t)!,
     );
   }
 }
@@ -817,16 +1016,54 @@ class RarityColors extends ThemeExtension<RarityColors> {
 @immutable
 class RealmColors extends ThemeExtension<RealmColors> {
   const RealmColors({
+    // Ultra
     required this.ultraColor,
+    required this.ultraOnColor,
+    required this.ultraColorContainer,
+    required this.ultraOnColorContainer,
+    
+    // Aequor
     required this.aequorColor,
+    required this.aequorOnColor,
+    required this.aequorColorContainer,
+    required this.aequorOnColorContainer,
+    
+    // Chaos
     required this.chaosColor,
+    required this.chaosOnColor,
+    required this.chaosColorContainer,
+    required this.chaosOnColorContainer,
+    
+    // Caro
     required this.caroColor,
+    required this.caroOnColor,
+    required this.caroColorContainer,
+    required this.caroOnColorContainer,
   });
 
+  // Ultra colors
   final Color ultraColor;
+  final Color ultraOnColor;
+  final Color ultraColorContainer;
+  final Color ultraOnColorContainer;
+  
+  // Aequor colors
   final Color aequorColor;
+  final Color aequorOnColor;
+  final Color aequorColorContainer;
+  final Color aequorOnColorContainer;
+  
+  // Chaos colors
   final Color chaosColor;
+  final Color chaosOnColor;
+  final Color chaosColorContainer;
+  final Color chaosOnColorContainer;
+  
+  // Caro colors
   final Color caroColor;
+  final Color caroOnColor;
+  final Color caroColorContainer;
+  final Color caroOnColorContainer;
 
   // Convenience method to get color based on realm
   Color getRealmColor(int realm) {
@@ -839,18 +1076,78 @@ class RealmColors extends ThemeExtension<RealmColors> {
     };
   }
 
+  // Convenience method to get onColor based on realm
+  Color getRealmOnColor(int realm) {
+    return switch (realm) {
+      4 => ultraOnColor,
+      3 => caroOnColor,
+      2 => aequorOnColor,
+      1 => chaosOnColor,
+      _ => chaosOnColor,
+    };
+  }
+
+  // Convenience method to get colorContainer based on realm
+  Color getRealmColorContainer(int realm) {
+    return switch (realm) {
+      4 => ultraColorContainer,
+      3 => caroColorContainer,
+      2 => aequorColorContainer,
+      1 => chaosColorContainer,
+      _ => chaosColorContainer,
+    };
+  }
+
+  // Convenience method to get onColorContainer based on realm
+  Color getRealmOnColorContainer(int realm) {
+    return switch (realm) {
+      4 => ultraOnColorContainer,
+      3 => caroOnColorContainer,
+      2 => aequorOnColorContainer,
+      1 => chaosOnColorContainer,
+      _ => chaosOnColorContainer,
+    };
+  }
+
   @override
   RealmColors copyWith({
     Color? ultraColor,
+    Color? ultraOnColor,
+    Color? ultraColorContainer,
+    Color? ultraOnColorContainer,
     Color? aequorColor,
+    Color? aequorOnColor,
+    Color? aequorColorContainer,
+    Color? aequorOnColorContainer,
     Color? chaosColor,
+    Color? chaosOnColor,
+    Color? chaosColorContainer,
+    Color? chaosOnColorContainer,
     Color? caroColor,
+    Color? caroOnColor,
+    Color? caroColorContainer,
+    Color? caroOnColorContainer,
   }) {
     return RealmColors(
       ultraColor: ultraColor ?? this.ultraColor,
+      ultraOnColor: ultraOnColor ?? this.ultraOnColor,
+      ultraColorContainer: ultraColorContainer ?? this.ultraColorContainer,
+      ultraOnColorContainer: ultraOnColorContainer ?? this.ultraOnColorContainer,
+      
       aequorColor: aequorColor ?? this.aequorColor,
+      aequorOnColor: aequorOnColor ?? this.aequorOnColor,
+      aequorColorContainer: aequorColorContainer ?? this.aequorColorContainer,
+      aequorOnColorContainer: aequorOnColorContainer ?? this.aequorOnColorContainer,
+      
       chaosColor: chaosColor ?? this.chaosColor,
+      chaosOnColor: chaosOnColor ?? this.chaosOnColor,
+      chaosColorContainer: chaosColorContainer ?? this.chaosColorContainer,
+      chaosOnColorContainer: chaosOnColorContainer ?? this.chaosOnColorContainer,
+      
       caroColor: caroColor ?? this.caroColor,
+      caroOnColor: caroOnColor ?? this.caroOnColor,
+      caroColorContainer: caroColorContainer ?? this.caroColorContainer,
+      caroOnColorContainer: caroOnColorContainer ?? this.caroOnColorContainer,
     );
   }
 
@@ -861,9 +1158,24 @@ class RealmColors extends ThemeExtension<RealmColors> {
     }
     return RealmColors(
       ultraColor: Color.lerp(ultraColor, other.ultraColor, t)!,
+      ultraOnColor: Color.lerp(ultraOnColor, other.ultraOnColor, t)!,
+      ultraColorContainer: Color.lerp(ultraColorContainer, other.ultraColorContainer, t)!,
+      ultraOnColorContainer: Color.lerp(ultraOnColorContainer, other.ultraOnColorContainer, t)!,
+      
       aequorColor: Color.lerp(aequorColor, other.aequorColor, t)!,
+      aequorOnColor: Color.lerp(aequorOnColor, other.aequorOnColor, t)!,
+      aequorColorContainer: Color.lerp(aequorColorContainer, other.aequorColorContainer, t)!,
+      aequorOnColorContainer: Color.lerp(aequorOnColorContainer, other.aequorOnColorContainer, t)!,
+      
       chaosColor: Color.lerp(chaosColor, other.chaosColor, t)!,
+      chaosOnColor: Color.lerp(chaosOnColor, other.chaosOnColor, t)!,
+      chaosColorContainer: Color.lerp(chaosColorContainer, other.chaosColorContainer, t)!,
+      chaosOnColorContainer: Color.lerp(chaosOnColorContainer, other.chaosOnColorContainer, t)!,
+      
       caroColor: Color.lerp(caroColor, other.caroColor, t)!,
+      caroOnColor: Color.lerp(caroOnColor, other.caroOnColor, t)!,
+      caroColorContainer: Color.lerp(caroColorContainer, other.caroColorContainer, t)!,
+      caroOnColorContainer: Color.lerp(caroOnColorContainer, other.caroOnColorContainer, t)!,
     );
   }
 }
