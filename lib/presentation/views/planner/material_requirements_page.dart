@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../core/data/models/material_requirements.dart';
 import '../../../core/services/material_calculator.dart';
+import '../../widgets/material_card.dart';
 
 class MaterialRequirementsPage extends StatelessWidget {
   const MaterialRequirementsPage({super.key});
@@ -16,49 +17,6 @@ class MaterialRequirementsPage extends StatelessWidget {
       default:
         return Colors.grey;
     }
-  }
-
-  Widget _buildMaterialCard(String title, int quantity, Color color) {
-    return Card(
-      child: Container(
-        width: 120,
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 48,
-              height: 48,
-              decoration: BoxDecoration(
-                color: color.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Icon(
-                Icons.storage,
-                color: color,
-                size: 32,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              title,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 12),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-            Text(
-              'x$quantity',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: color,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 
   Widget _buildFamilyCard(MaterialRequirement family) {
@@ -82,11 +40,11 @@ class MaterialRequirementsPage extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 children: [
                   if (family.tier3 > 0)
-                    _buildMaterialCard('Tier 3', family.tier3, _getTierColor(3)),
+                    TierMaterialCard(title: 'Tier 3', quantity: family.tier3, tier: 3),
                   if (family.tier2 > 0)
-                    _buildMaterialCard('Tier 2', family.tier2, _getTierColor(2)),
+                    TierMaterialCard(title: 'Tier 2', quantity: family.tier2, tier: 2),
                   if (family.tier1 > 0)
-                    _buildMaterialCard('Tier 1', family.tier1, _getTierColor(1)),
+                    TierMaterialCard(title: 'Tier 1', quantity: family.tier1, tier: 1),
                 ],
               ),
             ),
@@ -153,10 +111,10 @@ class MaterialRequirementsPage extends StatelessWidget {
                 itemCount: nonEmptyMaterials.length,
                 itemBuilder: (context, index) {
                   final material = nonEmptyMaterials[index];
-                  return _buildMaterialCard(
-                    material.materialName,
-                    material.quantity,
-                    Colors.orange,
+                  return TierMaterialCard(
+                    title: material.materialName,
+                    quantity: material.quantity,
+                    tier: 4,
                   );
                 },
               ),
@@ -188,10 +146,10 @@ class MaterialRequirementsPage extends StatelessWidget {
             const SizedBox(height: 8),
             SizedBox(
               height: 140,
-              child: _buildMaterialCard(
-                materialName, // Usa o nome específico do material
-                quantity,
-                Colors.orange,
+              child: TierMaterialCard(
+                title: materialName,
+                quantity: quantity,
+                tier: 0,
               ),
             ),
           ],

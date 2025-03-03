@@ -345,6 +345,36 @@ class MaterialTheme {
     ),
     scaffoldBackgroundColor: colorScheme.surface,
     canvasColor: colorScheme.surface,
+    extensions: [
+      RarityColors(
+        ssrColor: colorScheme.brightness == Brightness.light 
+          ? sSRRarity.light.color 
+          : sSRRarity.dark.color,
+        srColor: colorScheme.brightness == Brightness.light 
+          ? sRRarity.light.color 
+          : sRRarity.dark.color,
+        rColor: colorScheme.brightness == Brightness.light 
+          ? rRarity.light.color 
+          : rRarity.dark.color,
+        nColor: colorScheme.brightness == Brightness.light 
+          ? nRarity.light.color 
+          : nRarity.dark.color,
+      ),
+      RealmColors(
+        ultraColor: colorScheme.brightness == Brightness.light 
+          ? ultra.light.color 
+          : ultra.dark.color,
+        aequorColor: colorScheme.brightness == Brightness.light 
+          ? aequor.light.color 
+          : aequor.dark.color,
+        chaosColor: colorScheme.brightness == Brightness.light 
+          ? chaos.light.color 
+          : chaos.dark.color,
+        caroColor: colorScheme.brightness == Brightness.light 
+          ? caro.light.color 
+          : caro.dark.color,
+      ),
+    ],
   );
 
   /// Ultra
@@ -728,4 +758,101 @@ class ColorFamily {
   final Color onColor;
   final Color colorContainer;
   final Color onColorContainer;
+}
+
+@immutable
+class RarityColors extends ThemeExtension<RarityColors> {
+  const RarityColors({
+    required this.ssrColor,
+    required this.srColor,
+    required this.rColor,
+    required this.nColor,
+  });
+
+  final Color ssrColor;
+  final Color srColor;
+  final Color rColor;
+  final Color nColor;
+  
+  // Método de conveniência para obter a cor com base no tier
+  Color getTierColor(int tier) {
+    return switch (tier) {
+      4 => ssrColor,
+      3 => srColor,
+      2 => rColor,
+      1 => nColor,
+      _ => nColor,
+    };
+  }
+
+  @override
+  RarityColors copyWith({
+    Color? ssrColor,
+    Color? srColor,
+    Color? rColor,
+    Color? nColor,
+  }) {
+    return RarityColors(
+      ssrColor: ssrColor ?? this.ssrColor,
+      srColor: srColor ?? this.srColor,
+      rColor: rColor ?? this.rColor,
+      nColor: nColor ?? this.nColor,
+    );
+  }
+
+  @override
+  RarityColors lerp(ThemeExtension<RarityColors>? other, double t) {
+    if (other is! RarityColors) {
+      return this;
+    }
+    return RarityColors(
+      ssrColor: Color.lerp(ssrColor, other.ssrColor, t)!,
+      srColor: Color.lerp(srColor, other.srColor, t)!,
+      rColor: Color.lerp(rColor, other.rColor, t)!,
+      nColor: Color.lerp(nColor, other.nColor, t)!,
+    );
+  }
+}
+
+@immutable
+class RealmColors extends ThemeExtension<RealmColors> {
+  const RealmColors({
+    required this.ultraColor,
+    required this.aequorColor,
+    required this.chaosColor,
+    required this.caroColor,
+  });
+
+  final Color ultraColor;
+  final Color aequorColor;
+  final Color chaosColor;
+  final Color caroColor;
+
+  @override
+  RealmColors copyWith({
+    Color? ultraColor,
+    Color? aequorColor,
+    Color? chaosColor,
+    Color? caroColor,
+  }) {
+    return RealmColors(
+      ultraColor: ultraColor ?? this.ultraColor,
+      aequorColor: aequorColor ?? this.aequorColor,
+      chaosColor: chaosColor ?? this.chaosColor,
+      caroColor: caroColor ?? this.caroColor,
+    );
+  }
+
+  @override
+  RealmColors lerp(ThemeExtension<RealmColors>? other, double t) {
+    if (other is! RealmColors) {
+      return this;
+    }
+    return RealmColors(
+      ultraColor: Color.lerp(ultraColor, other.ultraColor, t)!,
+      aequorColor: Color.lerp(aequorColor, other.aequorColor, t)!,
+      chaosColor: Color.lerp(chaosColor, other.chaosColor, t)!,
+      caroColor: Color.lerp(caroColor, other.caroColor, t)!,
+    );
+  }
 }
