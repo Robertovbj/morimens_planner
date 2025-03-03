@@ -6,19 +6,6 @@ import '../../widgets/material_card.dart';
 class MaterialRequirementsPage extends StatelessWidget {
   const MaterialRequirementsPage({super.key});
 
-  Color _getTierColor(int tier) {
-    switch (tier) {
-      case 3:
-        return Colors.purple;
-      case 2:
-        return Colors.blue;
-      case 1:
-        return Colors.green;
-      default:
-        return Colors.grey;
-    }
-  }
-
   Widget _buildFamilyCard(MaterialRequirement family) {
     return Card(
       child: Padding(
