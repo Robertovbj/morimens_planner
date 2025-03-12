@@ -234,6 +234,7 @@ class DatabaseSeeder {
       {'name': 'Melting Doll', 'realm': 1, 'type': 3, 'rarity': 4, 'skillMaterialFamily': 1, 'edifyMaterialFamily': 1, 'advancedSkillMaterial': 1, 'universalMaterialFamily': 1},
       {'name': 'Nymphaea', 'realm': 1, 'type': 1, 'rarity': 4, 'skillMaterialFamily': 1, 'edifyMaterialFamily': 1, 'advancedSkillMaterial': 4, 'universalMaterialFamily': 1},
       {'name': 'Pandia', 'realm': 1, 'type': 1, 'rarity': 4, 'skillMaterialFamily': 1, 'edifyMaterialFamily': 1, 'advancedSkillMaterial': 1, 'universalMaterialFamily': 1},
+      {'name': 'Tinct', 'realm': 4, 'type': 3, 'rarity': 4, 'skillMaterialFamily': 4, 'edifyMaterialFamily': 4, 'advancedSkillMaterial': 4, 'universalMaterialFamily': 1},
     ];
 
     for (var awaker in awakers) {
