@@ -62,7 +62,7 @@ class MaterialRequirementsPage extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        ...nonEmptyFamilies.map(_buildFamilyCard).toList(),
+        ...nonEmptyFamilies.map(_buildFamilyCard),
         const SizedBox(height: 16),
       ],
     );

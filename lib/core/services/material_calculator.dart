@@ -36,10 +36,8 @@ class MaterialCalculator {
       if (awaker == null) continue;
 
       // Rastrear as famílias de materiais universais usadas
-      if (awaker != null) {
-        universalFamilies.add(awaker.universalMaterialFamily);
-      }
-
+      universalFamilies.add(awaker.universalMaterialFamily);
+    
       // Group skill upgrades by family
       final skillFamily = awaker.skillMaterialFamily;
       skillFamilyRanges.putIfAbsent(skillFamily, () => []);
