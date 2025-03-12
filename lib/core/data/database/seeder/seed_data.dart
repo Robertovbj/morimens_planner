@@ -153,7 +153,8 @@ class DatabaseSeeder {
       {'id': 5, 'description': 'Devout Holy Heart', 'icon': 'devout_holy_heart.png'},
       {'id': 6, 'description': 'Crown of the Holy Fetus', 'icon': 'crown_of_the_holy_fetus.png'},
       {'id': 7, 'description': 'Mother Tree Remains', 'icon': 'mother_tree_remains.png'},
-      {'id': 8, 'description': 'Dreamcatcher', 'icon': 'dreamcatcher.png'}
+      {'id': 8, 'description': 'Dreamcatcher', 'icon': 'dreamcatcher.png'},
+      {'id': 9, 'description': 'Crown of the Sacred Womb', 'icon': 'crown_of_the_sacred_womb.png'}
     ];
 
     for (var material in materials) {
@@ -227,6 +228,12 @@ class DatabaseSeeder {
       {'name': 'Casiah', 'realm': 4, 'type': 3, 'rarity': 4, 'skillMaterialFamily': 4, 'edifyMaterialFamily': 4, 'advancedSkillMaterial': 4, 'universalMaterialFamily': 1},
       {'name': 'Erica', 'realm': 4, 'type': 2, 'rarity': 4, 'skillMaterialFamily': 4, 'edifyMaterialFamily': 4, 'advancedSkillMaterial': 3, 'universalMaterialFamily': 1},
       {'name': 'Daffodil', 'realm': 4, 'type': 1, 'rarity': 4, 'skillMaterialFamily': 4, 'edifyMaterialFamily': 4, 'advancedSkillMaterial': 5, 'universalMaterialFamily': 1},
+      {'name': 'Caecus', 'realm': 2, 'type': 2, 'rarity': 4, 'skillMaterialFamily': 2, 'edifyMaterialFamily': 2, 'advancedSkillMaterial': 2, 'universalMaterialFamily': 1},
+      {'name': 'Murphy', 'realm': 2, 'type': 2, 'rarity': 4, 'skillMaterialFamily': 2, 'edifyMaterialFamily': 2, 'advancedSkillMaterial': 9, 'universalMaterialFamily': 1},
+      {'name': 'Alva', 'realm': 1, 'type': 2, 'rarity': 4, 'skillMaterialFamily': 1, 'edifyMaterialFamily': 1, 'advancedSkillMaterial': 2, 'universalMaterialFamily': 1},
+      {'name': 'Melting Doll', 'realm': 1, 'type': 3, 'rarity': 4, 'skillMaterialFamily': 1, 'edifyMaterialFamily': 1, 'advancedSkillMaterial': 1, 'universalMaterialFamily': 1},
+      {'name': 'Nymphaea', 'realm': 1, 'type': 1, 'rarity': 4, 'skillMaterialFamily': 1, 'edifyMaterialFamily': 1, 'advancedSkillMaterial': 4, 'universalMaterialFamily': 1},
+      {'name': 'Pandia', 'realm': 1, 'type': 1, 'rarity': 4, 'skillMaterialFamily': 1, 'edifyMaterialFamily': 1, 'advancedSkillMaterial': 1, 'universalMaterialFamily': 1},
     ];
 
     for (var awaker in awakers) {
