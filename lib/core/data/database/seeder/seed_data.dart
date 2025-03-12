@@ -193,7 +193,7 @@ class DatabaseSeeder {
       {'fromLevel': 2, 'toLevel': 3, 'type': 1, 'tier1': 0, 'tier2': 9, 'tier3': 0, 'advanced': 0, 'universal': 0, 'money': 12150, 'rarity': 4},
       {'fromLevel': 3, 'toLevel': 4, 'type': 1, 'tier1': 0, 'tier2': 15, 'tier3': 0, 'advanced': 1, 'universal': 0, 'money': 24750, 'rarity': 4},
       {'fromLevel': 4, 'toLevel': 5, 'type': 1, 'tier1': 0, 'tier2': 0, 'tier3': 9, 'advanced': 2, 'universal': 0, 'money': 44550, 'rarity': 4},
-      {'fromLevel': 10, 'toLevel': 20, 'type': 3, 'tier1': 9, 'tier2': 0, 'tier3': 0, 'advanced': 0, 'universal': 0, 'money': 0, 'rarity': 4},
+      {'fromLevel': 10, 'toLevel': 20, 'type': 3, 'tier1': 9, 'tier2': 0, 'tier3': 0, 'advanced': 0, 'universal': 0, 'money': 1800, 'rarity': 4},
       {'fromLevel': 20, 'toLevel': 30, 'type': 3, 'tier1': 0, 'tier2': 9, 'tier3': 0, 'advanced': 0, 'universal': 0, 'money': 8100, 'rarity': 4},
       {'fromLevel': 30, 'toLevel': 40, 'type': 3, 'tier1': 0, 'tier2': 18, 'tier3': 0, 'advanced': 0, 'universal': 0, 'money': 21600, 'rarity': 4},
       {'fromLevel': 40, 'toLevel': 50, 'type': 3, 'tier1': 0, 'tier2': 0, 'tier3': 15, 'advanced': 0, 'universal': 0, 'money': 67500, 'rarity': 4},
