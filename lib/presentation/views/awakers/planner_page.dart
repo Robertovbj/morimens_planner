@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/data/models/planner.dart';
 import '../../../core/data/models/awaker.dart';
-import '../../../core/services/planner_backup_service.dart';
 import 'add_plan_dialog.dart';
 import 'plan_details_page.dart';
 import '../../../core/utils/color_generator.dart';
@@ -16,7 +15,6 @@ class PlannerPage extends StatefulWidget {
 class _PlannerPageState extends State<PlannerPage> {
   List<Planner> plans = [];
   Map<int, Awaker> awakersMap = {};
-  final PlannerBackupService _backupService = PlannerBackupService();
 
   @override
   void initState() {
@@ -42,64 +40,12 @@ class _PlannerPageState extends State<PlannerPage> {
     });
   }
 
-  // Export planner data to JSON
-  Future<void> _exportData() async {
-    await _backupService.exportPlannersToJson(plans, context);
-  }
-
-  // Import planner data from JSON
-  Future<void> _importData() async {
-    // Confirmation before importing
-    final bool? confirmImport = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Import Data'),
-        content: const Text(
-            'Importing will replace all current planner data. Continue?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('Import'),
-          ),
-        ],
-      ),
-    );
-
-    if (confirmImport != true) return;
-
-    // Apply import using the service
-    final success = await _backupService.applyImport(context);
-    
-    // Reload data if import was successful
-    if (success) {
-      await _loadData();
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Awakers'),
-        actions: [
-          // Export icon
-          IconButton(
-            icon: const Icon(Icons.upload),
-            tooltip: 'Export data',
-            onPressed: _exportData,
-          ),
-          // Import icon
-          IconButton(
-            icon: const Icon(Icons.download),
-            tooltip: 'Import data',
-            onPressed: _importData,
-          ),
-        ],
-            ),
+      ),
       body: GridView.builder(
         padding: const EdgeInsets.all(8),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

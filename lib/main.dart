@@ -5,6 +5,7 @@ import 'core/services/theme_manager.dart';
 import 'presentation/views/debug/debug_views.dart';
 import 'presentation/views/awakers/planner_page.dart';
 import 'presentation/views/planner/material_requirements_page.dart';
+import 'presentation/views/settings/settings_page.dart';
 import 'package:flutter/foundation.dart';
 
 void main() async {
@@ -132,6 +133,16 @@ class _WelcomePageState extends State<WelcomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const MaterialRequirementsPage()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text('Settings'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SettingsPage()),
                 );
               },
             ),
