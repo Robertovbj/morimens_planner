@@ -20,7 +20,7 @@ void main() async {
   
   // Checking if we're in debug/development mode
   if (kDebugMode) {
-    print("Iniciando aplicativo em modo de depuração");
+    print("Starting application in debug mode");
   }
   
   runApp(const MyApp());
@@ -47,20 +47,52 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Morimens Planner',
       theme: ThemeManager().currentTheme,
-      home: const WelcomePage(),
+      home: const MainAppScaffold(initialPage: 0),
     );
   }
 }
 
-class WelcomePage extends StatefulWidget {
-  const WelcomePage({super.key});
+class MainAppScaffold extends StatefulWidget {
+  final int initialPage;
+  
+  const MainAppScaffold({super.key, required this.initialPage});
 
   @override
-  State<WelcomePage> createState() => _WelcomePageState();
+  State<MainAppScaffold> createState() => _MainAppScaffoldState();
 }
 
-class _WelcomePageState extends State<WelcomePage> {
-  int _secretTapCount = 0;
+class _MainAppScaffoldState extends State<MainAppScaffold> {
+  late int _currentPageIndex;
+  
+  // List of main pages
+  final List<Widget> _pages = [
+    const MaterialRequirementsPage(),
+    const PlannerPage(),
+    const SettingsPage(),
+  ];
+
+  // Page titles
+  final List<String> _pageTitles = [
+    'Materials',
+    'Awakers',
+    'Settings',
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _currentPageIndex = widget.initialPage;
+  }
+
+  void _navigateToPage(int index) {
+    // Close the drawer
+    Navigator.pop(context);
+    
+    // Update current page
+    setState(() {
+      _currentPageIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,28 +100,32 @@ class _WelcomePageState extends State<WelcomePage> {
     
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Welcome'),
+        title: Text(_pageTitles[_currentPageIndex]),
       ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            GestureDetector(
-              onTap: () {
-                _secretTapCount++;
-                if (_secretTapCount >= 10) {
-                  setState(() {
-                    DebugConfig().isDebugMode = true;
-                  });
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Debug mode activated!')),
-                  );
-                }
-              },
-              child: DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              child: GestureDetector(
+                onTap: () {
+                  // Secret code to activate debug mode
+                  int tapCount = DebugConfig().secretTapCount + 1;
+                  DebugConfig().secretTapCount = tapCount;
+                  
+                  if (tapCount >= 10) {
+                    setState(() {
+                      DebugConfig().isDebugMode = true;
+                      DebugConfig().secretTapCount = 0;
+                    });
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Debug mode activated!')),
+                    );
+                  }
+                },
                 child: Text(
                   'Menu',
                   style: TextStyle(
@@ -110,52 +146,28 @@ class _WelcomePageState extends State<WelcomePage> {
             ),
             const Divider(),
             ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text('Home'),
-              onTap: () {
-                Navigator.pop(context);
-              },
+              leading: const Icon(Icons.shopping_cart),
+              title: const Text('Materials'),
+              selected: _currentPageIndex == 0,
+              onTap: () => _navigateToPage(0),
             ),
             ListTile(
               leading: const Icon(Icons.person),
               title: const Text('Awakers'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const PlannerPage()),
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.shopping_cart),
-              title: const Text('Materials'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const MaterialRequirementsPage()),
-                );
-              },
+              selected: _currentPageIndex == 1,
+              onTap: () => _navigateToPage(1),
             ),
             ListTile(
               leading: const Icon(Icons.settings),
               title: const Text('Settings'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SettingsPage()),
-                );
-              },
+              selected: _currentPageIndex == 2,
+              onTap: () => _navigateToPage(2),
             ),
             if (DebugConfig().isDebugMode) ...DebugViews.debugMenuItems(context),
           ],
         ),
       ),
-      body: Center(
-        child: Text(
-          'Welcome to the Planner App!',
-          style: Theme.of(context).textTheme.headlineMedium,
-        ),
-      ),
+      body: _pages[_currentPageIndex],
     );
   }
 }

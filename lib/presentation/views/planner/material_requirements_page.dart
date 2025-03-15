@@ -147,77 +147,72 @@ class MaterialRequirementsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Material Requirements'),
-      ),
-      body: FutureBuilder<MaterialRequirements>(
-        future: MaterialCalculator.calculate(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          
-          if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          }
+    return FutureBuilder<MaterialRequirements>(
+      future: MaterialCalculator.calculate(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        
+        if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }
 
-          final requirements = snapshot.data!;
-          
-          return SingleChildScrollView(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildFamilySection('Edify Materials', requirements.edifyFamilies),
-                _buildFamilySection('Skill Materials', requirements.skillFamilies),
-                if (requirements.advancedMaterials.any((m) => m.quantity > 0)) ...[
-                  _buildAdvancedMaterialsCard(requirements.advancedMaterials),
-                  const SizedBox(height: 16),
-                ],
-                if (requirements.universalMaterials > 0) ...[
-                  _buildUniversalMaterialsCard(
-                    requirements.universalMaterials, 
-                    requirements.universalMaterialName
-                  ),
-                  const SizedBox(height: 16),
-                ],
-                if (requirements.totalMoney > 0)
-                  Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        children: [
-                          const Icon(Icons.monetization_on, color: Colors.amber),
-                          const SizedBox(width: 8),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Money Required',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
+        final requirements = snapshot.data!;
+        
+        return SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildFamilySection('Edify Materials', requirements.edifyFamilies),
+              _buildFamilySection('Skill Materials', requirements.skillFamilies),
+              if (requirements.advancedMaterials.any((m) => m.quantity > 0)) ...[
+                _buildAdvancedMaterialsCard(requirements.advancedMaterials),
+                const SizedBox(height: 16),
+              ],
+              if (requirements.universalMaterials > 0) ...[
+                _buildUniversalMaterialsCard(
+                  requirements.universalMaterials, 
+                  requirements.universalMaterialName
+                ),
+                const SizedBox(height: 16),
+              ],
+              if (requirements.totalMoney > 0)
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.monetization_on, color: Colors.amber),
+                        const SizedBox(width: 8),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Money Required',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
                               ),
-                              Text(
-                                '${requirements.totalMoney}',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.amber,
-                                ),
+                            ),
+                            Text(
+                              '${requirements.totalMoney}',
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.amber,
                               ),
-                            ],
-                          ),
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
-              ],
-            ),
-          );
-        },
-      ),
+                ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
