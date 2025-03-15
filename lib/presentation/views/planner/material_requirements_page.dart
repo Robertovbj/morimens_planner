@@ -145,6 +145,16 @@ class MaterialRequirementsPage extends StatelessWidget {
     );
   }
 
+  bool _hasNoRequirements(MaterialRequirements requirements) {
+    return requirements.edifyFamilies.every((family) => 
+        family.tier1 <= 0 && family.tier2 <= 0 && family.tier3 <= 0) &&
+      requirements.skillFamilies.every((family) => 
+        family.tier1 <= 0 && family.tier2 <= 0 && family.tier3 <= 0) &&
+      requirements.advancedMaterials.every((m) => m.quantity <= 0) &&
+      requirements.universalMaterials <= 0 &&
+      requirements.totalMoney <= 0;
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<MaterialRequirements>(
@@ -159,6 +169,30 @@ class MaterialRequirementsPage extends StatelessWidget {
         }
 
         final requirements = snapshot.data!;
+        
+        // Check if there's nothing to show
+        if (_hasNoRequirements(requirements)) {
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.all(32.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                    Icon(Icons.info_outline, size: 64, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Nothing to show here. Try adding some Awakers :)',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
         
         return SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
