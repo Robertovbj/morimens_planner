@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/foundation.dart';
 import '../data/models/planner.dart';
@@ -21,7 +20,7 @@ class PlannerBackupService {
   }
 
   // Exporta planejadores para arquivo JSON
-  Future<bool> exportPlannersToJson(List<Planner> planners, BuildContext context) async {
+  Future<String?> exportPlannersToJson(List<Planner> planners) async {
     try {
       // Converte planejadores para JSON
       final jsonData = _plannersToJson(planners);
@@ -49,16 +48,10 @@ class PlannerBackupService {
         if (result != null) {
           // Copia o arquivo temporário para o local selecionado
           await tempFile.copy(result);
-          
-          if (context.mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Exportado com sucesso para $result')),
-            );
-          }
-          return true;
+          return 'Exportado com sucesso para $result';
         } else {
           // Usuário cancelou
-          return false;
+          return null;
         }
       } catch (e) {
         // Fallback para dispositivos que não suportam saveFile
@@ -73,32 +66,21 @@ class PlannerBackupService {
         if (selectedDirectory != null) {
           final file = File('$selectedDirectory/$fileName');
           await tempFile.copy(file.path);
-          
-          if (context.mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Exportado com sucesso para ${file.path}')),
-            );
-          }
-          return true;
+          return 'Exportado com sucesso para ${file.path}';
         }
       }
       
-      return false;
+      return null;
     } catch (e) {
       if (kDebugMode) {
         print("Erro ao exportar: $e");
       }
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erro ao exportar: $e')),
-        );
-      }
-      return false;
+      return 'Erro ao exportar: $e';
     }
   }
 
   // Importa planejadores de arquivo JSON
-  Future<List<Planner>?> importPlannersFromJson(BuildContext context) async {
+  Future<(List<Planner>?, String?)> importPlannersFromJson() async {
     try {
       // Seleciona arquivo JSON com tratamento de erro mais robusto
       FilePickerResult? result;
@@ -117,18 +99,13 @@ class PlannerBackupService {
       }
       
       if (result == null) {
-        return null; // Usuário cancelou
+        return (null, null); // Usuário cancelou
       }
       
       // Lê o arquivo
       final path = result.files.single.path;
       if (path == null) {
-        if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Caminho do arquivo inválido')),
-          );
-        }
-        return null;
+        return (null, 'Caminho do arquivo inválido');
       }
       
       File file = File(path);
@@ -137,28 +114,27 @@ class PlannerBackupService {
       // Converte JSON para lista de planejadores
       List<Planner> importedPlanners = _plannersFromJson(jsonData);
       
-      return importedPlanners;
+      return (importedPlanners, null);
     } catch (e) {
       if (kDebugMode) {
         print("Erro na importação: $e");
       }
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erro ao importar: $e')),
-        );
-      }
-      return null;
+      return (null, 'Erro ao importar: $e');
     }
   }
 
   // Aplica os dados importados substituindo os existentes
-  Future<bool> applyImport(BuildContext context) async {
+  Future<String> applyImport() async {
     try {
       // Obtém os planos importados do arquivo JSON
-      final importedPlanners = await importPlannersFromJson(context);
+      final (importedPlanners, errorMessage) = await importPlannersFromJson();
+      
+      if (errorMessage != null) {
+        return errorMessage;
+      }
       
       if (importedPlanners == null || importedPlanners.isEmpty) {
-        return false;
+        return 'Nenhum dado para importar';
       }
       
       // Limpa os dados atuais
@@ -177,40 +153,21 @@ class PlannerBackupService {
             print("Erro ao importar plano: $e");
           }
           errorCount++;
-          
-          if (context.mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Erro ao importar plano: $e')),
-            );
-          }
         }
       }
       
-      // Notifica o usuário sobre o resultado
-      if (context.mounted) {
-        String message = 'Dados importados com sucesso!';
-        if (errorCount > 0) {
-          message += ' ($successCount importados, $errorCount com erro)';
-        }
-        
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(message)),
-        );
+      String message = 'Dados importados com sucesso!';
+      if (errorCount > 0) {
+        message += ' ($successCount importados, $errorCount com erro)';
       }
       
-      return successCount > 0;
+      return message;
     } catch (e) {
       if (kDebugMode) {
         print("Erro na aplicação da importação: $e");
       }
       
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erro ao aplicar importação: $e')),
-        );
-      }
-      
-      return false;
+      return 'Erro ao aplicar importação: $e';
     }
   }
 }

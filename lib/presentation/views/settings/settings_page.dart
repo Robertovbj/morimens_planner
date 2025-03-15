@@ -2,18 +2,31 @@ import 'package:flutter/material.dart';
 import '../../../core/services/planner_backup_service.dart';
 import '../../../core/data/models/planner.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
 
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
   // Export planner data to JSON
-  Future<void> _exportData(BuildContext context) async {
+  Future<void> _exportData() async {
     final backupService = PlannerBackupService();
     final planners = await Planner.getAll();
-    await backupService.exportPlannersToJson(planners, context);
+    final result = await backupService.exportPlannersToJson(planners);
+    
+    if (result != null && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(result)),
+      );
+    }
   }
 
   // Import planner data from JSON
-  Future<void> _importData(BuildContext context) async {
+  Future<void> _importData() async {
+    if (!mounted) return;
+    
     final backupService = PlannerBackupService();
     // Confirmation before importing
     final bool? confirmImport = await showDialog<bool>(
@@ -35,10 +48,16 @@ class SettingsPage extends StatelessWidget {
       ),
     );
 
-    if (confirmImport != true) return;
+    if (confirmImport != true || !mounted) return;
 
     // Apply import using the service
-    await backupService.applyImport(context);
+    final message = await backupService.applyImport();
+    
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(message)),
+      );
+    }
   }
 
   @override
@@ -64,12 +83,12 @@ class SettingsPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ElevatedButton.icon(
-                      onPressed: () => _importData(context),
+                      onPressed: _importData,
                       icon: const Icon(Icons.download),
                       label: const Text('Import Data'),
                     ),
                     ElevatedButton.icon(
-                      onPressed: () => _exportData(context),
+                      onPressed: _exportData,
                       icon: const Icon(Icons.upload),
                       label: const Text('Export Data'),
                     ),
