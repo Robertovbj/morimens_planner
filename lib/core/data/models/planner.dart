@@ -141,6 +141,11 @@ class Planner {
     );
   }
 
+  static Future<int> deleteAll() async {
+    final db = await DBHelper().database;
+    return await db.delete('Planner');
+  }
+
   static Future<List<Planner>> getAll() async {
     final db = await DBHelper().database;
     final List<Map<String, dynamic>> maps = await db.query('Planner');

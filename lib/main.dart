@@ -5,11 +5,23 @@ import 'core/services/theme_manager.dart';
 import 'presentation/views/debug/debug_views.dart';
 import 'presentation/views/awakers/planner_page.dart';
 import 'presentation/views/planner/material_requirements_page.dart';
+import 'package:flutter/foundation.dart';
 
 void main() async {
+  // Garantindo que o binding está inicializado antes de usar plugins
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Inicializando o banco de dados
   await DBHelper().database;
+  
+  // Inicializando o tema
   await ThemeManager().initialize();
+  
+  // Verificando se estamos em modo de depuração/desenvolvimento
+  if (kDebugMode) {
+    print("Iniciando aplicativo em modo de depuração");
+  }
+  
   runApp(const MyApp());
 }
 
