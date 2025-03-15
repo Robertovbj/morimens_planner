@@ -8,16 +8,16 @@ import 'presentation/views/planner/material_requirements_page.dart';
 import 'package:flutter/foundation.dart';
 
 void main() async {
-  // Garantindo que o binding está inicializado antes de usar plugins
+  // Ensuring binding is initialized before using plugins
   WidgetsFlutterBinding.ensureInitialized();
   
-  // Inicializando o banco de dados
+  // Initializing the database
   await DBHelper().database;
   
-  // Inicializando o tema
+  // Initializing the theme
   await ThemeManager().initialize();
   
-  // Verificando se estamos em modo de depuração/desenvolvimento
+  // Checking if we're in debug/development mode
   if (kDebugMode) {
     print("Iniciando aplicativo em modo de depuração");
   }
@@ -98,7 +98,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 ),
               ),
             ),
-            // Botão de toggle do tema
+            // Theme toggle button
             ListTile(
               leading: Icon(isDark ? Icons.light_mode : Icons.dark_mode),
               title: Text(isDark ? 'Light Mode' : 'Dark Mode'),

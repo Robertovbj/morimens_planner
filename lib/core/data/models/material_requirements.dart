@@ -31,7 +31,7 @@ class MaterialRequirements {
   final List<MaterialRequirement> edifyFamilies;
   final List<AdvancedMaterialRequirement> advancedMaterials;
   final int universalMaterials;
-  final String universalMaterialName; // Novo campo
+  final String universalMaterialName;
   final int totalMoney;
 
   MaterialRequirements({
@@ -39,7 +39,7 @@ class MaterialRequirements {
     required this.edifyFamilies,
     required this.advancedMaterials,
     required this.universalMaterials,
-    required this.universalMaterialName, // Novo campo
+    required this.universalMaterialName,
     required this.totalMoney,
   });
 }

@@ -53,17 +53,17 @@ class _PlannerPageState extends State<PlannerPage> {
     final bool? confirmImport = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Importar Dados'),
+        title: const Text('Import Data'),
         content: const Text(
-            'A importação substituirá todos os dados atuais do planejador. Continuar?'),
+            'Importing will replace all current planner data. Continue?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancelar'),
+            child: const Text('Cancel'),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Importar'),
+            child: const Text('Import'),
           ),
         ],
       ),
@@ -89,17 +89,17 @@ class _PlannerPageState extends State<PlannerPage> {
           // Export icon
           IconButton(
             icon: const Icon(Icons.upload),
-            tooltip: 'Exportar dados',
+            tooltip: 'Export data',
             onPressed: _exportData,
           ),
           // Import icon
           IconButton(
             icon: const Icon(Icons.download),
-            tooltip: 'Importar dados',
+            tooltip: 'Import data',
             onPressed: _importData,
           ),
         ],
-      ),
+            ),
       body: GridView.builder(
         padding: const EdgeInsets.all(8),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

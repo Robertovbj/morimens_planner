@@ -3,7 +3,7 @@ import '../data/database/db_helper.dart';
 import '../data/models/material_requirements.dart';
 import '../data/models/planner.dart';
 import '../data/models/awaker.dart';
-import '../data/models/universal_material.dart'; // Importar o modelo do material universal
+import '../data/models/universal_material.dart'; // Import the universal material model
 
 class MaterialCalculator {
   static Future<MaterialRequirements> calculate() async {
@@ -27,7 +27,7 @@ class MaterialCalculator {
     // Track advanced materials by ID
     Map<int, int> advancedMaterialsCount = {};
 
-    // Grupo para rastrear famílias de materiais universais
+    // Group to track universal material families
     Set<int> universalFamilies = {};
     int totalUniversalMaterials = 0;
 
@@ -35,7 +35,7 @@ class MaterialCalculator {
       final awaker = awakersMap[plan.awaker];
       if (awaker == null) continue;
 
-      // Rastrear as famílias de materiais universais usadas
+      // Track the families of universal materials used
       universalFamilies.add(awaker.universalMaterialFamily);
     
       // Group skill upgrades by family
@@ -202,10 +202,10 @@ class MaterialCalculator {
       );
     }
 
-    // Obter o nome do material universal completo (não o fragmento)
-    String universalMaterialName = "Universal Material"; // Nome padrão
+    // Get the full universal material name (not the fragment)
+    String universalMaterialName = "Universal Material"; // Default name
     if (universalFamilies.isNotEmpty) {
-      // Pegamos o primeiro, pois normalmente todos os awakeners usarão o mesmo tipo de material universal
+      // We take the first one, as usually all awakeners will use the same type of universal material
       final familyId = universalFamilies.first;
       final universalMaterial = await UniversalMaterial.getCompleteMaterialFromFamily(familyId);
       if (universalMaterial != null) {
@@ -217,8 +217,8 @@ class MaterialCalculator {
       skillFamilies: skillRequirements,
       edifyFamilies: edifyRequirements,
       advancedMaterials: advancedRequirements,
-      universalMaterials: totalUniversalMaterials, // Novo campo
-      universalMaterialName: universalMaterialName, // Novo campo
+      universalMaterials: totalUniversalMaterials,
+      universalMaterialName: universalMaterialName,
       totalMoney: totalMoney,
     );
   }

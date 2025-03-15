@@ -10,7 +10,7 @@ class Awaker {
   final int skillMaterialFamily;
   final int edifyMaterialFamily;
   final int advancedSkillMaterial;
-  final int universalMaterialFamily; // Novo campo
+  final int universalMaterialFamily;
 
   Awaker({
     this.id,
@@ -21,7 +21,7 @@ class Awaker {
     required this.skillMaterialFamily,
     required this.edifyMaterialFamily,
     required this.advancedSkillMaterial,
-    required this.universalMaterialFamily, // Novo campo
+    required this.universalMaterialFamily,
   });
 
   factory Awaker.fromMap(Map<String, Object?> map) => Awaker(
@@ -33,7 +33,7 @@ class Awaker {
         skillMaterialFamily: (map['skillMaterialFamily'] as num?)?.toInt() ?? 0,
         edifyMaterialFamily: (map['edifyMaterialFamily'] as num?)?.toInt() ?? 0,
         advancedSkillMaterial: (map['advancedSkillMaterial'] as num?)?.toInt() ?? 0,
-        universalMaterialFamily: (map['universalMaterialFamily'] as num?)?.toInt() ?? 0, // Novo campo
+        universalMaterialFamily: (map['universalMaterialFamily'] as num?)?.toInt() ?? 0,
       );
 
   Map<String, Object?> toMap() => {
@@ -45,7 +45,7 @@ class Awaker {
         'skillMaterialFamily': skillMaterialFamily,
         'edifyMaterialFamily': edifyMaterialFamily,
         'advancedSkillMaterial': advancedSkillMaterial,
-        'universalMaterialFamily': universalMaterialFamily, // Novo campo
+        'universalMaterialFamily': universalMaterialFamily,
       };
 
   @override

@@ -41,7 +41,7 @@ class _AddPlanDialogState extends State<AddPlanDialog> {
     _loadAwakers();
     
     if (widget.planToEdit != null) {
-      // Preencher os campos com os valores existentes
+      // Fill the fields with existing values
       basicAttackFromController.text = widget.planToEdit!.basicAttackFrom.toString();
       basicAttackToController.text = widget.planToEdit!.basicAttackTo.toString();
       basicDefenseFromController.text = widget.planToEdit!.basicDefenseFrom.toString();

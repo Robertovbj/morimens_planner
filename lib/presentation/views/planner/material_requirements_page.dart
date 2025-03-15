@@ -178,7 +178,7 @@ class MaterialRequirementsPage extends StatelessWidget {
                 if (requirements.universalMaterials > 0) ...[
                   _buildUniversalMaterialsCard(
                     requirements.universalMaterials, 
-                    requirements.universalMaterialName // Passa o nome específico
+                    requirements.universalMaterialName
                   ),
                   const SizedBox(height: 16),
                 ],
