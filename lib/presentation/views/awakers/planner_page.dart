@@ -26,14 +26,14 @@ class _PlannerPageState extends State<PlannerPage> {
     final allPlans = await Planner.getAll();
     final allAwakers = await Awaker.getAll();
     final awakerMap = {for (var awaker in allAwakers) awaker.id!: awaker};
-    
+
     // Sort plans based on awaker names
     allPlans.sort((a, b) {
       final awakerA = awakerMap[a.awaker]?.name ?? '';
       final awakerB = awakerMap[b.awaker]?.name ?? '';
       return awakerA.compareTo(awakerB);
     });
-    
+
     setState(() {
       plans = allPlans;
       awakersMap = awakerMap;
@@ -43,77 +43,101 @@ class _PlannerPageState extends State<PlannerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Awakers'),
-      ),
-      body: GridView.builder(
-        padding: const EdgeInsets.all(8),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 0.75,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-        ),
-        itemCount: plans.length,
-        itemBuilder: (context, index) {
-          final plan = plans[index];
-          final awaker = awakersMap[plan.awaker];
-          
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PlanDetailsPage(
-                    plan: plan,
-                    awaker: awaker!,
+      body:
+          plans.isEmpty
+              ? Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(32.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.info_outline,
+                        size: 64,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        'Nothing to show here. Try adding some Awakers :)',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ).then((_) => _loadData()); // Reload data when returning
-            },
-            child: Card(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: ColorGenerator.fromString(awaker?.name ?? ''),
-                        borderRadius: const BorderRadius.vertical(
-                          top: Radius.circular(4),
+              )
+              : GridView.builder(
+                padding: const EdgeInsets.all(8),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.75,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                ),
+                itemCount: plans.length,
+                itemBuilder: (context, index) {
+                  final plan = plans[index];
+                  final awaker = awakersMap[plan.awaker];
+
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder:
+                              (context) =>
+                                  PlanDetailsPage(plan: plan, awaker: awaker!),
                         ),
-                      ),
-                      child: const Center(
-                        child: Icon(
-                          Icons.person,
-                          size: 64,
-                          color: Colors.white,
-                        ),
+                      ).then((_) => _loadData()); // Reload data when returning
+                    },
+                    child: Card(
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: ColorGenerator.fromString(
+                                  awaker?.name ?? '',
+                                ),
+                                borderRadius: const BorderRadius.vertical(
+                                  top: Radius.circular(4),
+                                ),
+                              ),
+                              child: const Center(
+                                child: Icon(
+                                  Icons.person,
+                                  size: 64,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              awaker?.name ?? 'Unknown',
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      awaker?.name ?? 'Unknown',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
+                  );
+                },
               ),
-            ),
-          );
-        },
-      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           final result = await showDialog(
             context: context,
             builder: (context) => const AddPlanDialog(),
           );
-          
+
           if (result == true) {
             _loadData();
           }
