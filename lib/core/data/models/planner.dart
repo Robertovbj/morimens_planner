@@ -18,6 +18,7 @@ class Planner {
   final int skillTwoTo;
   final int edifyFrom;
   final int edifyTo;
+  final bool active;
 
   Planner({
     this.id,
@@ -36,6 +37,7 @@ class Planner {
     required this.skillTwoTo,
     required this.edifyFrom,
     required this.edifyTo,
+    this.active = true,
   }) {
     if (basicAttackTo < basicAttackFrom ||
         basicDefenseTo < basicDefenseFrom ||
@@ -65,6 +67,7 @@ class Planner {
         skillTwoTo: map['skillTwo_to'] as int,
         edifyFrom: map['edify_from'] as int,
         edifyTo: map['edify_to'] as int,
+        active: map['active'] == 1, // Int to bool conversion
       );
 
   Map<String, Object?> toMap() => {
@@ -84,11 +87,12 @@ class Planner {
         'skillTwo_to': skillTwoTo,
         'edify_from': edifyFrom,
         'edify_to': edifyTo,
+        'active': active ? 1 : 0, // Bool to int conversion
       };
 
   @override
   String toString() {
-    return 'Planner{id: $id, awaker: $awaker, basicAttackFrom: $basicAttackFrom, basicAttackTo: $basicAttackTo, basicDefenseFrom: $basicDefenseFrom, basicDefenseTo: $basicDefenseTo, exaltFrom: $exaltFrom, exaltTo: $exaltTo, rouseFrom: $rouseFrom, rouseTo: $rouseTo, skillOneFrom: $skillOneFrom, skillOneTo: $skillOneTo, skillTwoFrom: $skillTwoFrom, skillTwoTo: $skillTwoTo, edifyFrom: $edifyFrom, edifyTo: $edifyTo}';
+    return 'Planner{id: $id, awaker: $awaker, active: $active, basicAttackFrom: $basicAttackFrom, basicAttackTo: $basicAttackTo, basicDefenseFrom: $basicDefenseFrom, basicDefenseTo: $basicDefenseTo, exaltFrom: $exaltFrom, exaltTo: $exaltTo, rouseFrom: $rouseFrom, rouseTo: $rouseTo, skillOneFrom: $skillOneFrom, skillOneTo: $skillOneTo, skillTwoFrom: $skillTwoFrom, skillTwoTo: $skillTwoTo, edifyFrom: $edifyFrom, edifyTo: $edifyTo}';
   }
 
   // CRUD functions
@@ -152,5 +156,41 @@ class Planner {
     return List.generate(maps.length, (i) {
       return Planner.fromMap(maps[i]);
     });
+  }
+
+  // Activate a plan
+  static Future<int> activate(int id) async {
+    final db = await DBHelper().database;
+    return await db.update(
+      'Planner',
+      {'active': 1},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+  // Deactivate a plan
+  static Future<int> deactivate(int id) async {
+    final db = await DBHelper().database;
+    return await db.update(
+      'Planner',
+      {'active': 0},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+  // Toggle plan activation status
+  static Future<bool> toggleActive(int id) async {
+    final planner = await get(id);
+    if (planner == null) return false;
+    
+    if (planner.active) {
+      await deactivate(id);
+      return false;
+    } else {
+      await activate(id);
+      return true;
+    }
   }
 }
