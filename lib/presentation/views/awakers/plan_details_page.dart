@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../../core/data/models/planner.dart';
 import '../../../core/data/models/awaker.dart';
-import 'add_plan_dialog.dart';
+import '../../../core/data/models/material_requirements.dart';
+import '../../../core/services/material_calculator.dart';
 import '../../../core/utils/color_generator.dart';
+import '../../widgets/material_requirements_view.dart';
+import 'add_plan_dialog.dart';
 
 class PlanDetailsPage extends StatefulWidget {
   final Planner plan;
@@ -109,9 +112,10 @@ class _PlanDetailsPageState extends State<PlanDetailsPage> {
           ),
         ],
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildDetailRow('Edify', currentPlan.edifyFrom, currentPlan.edifyTo),
             _buildDetailRow('Basic Attack', currentPlan.basicAttackFrom, currentPlan.basicAttackTo),
@@ -120,6 +124,38 @@ class _PlanDetailsPageState extends State<PlanDetailsPage> {
             _buildDetailRow('Skill One', currentPlan.skillOneFrom, currentPlan.skillOneTo),
             _buildDetailRow('Skill Two', currentPlan.skillTwoFrom, currentPlan.skillTwoTo),
             _buildDetailRow('Exalt (Ult)', currentPlan.exaltFrom, currentPlan.exaltTo),
+            
+            const SizedBox(height: 24),
+            const Divider(),
+            const SizedBox(height: 16),
+            
+            const Text(
+              'Material Requirements',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 16),
+            
+            FutureBuilder<MaterialRequirements>(
+              future: MaterialCalculator.calculateForPlan(currentPlan, widget.awaker),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                
+                if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                }
+                
+                final requirements = snapshot.data!;
+                return MaterialRequirementsView(
+                  requirements: requirements,
+                  showTitle: false,
+                );
+              },
+            ),
           ],
         ),
       ),
