@@ -18,6 +18,7 @@ A mobile evolution planner for Morimens. Plan your farming routes, calculate req
 
 ## Other Planned Features
 
+- [ ] Adding EXP requirement calculator for farming completion
 - [ ] Menophin requirement calculator for farming completion
 - [ ] Adding a "What's New" section in the planner
 - [x] Remove the blank welcome screen
