@@ -2,22 +2,27 @@
 
 A mobile evolution planner for Morimens. Plan your farming routes, calculate required materials, and track your progress efficiently. This tool helps you optimize your resource gathering and evolution strategies in the game.
 
-## Planned Features
+## Planned Features For v1.0
 
-- Add apk releases
-- Adding proper icons for characters and materials
-- Displaying character icons below the list for easy farming reference
-- Character deactivation functionality in the planner
-- Per-character material requirement view
-- Inventory management system
-- Automatic item conversion in inventory
-- Menophin requirement calculator for farming completion
-- Better UI for the planner details
-- Importing and exporting planner data to json
-- Adding a "What's New" section in the planner
-- Remove the blank welcome screen
-- Add more descriptive tooltips in the material list
-- Probably some other things I forgot right now...
+- [ ] Add apk releases
+- [ ] Adding proper icons for characters and materials
+- [ ] Displaying character icons below the list for easy farming reference
+- [ ] Character deactivation functionality in the planner
+- [x] Per-character material requirement view
+- [ ] Inventory management system
+- [ ] Automatic item conversion in inventory
+- [x] Importing and exporting planner data to json
+- [ ] Better UI for the planner details
+- [ ] Add more descriptive tooltips in the material list
+- [ ] Probably some other things I forgot right now...
+
+## Other Planned Features
+
+- [ ] Menophin requirement calculator for farming completion
+- [ ] Adding a "What's New" section in the planner
+- [x] Remove the blank welcome screen
+- [ ] Add more descriptive tooltips in the material list
+- [ ] Probably some other things I forgot right now...
 
 ## Development Setup
 
