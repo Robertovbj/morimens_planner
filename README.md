@@ -7,7 +7,7 @@ A mobile evolution planner for Morimens. Plan your farming routes, calculate req
 - [ ] Add apk releases
 - [ ] Adding proper icons for characters and materials
 - [ ] Displaying character icons below the list for easy farming reference
-- [ ] Character deactivation functionality in the planner
+- [x] Character deactivation functionality in the planner
 - [x] Per-character material requirement view
 - [ ] Inventory management system
 - [ ] Automatic item conversion in inventory
@@ -23,6 +23,7 @@ A mobile evolution planner for Morimens. Plan your farming routes, calculate req
 - [ ] Adding a "What's New" section in the planner
 - [x] Remove the blank welcome screen
 - [ ] Add more descriptive tooltips in the material list
+- [ ] Adding a 'Help' section
 - [ ] Probably some other things I forgot right now...
 
 ## Development Setup
