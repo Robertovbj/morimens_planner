@@ -57,6 +57,14 @@ class MaterialCalculator {
         'rarity': awaker.rarity,
         'advancedMaterial': awaker.advancedSkillMaterial, // Adicionando ID do material avançado
       });
+
+      // Rouse SKill
+      skillFamilyRanges[skillFamily]!.add({
+        'from': plan.rouseFrom,
+        'to': plan.rouseTo,
+        'rarity': awaker.rarity,
+        'advancedMaterial': awaker.advancedSkillMaterial, // Adicionando ID do material avançado
+      });
       
       // Skills
       skillFamilyRanges[skillFamily]!.add({
@@ -316,6 +324,14 @@ class MaterialCalculator {
       'advancedMaterial': awaker.advancedSkillMaterial, // Adicionando ID do material avançado
     });
     
+    // Rouse SKill
+    skillFamilyRanges[skillFamily]!.add({
+      'from': plan.rouseFrom,
+      'to': plan.rouseTo,
+      'rarity': awaker.rarity,
+      'advancedMaterial': awaker.advancedSkillMaterial, // Adicionando ID do material avançado
+    });
+
     // Skills
     skillFamilyRanges[skillFamily]!.add({
       'from': plan.skillOneFrom,
