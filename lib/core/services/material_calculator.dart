@@ -6,11 +6,29 @@ import '../data/models/awaker.dart';
 import '../data/models/universal_material.dart'; // Import the universal material model
 
 class MaterialCalculator {
-  static Future<MaterialRequirements> calculate() async {
+  static Future<MaterialRequirements> calculate({bool onlyActive = true}) async {
     final db = await DBHelper().database;
-    final plans = await Planner.getAll();
+    
+    // Get all plans and filter to include only active ones if needed
+    final allPlans = await Planner.getAll();
+    final plans = onlyActive 
+        ? allPlans.where((plan) => plan.active).toList()
+        : allPlans;
+    
+    // If there are no active plans, return empty requirements
+    if (plans.isEmpty) {
+      return MaterialRequirements(
+        skillFamilies: [],
+        edifyFamilies: [],
+        advancedMaterials: [],
+        universalMaterials: 0,
+        universalMaterialName: "Universal Material",
+        totalMoney: 0,
+      );
+    }
+    
     Map<int, Awaker> awakersMap = {};
-
+    
     // Load all awakers used in plans
     for (var plan in plans) {
       final awaker = await Awaker.get(plan.awaker);
@@ -333,8 +351,21 @@ class MaterialCalculator {
   // Método para calcular requisitos para um único plano
   static Future<MaterialRequirements> calculateForPlan(
     Planner plan,
-    Awaker awaker,
-  ) async {
+    Awaker awaker, {
+    bool checkActive = false,
+  }) async {
+    // If the plan is inactive and checkActive is true, return empty requirements
+    if (checkActive && !plan.active) {
+      return MaterialRequirements(
+        skillFamilies: [],
+        edifyFamilies: [],
+        advancedMaterials: [],
+        universalMaterials: 0,
+        universalMaterialName: "Universal Material",
+        totalMoney: 0,
+      );
+    }
+
     final db = await DBHelper().database;
 
     // Group by material family

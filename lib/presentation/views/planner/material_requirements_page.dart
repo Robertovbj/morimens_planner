@@ -4,12 +4,19 @@ import '../../../core/services/material_calculator.dart';
 import '../../widgets/material_requirements_view.dart';
 
 class MaterialRequirementsPage extends StatelessWidget {
-  const MaterialRequirementsPage({super.key});
+  
+  final bool onlyActive;
+  
+  const MaterialRequirementsPage({
+    super.key, 
+    this.onlyActive = true,
+  });
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<MaterialRequirements>(
-      future: MaterialCalculator.calculate(),
+      // Explicitly pass the onlyActive parameter
+      future: MaterialCalculator.calculate(onlyActive: onlyActive),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -32,7 +39,9 @@ class MaterialRequirementsPage extends StatelessWidget {
                   Icon(Icons.info_outline, size: 64, color: Theme.of(context).colorScheme.onSurfaceVariant),
                   const SizedBox(height: 16),
                   Text(
-                    'Nothing to show here. Try adding some Awakers :)',
+                    onlyActive 
+                        ? 'No active awakers to show. Try activating some plans!'
+                        : 'Nothing to show here. Try adding some Awakers :)',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 18,
