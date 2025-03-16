@@ -66,7 +66,7 @@ class _AddPlanDialogState extends State<AddPlanDialog> {
     final loadedAwakers = await Awaker.getAll();
     
     if (widget.planToEdit != null) {
-      // Se estiver editando, carrega apenas o awaker atual
+      // If editing, load only the current awaker
       final currentAwaker = await Awaker.get(widget.planToEdit!.awaker);
       setState(() {
         awakers = [currentAwaker!];
@@ -252,6 +252,7 @@ class _AddPlanDialogState extends State<AddPlanDialog> {
         skillTwoTo: int.parse(skillTwoToController.text),
         edifyFrom: int.parse(edifyFromController.text),
         edifyTo: int.parse(edifyToController.text),
+        active: widget.planToEdit?.active ?? true,
       );
 
       if (widget.planToEdit != null) {

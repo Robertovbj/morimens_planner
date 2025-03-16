@@ -37,7 +37,7 @@ class Planner {
     required this.skillTwoTo,
     required this.edifyFrom,
     required this.edifyTo,
-    this.active = true,
+    required this.active,
   }) {
     if (basicAttackTo < basicAttackFrom ||
         basicDefenseTo < basicDefenseFrom ||
