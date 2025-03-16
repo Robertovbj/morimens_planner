@@ -19,20 +19,27 @@ class PlannerService {
   /// Loads all plans and their related awakeners.
   ///
   /// Retrieves plans and constructs a map of awakeners for efficient lookup.
-  /// Plans are sorted by their awakener's name.
+  /// Plans are sorted by their activation status first (active ones first),
+  /// then alphabetically by awakener name within each group.
   ///
   /// [onlyActive] When true, retrieves only active plans. Defaults to false.
   /// 
   /// Returns a tuple containing:
-  /// - A list of [Planner] objects sorted by awakener name
+  /// - A list of [Planner] objects sorted by activation status and awakener name
   /// - A map of awakener IDs to [Awaker] objects for quick reference
   Future<(List<Planner>, Map<int, Awaker>)> loadPlansWithAwakers({bool onlyActive = false}) async {
     final plans = await getAllPlans(onlyActive: onlyActive);
     final allAwakers = await Awaker.getAll();
     final awakersMap = {for (var awaker in allAwakers) awaker.id!: awaker};
 
-    // Sort plans by awakener name
+    // Sort plans: active first, then by awakener name
     plans.sort((a, b) {
+      // First compare by active status (active plans first)
+      if (a.active != b.active) {
+        return a.active ? -1 : 1;
+      }
+      
+      // Then sort alphabetically by awakener name
       final awakerA = awakersMap[a.awaker]?.name ?? '';
       final awakerB = awakersMap[b.awaker]?.name ?? '';
       return awakerA.compareTo(awakerB);

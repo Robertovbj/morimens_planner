@@ -33,6 +33,53 @@ class _PlannerPageState extends State<PlannerPage> {
     });
   }
 
+  Future<void> _togglePlanActive(Planner plan) async {
+    if (plan.id != null) {
+      final awaker = awakersMap[plan.awaker];
+      final isActive = await _plannerService.togglePlanActive(plan.id!);
+      
+      // User feedback
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            isActive 
+              ? '${awaker?.name} activated' 
+              : '${awaker?.name} deactivated'
+          ),
+          duration: const Duration(seconds: 1),
+        ),
+      );
+      // Important: Only updates the visual state of the current list
+      // without reordering items
+      setState(() {
+        // Find the index of the plan in the list
+        final index = plans.indexWhere((p) => p.id == plan.id);
+        if (index >= 0) {
+          // Update only the active state of the plan
+          plans[index] = Planner(
+        id: plan.id,
+            awaker: plan.awaker,
+            basicAttackFrom: plan.basicAttackFrom,
+            basicAttackTo: plan.basicAttackTo,
+            basicDefenseFrom: plan.basicDefenseFrom,
+            basicDefenseTo: plan.basicDefenseTo,
+            exaltFrom: plan.exaltFrom,
+            exaltTo: plan.exaltTo,
+            rouseFrom: plan.rouseFrom,
+            rouseTo: plan.rouseTo,
+            skillOneFrom: plan.skillOneFrom,
+            skillOneTo: plan.skillOneTo,
+            skillTwoFrom: plan.skillTwoTo,
+            skillTwoTo: plan.skillTwoTo,
+            edifyFrom: plan.edifyFrom,
+            edifyTo: plan.edifyTo,
+            active: isActive,
+          );
+        }
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,34 +128,14 @@ class _PlannerPageState extends State<PlannerPage> {
                         context,
                         MaterialPageRoute(
                           builder:
-                              (context) =>
+                                (context) =>
                                   PlanDetailsPage(plan: plan, awaker: awaker!),
-                        ),
-                      ).then((_) => _loadData()); // Reload data when returning
-                    },
-                    onLongPress: () async {
-                      // Toggle the plan's active state when long pressing
-                      if (plan.id != null) {
-                        final isActive = await _plannerService.togglePlanActive(plan.id!);
-                        
-                        // User feedback
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              isActive 
-                                ? '${awaker?.name} activated' 
-                                : '${awaker?.name} deactivated'
                             ),
-                            duration: const Duration(seconds: 1),
-                          ),
-                        );
-                        
-                        // Update the list
-                        _loadData();
-                      }
-                    },
-                    child: Card(
-                      child: Column(
+                            ).then((_) => _loadData()); // Reloads and reorders when returning
+                          },
+                          onLongPress: () => _togglePlanActive(plan), // Uses the new method
+                          child: Card(
+                            child: Column(
                         children: [
                           Expanded(
                             child: Stack(
