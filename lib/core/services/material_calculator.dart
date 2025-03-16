@@ -47,6 +47,7 @@ class MaterialCalculator {
         'from': plan.basicAttackFrom,
         'to': plan.basicAttackTo,
         'rarity': awaker.rarity,
+        'advancedMaterial': awaker.advancedSkillMaterial, // Adicionando ID do material avançado
       });
       
       // Basic Defense
@@ -54,6 +55,7 @@ class MaterialCalculator {
         'from': plan.basicDefenseFrom,
         'to': plan.basicDefenseTo,
         'rarity': awaker.rarity,
+        'advancedMaterial': awaker.advancedSkillMaterial, // Adicionando ID do material avançado
       });
       
       // Skills
@@ -61,11 +63,13 @@ class MaterialCalculator {
         'from': plan.skillOneFrom,
         'to': plan.skillOneTo,
         'rarity': awaker.rarity,
+        'advancedMaterial': awaker.advancedSkillMaterial, // Adicionando ID do material avançado
       });
       skillFamilyRanges[skillFamily]!.add({
         'from': plan.skillTwoFrom,
         'to': plan.skillTwoTo,
         'rarity': awaker.rarity,
+        'advancedMaterial': awaker.advancedSkillMaterial, // Adicionando ID do material avançado
       });
       
       // Group edify upgrades
@@ -109,6 +113,18 @@ class MaterialCalculator {
       ));
       
       totalMoney += result['money'] ?? 0;
+      
+      // Processando materiais avançados das habilidades
+      if ((result['advanced'] ?? 0) > 0) {
+        for (var range in entry.value) {
+          final advancedMaterialId = range['advancedMaterial'] as int;
+          advancedMaterialsCount[advancedMaterialId] = 
+              (advancedMaterialsCount[advancedMaterialId] ?? 0) + 
+              (result['advanced'] ?? 0);
+        }
+      }
+      
+      totalUniversalMaterials += result['universal'] ?? 0;
     }
 
     // Calculate edify materials
@@ -278,6 +294,7 @@ class MaterialCalculator {
 
     // Track universal material family
     int totalUniversalMaterials = 0;
+    Map<int, int> advancedMaterialsCount = {}; // Para rastrear materiais avançados
 
     // Group skill upgrades by family
     final skillFamily = awaker.skillMaterialFamily;
@@ -288,6 +305,7 @@ class MaterialCalculator {
       'from': plan.basicAttackFrom,
       'to': plan.basicAttackTo,
       'rarity': awaker.rarity,
+      'advancedMaterial': awaker.advancedSkillMaterial, // Adicionando ID do material avançado
     });
     
     // Basic Defense
@@ -295,6 +313,7 @@ class MaterialCalculator {
       'from': plan.basicDefenseFrom,
       'to': plan.basicDefenseTo,
       'rarity': awaker.rarity,
+      'advancedMaterial': awaker.advancedSkillMaterial, // Adicionando ID do material avançado
     });
     
     // Skills
@@ -302,11 +321,13 @@ class MaterialCalculator {
       'from': plan.skillOneFrom,
       'to': plan.skillOneTo,
       'rarity': awaker.rarity,
+      'advancedMaterial': awaker.advancedSkillMaterial, // Adicionando ID do material avançado
     });
     skillFamilyRanges[skillFamily]!.add({
       'from': plan.skillTwoFrom,
       'to': plan.skillTwoTo,
       'rarity': awaker.rarity,
+      'advancedMaterial': awaker.advancedSkillMaterial, // Adicionando ID do material avançado
     });
     
     // Group edify upgrades
@@ -349,6 +370,16 @@ class MaterialCalculator {
       ));
       
       totalMoney += result['money'] ?? 0;
+      totalUniversalMaterials += result['universal'] ?? 0;
+      
+      // Processando materiais avançados das habilidades
+      if ((result['advanced'] ?? 0) > 0) {
+        // Pegamos apenas o primeiro item pois todos usam o mesmo material avançado
+        final advancedMaterialId = entry.value.first['advancedMaterial'] as int;
+        advancedMaterialsCount[advancedMaterialId] = 
+            (advancedMaterialsCount[advancedMaterialId] ?? 0) + 
+            (result['advanced'] ?? 0);
+      }
     }
 
     // Calculate edify materials
@@ -383,14 +414,9 @@ class MaterialCalculator {
 
       // Track which advanced material is needed
       final advancedMaterialId = range['advancedMaterial'] as int;
-      if (exaltResult['advanced'] != null && exaltResult['advanced']! > 0) {
-        final materialName = await _getAdvancedMaterialName(db, advancedMaterialId);
-        advancedRequirements.add(AdvancedMaterialRequirement(
-          materialId: advancedMaterialId,
-          materialName: materialName,
-          quantity: exaltResult['advanced'] ?? 0,
-        ));
-      }
+      advancedMaterialsCount[advancedMaterialId] = 
+          (advancedMaterialsCount[advancedMaterialId] ?? 0) + 
+          (exaltResult['advanced'] ?? 0);
 
       // Add skill materials to the corresponding family
       final skillFamily = range['skillFamily'] as int;
@@ -423,6 +449,18 @@ class MaterialCalculator {
         tier2: familyReq.tier2 + (skillResult['tier2'] ?? 0),
         tier3: familyReq.tier3 + (skillResult['tier3'] ?? 0),
       );
+    }
+    
+    // Convert advanced materials count to requirements list
+    for (var entry in advancedMaterialsCount.entries) {
+      if (entry.value > 0) {
+        final materialName = await _getAdvancedMaterialName(db, entry.key);
+        advancedRequirements.add(AdvancedMaterialRequirement(
+          materialId: entry.key,
+          materialName: materialName,
+          quantity: entry.value,
+        ));
+      }
     }
 
     // Get universal material name
