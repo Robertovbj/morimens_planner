@@ -276,9 +276,6 @@ class MaterialCalculator {
     Map<int, List<Map<String, dynamic>>> edifyFamilyRanges = {};
     List<Map<String, dynamic>> exaltRanges = [];
 
-    // Track advanced materials by ID
-    Map<int, int> advancedMaterialsCount = {};
-
     // Track universal material family
     int totalUniversalMaterials = 0;
 
