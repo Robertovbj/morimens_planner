@@ -25,7 +25,8 @@ class _PlannerPageState extends State<PlannerPage> {
   }
 
   Future<void> _loadData() async {
-    final (loadedPlans, awakerMap) = await _plannerService.loadPlansWithAwakers();
+    final (loadedPlans, awakerMap) =
+        await _plannerService.loadPlansWithAwakers();
 
     setState(() {
       plans = loadedPlans;
@@ -37,14 +38,14 @@ class _PlannerPageState extends State<PlannerPage> {
     if (plan.id != null) {
       final awaker = awakersMap[plan.awaker];
       final isActive = await _plannerService.togglePlanActive(plan.id!);
-      
+
       // User feedback
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            isActive 
-              ? '${awaker?.name} activated' 
-              : '${awaker?.name} deactivated'
+            isActive
+                ? '${awaker?.name} activated'
+                : '${awaker?.name} deactivated',
           ),
           duration: const Duration(seconds: 1),
         ),
@@ -57,7 +58,7 @@ class _PlannerPageState extends State<PlannerPage> {
         if (index >= 0) {
           // Update only the active state of the plan
           plans[index] = Planner(
-        id: plan.id,
+            id: plan.id,
             awaker: plan.awaker,
             basicAttackFrom: plan.basicAttackFrom,
             basicAttackTo: plan.basicAttackTo,
@@ -128,14 +129,17 @@ class _PlannerPageState extends State<PlannerPage> {
                         context,
                         MaterialPageRoute(
                           builder:
-                                (context) =>
+                              (context) =>
                                   PlanDetailsPage(plan: plan, awaker: awaker!),
-                            ),
-                            ).then((_) => _loadData()); // Reloads and reorders when returning
-                          },
-                          onLongPress: () => _togglePlanActive(plan), // Uses the new method
-                          child: Card(
-                            child: Column(
+                        ),
+                      ).then(
+                        (_) => _loadData(),
+                      ); // Reloads and reorders when returning
+                    },
+                    onLongPress:
+                        () => _togglePlanActive(plan), // Uses the new method
+                    child: Card(
+                      child: Column(
                         children: [
                           Expanded(
                             child: Stack(
@@ -162,7 +166,10 @@ class _PlannerPageState extends State<PlannerPage> {
                                 if (!plan.active)
                                   Container(
                                     decoration: BoxDecoration(
-                                      color: Theme.of(context).colorScheme.shadow.withValues(alpha: 0.8),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .shadow
+                                          .withValues(alpha: 0.8),
                                       borderRadius: const BorderRadius.vertical(
                                         top: Radius.circular(4),
                                       ),
@@ -185,9 +192,10 @@ class _PlannerPageState extends State<PlannerPage> {
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
-                                color: plan.active 
-                                    ? null 
-                                    : Theme.of(context).disabledColor,
+                                color:
+                                    plan.active
+                                        ? null
+                                        : Theme.of(context).disabledColor,
                               ),
                             ),
                           ),
