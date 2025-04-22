@@ -239,6 +239,7 @@ class DatabaseSeeder {
       {'name': 'Winkle', 'realm': 4, 'type': 2, 'rarity': 4, 'skillMaterialFamily': 4, 'edifyMaterialFamily': 4, 'advancedSkillMaterial': 1, 'universalMaterialFamily': 1},
       {'name': 'Clementine', 'realm': 4, 'type': 3, 'rarity': 4, 'skillMaterialFamily': 4, 'edifyMaterialFamily': 4, 'advancedSkillMaterial': 2, 'universalMaterialFamily': 1},
       {'name': 'Jenkin', 'realm': 4, 'type': 1, 'rarity': 4, 'skillMaterialFamily': 4, 'edifyMaterialFamily': 4, 'advancedSkillMaterial': 2, 'universalMaterialFamily': 1},
+      {'name': '24', 'realm': 1, 'type': 1, 'rarity': 4, 'skillMaterialFamily': 1, 'edifyMaterialFamily': 1, 'advancedSkillMaterial': 9, 'universalMaterialFamily': 1},
     ];
 
     for (var awaker in awakers) {
