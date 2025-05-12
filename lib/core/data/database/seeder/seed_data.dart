@@ -45,9 +45,9 @@ class DatabaseSeeder {
 
   Future<void> _seedAwakerTypes() async {
     final types = [
-      {'id': 1, 'description': 'Damage'},
-      {'id': 2, 'description': 'Defense'},
-      {'id': 3, 'description': 'Assist'},
+      {'id': 1, 'description': 'Assault'},
+      {'id': 2, 'description': 'Warden'},
+      {'id': 3, 'description': 'Chorus'},
     ];
 
     for (var type in types) {
