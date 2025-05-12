@@ -231,7 +231,7 @@ class DatabaseSeeder {
       {'name': 'Caecus', 'realm': 2, 'type': 2, 'rarity': 4, 'skillMaterialFamily': 2, 'edifyMaterialFamily': 2, 'advancedSkillMaterial': 2, 'universalMaterialFamily': 1},
       {'name': 'Murphy', 'realm': 2, 'type': 2, 'rarity': 4, 'skillMaterialFamily': 2, 'edifyMaterialFamily': 2, 'advancedSkillMaterial': 9, 'universalMaterialFamily': 1},
       {'name': 'Alva', 'realm': 1, 'type': 2, 'rarity': 4, 'skillMaterialFamily': 1, 'edifyMaterialFamily': 1, 'advancedSkillMaterial': 2, 'universalMaterialFamily': 1},
-      {'name': 'Melting Doll', 'realm': 1, 'type': 3, 'rarity': 4, 'skillMaterialFamily': 1, 'edifyMaterialFamily': 1, 'advancedSkillMaterial': 1, 'universalMaterialFamily': 1},
+      {'name': 'Doll: Inferno', 'realm': 1, 'type': 3, 'rarity': 4, 'skillMaterialFamily': 1, 'edifyMaterialFamily': 1, 'advancedSkillMaterial': 1, 'universalMaterialFamily': 1},
       {'name': 'Nymphaea', 'realm': 1, 'type': 1, 'rarity': 4, 'skillMaterialFamily': 1, 'edifyMaterialFamily': 1, 'advancedSkillMaterial': 4, 'universalMaterialFamily': 1},
       {'name': 'Pandia', 'realm': 1, 'type': 1, 'rarity': 4, 'skillMaterialFamily': 1, 'edifyMaterialFamily': 1, 'advancedSkillMaterial': 1, 'universalMaterialFamily': 1},
       {'name': 'Tinct', 'realm': 4, 'type': 3, 'rarity': 4, 'skillMaterialFamily': 4, 'edifyMaterialFamily': 4, 'advancedSkillMaterial': 4, 'universalMaterialFamily': 1},
@@ -240,6 +240,8 @@ class DatabaseSeeder {
       {'name': 'Clementine', 'realm': 4, 'type': 3, 'rarity': 4, 'skillMaterialFamily': 4, 'edifyMaterialFamily': 4, 'advancedSkillMaterial': 2, 'universalMaterialFamily': 1},
       {'name': 'Jenkin', 'realm': 4, 'type': 1, 'rarity': 4, 'skillMaterialFamily': 4, 'edifyMaterialFamily': 4, 'advancedSkillMaterial': 2, 'universalMaterialFamily': 1},
       {'name': '24', 'realm': 1, 'type': 1, 'rarity': 4, 'skillMaterialFamily': 1, 'edifyMaterialFamily': 1, 'advancedSkillMaterial': 9, 'universalMaterialFamily': 1},
+      {'name': 'Goliath', 'realm': 2, 'type': 1, 'rarity': 4, 'skillMaterialFamily': 2, 'edifyMaterialFamily': 2, 'advancedSkillMaterial': 4, 'universalMaterialFamily': 1},
+      {'name': 'Corposant', 'realm': 2, 'type': 2, 'rarity': 4, 'skillMaterialFamily': 2, 'edifyMaterialFamily': 2, 'advancedSkillMaterial': 2, 'universalMaterialFamily': 1},
     ];
 
     for (var awaker in awakers) {
