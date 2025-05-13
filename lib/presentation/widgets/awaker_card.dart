@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import '../../../core/utils/color_generator.dart';
+import 'package:morimens_planner/core/data/models/awaker.dart';
+import '../../core/resources/theme/theme.dart';
+import '../../core/services/awaker_image_name.dart';
 
 class AwakerCard extends StatelessWidget {
-  final String name;
+  final Awaker awaker;
   final bool isActive;
   final VoidCallback? onTap;
   final VoidCallback? onLongPress;
 
   const AwakerCard({
     super.key,
-    required this.name,
+    required this.awaker,
     required this.isActive,
     this.onTap,
     this.onLongPress,
@@ -29,26 +31,21 @@ class AwakerCard extends StatelessWidget {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                      color: ColorGenerator.fromString(name),
+                      color: Theme.of(context).extension<RealmColors>()?.getRealmColor(awaker.realm) ?? Colors.grey,
                       borderRadius: const BorderRadius.vertical(
                         top: Radius.circular(4),
                       ),
                     ),
-                    child: const Center(
-                      child: Icon(
-                        Icons.person,
-                        size: 64,
-                        color: Colors.white,
-                      ),
+                    child: Center(
+                      child: Image(image: AssetImage(AwakerImageName.getCardPath(awaker)),)
                     ),
                   ),
                   if (!isActive)
                     Container(
                       decoration: BoxDecoration(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .shadow
-                            .withValues(alpha: 0.8),
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.shadow.withValues(alpha: 0.8),
                         borderRadius: const BorderRadius.vertical(
                           top: Radius.circular(4),
                         ),
@@ -67,7 +64,7 @@ class AwakerCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                name,
+                awaker.name,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,

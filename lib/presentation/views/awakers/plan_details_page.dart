@@ -3,9 +3,9 @@ import '../../../core/data/models/planner.dart';
 import '../../../core/data/models/awaker.dart';
 import '../../../core/data/models/material_requirements.dart';
 import '../../../core/services/material_calculator.dart';
-import '../../../core/utils/color_generator.dart';
 import '../../widgets/material_requirements_view.dart';
 import 'add_plan_dialog.dart';
+import '../../../core/resources/theme/theme.dart';
 
 class PlanDetailsPage extends StatefulWidget {
   final Planner plan;
@@ -103,8 +103,8 @@ class _PlanDetailsPageState extends State<PlanDetailsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.awaker.name),
-        backgroundColor: ColorGenerator.fromString(widget.awaker.name),
-        foregroundColor: Colors.white,
+        backgroundColor: Theme.of(context).extension<RealmColors>()?.getRealmColor(widget.awaker.realm) ?? Colors.grey,
+        foregroundColor: Theme.of(context).extension<RealmColors>()?.getRealmOnColor(widget.awaker.realm) ?? Colors.grey,
         actions: [
           IconButton(
             icon: const Icon(Icons.delete),

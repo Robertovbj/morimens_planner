@@ -122,15 +122,20 @@ class _PlannerPageState extends State<PlannerPage> {
                 final plan = plans[index];
                 final awaker = awakersMap[plan.awaker];
 
+                // Skip if awaker is null
+                if (awaker == null) {
+                  return const SizedBox.shrink();
+                }
+                
                 return AwakerCard(
-                  name: awaker?.name ?? 'Unknown',
+                  awaker: awaker,
                   isActive: plan.active,
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            PlanDetailsPage(plan: plan, awaker: awaker!),
+                            PlanDetailsPage(plan: plan, awaker: awaker),
                       ),
                     ).then((_) => _loadData());
                   },
