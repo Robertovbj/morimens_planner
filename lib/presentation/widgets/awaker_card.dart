@@ -31,13 +31,27 @@ class AwakerCard extends StatelessWidget {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                      color: Theme.of(context).extension<RealmColors>()?.getRealmColor(awaker.realm) ?? Colors.grey,
+                      color:
+                          Theme.of(context)
+                              .extension<RealmColors>()
+                              ?.getRealmColor(awaker.realm) ??
+                          Colors.grey,
                       borderRadius: const BorderRadius.vertical(
                         top: Radius.circular(4),
                       ),
                     ),
                     child: Center(
-                      child: Image(image: AssetImage(AwakerImageName.getCardPath(awaker)),)
+                      child: Image(
+                        image: AssetImage(AwakerImageName.getCardPath(awaker)),
+                        // Fallback icon in case of error
+                        errorBuilder: (context, error, stackTrace) {
+                          return const Icon(
+                            Icons.person,
+                            size: 64,
+                            color: Colors.white,
+                          );
+                        },
+                      ),
                     ),
                   ),
                   if (!isActive)
