@@ -40,18 +40,17 @@ class AwakerCard extends StatelessWidget {
                         top: Radius.circular(4),
                       ),
                     ),
-                    child: Center(
-                      child: Image(
-                        image: AssetImage(AwakerImageName.getCardPath(awaker)),
-                        // Fallback icon in case of error
-                        errorBuilder: (context, error, stackTrace) {
-                          return const Icon(
-                            Icons.person,
-                            size: 64,
-                            color: Colors.white,
-                          );
-                        },
-                      ),
+                    child: Image(
+                      image: AssetImage(AwakerImageName.getCardPath(awaker)),
+                      fit: BoxFit.fitHeight,
+                      // Fallback icon in case of error
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Icon(
+                          Icons.person,
+                          size: 64,
+                          color: Colors.white,
+                        );
+                      },
                     ),
                   ),
                   if (!isActive)
