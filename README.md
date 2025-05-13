@@ -5,7 +5,8 @@ A mobile evolution planner for Morimens. Plan your farming routes, calculate req
 ## Planned Features For v1.0
 
 - [ ] Add apk releases
-- [ ] Adding proper icons for characters and materials
+- [x] Adding proper icons for characters
+- [ ] Adding proper icons for materials
 - [ ] Displaying character icons below the list for easy farming reference
 - [x] Character deactivation functionality in the planner
 - [x] Per-character material requirement view
@@ -44,12 +45,7 @@ This ensures consistent line endings across different operating systems when col
 
 ## Contributing
 
-While code contributions are currently not being accepted, we welcome data contributions for higher-level character progression (beyond level 30). This includes:
-
-- Skill upgrade requirements
-- Exalt requirements
-- Edify requirements
-- Material costs
+While code contributions are currently not being accepted, we welcome data contributions for characters and their weekly material requirements.
 
 You can submit game data through:
 - Email: roberto.rvbj@gmail.com
