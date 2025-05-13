@@ -4,7 +4,7 @@ import '../../../core/data/models/awaker.dart';
 import '../../../core/services/planner_service.dart';
 import 'add_plan_dialog.dart';
 import 'plan_details_page.dart';
-import '../../../core/utils/color_generator.dart';
+import '../../widgets/awaker_card.dart';
 
 class PlannerPage extends StatefulWidget {
   const PlannerPage({super.key});
@@ -84,127 +84,60 @@ class _PlannerPageState extends State<PlannerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
-          plans.isEmpty
-              ? Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(32.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.info_outline,
-                        size: 64,
+      body: plans.isEmpty
+          ? Center(
+              child: Padding(
+                padding: const EdgeInsets.all(32.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.info_outline,
+                      size: 64,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Nothing to show here. Try adding some Awakers :)',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 18,
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
-                      const SizedBox(height: 16),
-                      Text(
-                        'Nothing to show here. Try adding some Awakers :)',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Theme.of(context).colorScheme.onSurfaceVariant,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              )
-              : GridView.builder(
-                padding: const EdgeInsets.all(8),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.75,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                ),
-                itemCount: plans.length,
-                itemBuilder: (context, index) {
-                  final plan = plans[index];
-                  final awaker = awakersMap[plan.awaker];
-
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder:
-                              (context) =>
-                                  PlanDetailsPage(plan: plan, awaker: awaker!),
-                        ),
-                      ).then(
-                        (_) => _loadData(),
-                      ); // Reloads and reorders when returning
-                    },
-                    onLongPress:
-                        () => _togglePlanActive(plan), // Uses the new method
-                    child: Card(
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: Stack(
-                              fit: StackFit.expand,
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: ColorGenerator.fromString(
-                                      awaker?.name ?? '',
-                                    ),
-                                    borderRadius: const BorderRadius.vertical(
-                                      top: Radius.circular(4),
-                                    ),
-                                  ),
-                                  child: const Center(
-                                    child: Icon(
-                                      Icons.person,
-                                      size: 64,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                // Add a darkened overlay for disabled plans
-                                if (!plan.active)
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .shadow
-                                          .withValues(alpha: 0.8),
-                                      borderRadius: const BorderRadius.vertical(
-                                        top: Radius.circular(4),
-                                      ),
-                                    ),
-                                    child: const Center(
-                                      child: Icon(
-                                        Icons.mode_night,
-                                        size: 64,
-                                        color: Colors.white54,
-                                      ),
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              awaker?.name ?? 'Unknown',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color:
-                                    plan.active
-                                        ? null
-                                        : Theme.of(context).disabledColor,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
                     ),
-                  );
-                },
+                  ],
+                ),
               ),
+            )
+          : GridView.builder(
+              padding: const EdgeInsets.all(8),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.75,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+              ),
+              itemCount: plans.length,
+              itemBuilder: (context, index) {
+                final plan = plans[index];
+                final awaker = awakersMap[plan.awaker];
+
+                return AwakerCard(
+                  name: awaker?.name ?? 'Unknown',
+                  isActive: plan.active,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            PlanDetailsPage(plan: plan, awaker: awaker!),
+                      ),
+                    ).then((_) => _loadData());
+                  },
+                  onLongPress: () => _togglePlanActive(plan),
+                );
+              },
+            ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           final result = await showDialog(
