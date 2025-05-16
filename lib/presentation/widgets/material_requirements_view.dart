@@ -41,6 +41,16 @@ class MaterialRequirementsView extends StatelessWidget {
                 ],
               ),
             ),
+            // TODO(roberto.rvbj): Add a horizontal list of Awakers that require this family
+            SizedBox(
+              height: 50,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  // TODO(Roberto): Replace with actual Awaker data
+                ],
+              ),
+            ),
           ],
         ),
       ),
